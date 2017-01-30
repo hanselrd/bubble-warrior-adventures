@@ -3,8 +3,8 @@
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Contributors
-[Hansel De La Cruz](https://github.com/hanselrd)
-[Kyle Jolicoeur](https://github.com/kjolicoeur)
+..*[Hansel De La Cruz](https://github.com/hanselrd)
+..*[Kyle Jolicoeur](https://github.com/kjolicoeur)
 
 ## Development Environment
 [Visual Studio Community](https://www.visualstudio.com/downloads)
