@@ -1,13 +1,17 @@
-# bubble-warrior-adventures
+# Bubble Warrior Adventures!
 
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Contributors
-*[Hansel De La Cruz](https://github.com/hanselrd)
-*[Kyle Jolicoeur](https://github.com/kjolicoeur)
+## Motivation
+Video games have always been our passion. What better way to feed that passion by
+creating our own game to suit our playing styles and desires.
 
 ## Development Environment
 [Visual Studio Community](https://www.visualstudio.com/downloads)
+
+## Contributors
+* [Hansel De La Cruz](https://github.com/hanselrd)
+* [Kyle Jolicoeur](https://github.com/kjolicoeur)
 
 ## License
 MIT License
