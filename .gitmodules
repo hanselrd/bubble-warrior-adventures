@@ -1,0 +1,3 @@
+[submodule "bubble_warrior_adventures/dependencies/sol2"]
+	path = bubble_warrior_adventures/dependencies/sol2
+	url = https://github.com/ThePhD/sol2.git
