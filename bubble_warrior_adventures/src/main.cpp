@@ -6,6 +6,7 @@
 int main(int argc, char* argv[]) {
 	sol::state lua;
 	lua.script_file("config.lua");
+	// test comment
 	sf::RenderWindow window({ 
 		lua["config"]["resolution"]["x"].get<unsigned>(),
 		lua["config"]["resolution"]["y"].get<unsigned>()}, 
