@@ -1,13 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <lua.hpp>
 #include <sol.hpp>
+#include <utility>
 
 int main(int argc, char* argv[]) {
-	sol::state l;
-	l.open_libraries(sol::lib::base);
-	l.do_string("print('Lua works')");
-
-	sf::RenderWindow window({ 800, 600 }, "Bubble Warrior Adventures");
+	sol::state lua;
+	lua.script_file("config.lua");
+	sf::RenderWindow window({ 
+		lua["config"]["resolution"]["x"].get<unsigned>(),
+		lua["config"]["resolution"]["y"].get<unsigned>()}, 
+		"Bubble Warrior Adventures");
 	window.setVerticalSyncEnabled(true);
 	while (window.isOpen()) {
 		sf::Event e;
