@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <lua.hpp>
 
 int main(int argc, char* argv[]) {
 	sf::RenderWindow window({ 800, 600 }, "Bubble Warrior Adventures");
