@@ -7,7 +7,8 @@ Video games have always been our passion. What better way to feed that passion b
 creating our own game to suit our playing styles and desires.
 
 ## Development Environment
-[Visual Studio Community](https://www.visualstudio.com/downloads)
+We are using [Visual Studio Community](https://www.visualstudio.com/downloads), but since our libraries are
+cross-platform, you can easily use any editor and/or operating system. **Makefile not included!**
 
 ## Contributors
 * [Hansel De La Cruz](https://github.com/hanselrd)
