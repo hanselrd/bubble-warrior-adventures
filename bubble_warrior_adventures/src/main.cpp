@@ -1,7 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <lua.hpp>
+#include <sol.hpp>
 
 int main(int argc, char* argv[]) {
+	sol::state l;
+	l.open_libraries(sol::lib::base);
+	l.do_string("print('Lua works')");
+
 	sf::RenderWindow window({ 800, 600 }, "Bubble Warrior Adventures");
 	window.setVerticalSyncEnabled(true);
 	while (window.isOpen()) {
