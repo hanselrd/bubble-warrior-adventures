@@ -2,6 +2,14 @@
 
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Synopsis
+This project was created for our Software Engineering course. We were tasked with
+creating a **PowerPoint** presentation detailing what our project was about,
+how the work would be split up and a guideline to follow. With the freedom given
+to us to choose our programming language and project we settled on using *C++* with a
+sprinkle of *Lua* for simple scripting and a role-playing game. We are still working out
+the story.
+
 ## Motivation
 Hmm, we didn't know you needed any motivation to create a game, but here goes!
 Video games have always been a passion of ours. They're natural stress relievers
@@ -16,12 +24,12 @@ cross-platform, you can easily use any editor and/or operating system. **Makefil
 * [Kyle Jolicoeur](https://github.com/kjolicoeur)
 
 ## Installation
-Clone the repo by doing the following:
+Clone the repo by pasting the following command in your terminal.
 ```bash
 git clone https://github.com/hanselrd/bubble-warrior-adventures --recursive
 ```
 Then navigate to the newly created **bubble-warrior-adventures** and double-click
-the .sln file. Currently we do not support any other operating systems other
+the **.sln** file. Currently we do not support any other operating systems other
 than Windows. Sorry!
 
 ## License
