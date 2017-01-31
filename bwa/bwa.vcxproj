@@ -21,8 +21,9 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{84908B69-D31C-479E-83BE-4454205E679D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>bubble_warrior_adventures</RootNamespace>
+    <RootNamespace>bwa</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>bwa</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
