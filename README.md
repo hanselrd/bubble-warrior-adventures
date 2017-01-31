@@ -2,7 +2,15 @@
 
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Synopsis
+## Contents
+- [Intro](#intro)
+- [Motivation](#motivation)
+- [Development Environment](#development-environment)
+- [Contributors](#contributors)
+- [Installation](#installation)
+- [License](#license)
+
+## Intro
 This project was created for our Software Engineering course. We were tasked with
 creating a **PowerPoint** presentation detailing what our project was about,
 how the work would be split up and a guideline to follow. With the freedom given
