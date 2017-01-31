@@ -7,8 +7,9 @@ This project was created for our Software Engineering course. We were tasked wit
 creating a **PowerPoint** presentation detailing what our project was about,
 how the work would be split up and a guideline to follow. With the freedom given
 to us to choose our programming language and project we settled on using *C++* with a
-sprinkle of *[Lua](https://www.lua.org/manual/5.3)* for simple scripting and a role-playing game. We are still working out
-the story.
+bit of *[Lua](https://www.lua.org/manual/5.3)* for simple scripting and a 
+role-playing game. We are using *[SFML](http://www.sfml-dev.org/index.php)*
+as our window management and graphics library. We currently working on the story.
 
 ## Motivation
 Hmm, we didn't know you needed any motivation to create a game, but here goes!
