@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <TGUI/TGUI.hpp>
 #include <sol.hpp>
 
 namespace bwa {
@@ -14,6 +14,7 @@ namespace bwa {
 		sf::Font _font;
 		sf::Text _text;
 		sf::RenderWindow _window;
+		tgui::Gui _gui;
 		sol::state _lua;
 	};
 }

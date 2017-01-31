@@ -20,6 +20,7 @@ bwa::Game::Game() {
 	else
 		_window.create({ xy.first, xy.second }, WINDOW_TITLE);
 	_window.setVerticalSyncEnabled(true);
+	_gui.setWindow(_window);
 }
 
 void bwa::Game::run() {
@@ -32,6 +33,7 @@ void bwa::Game::run() {
 			if (e.type == sf::Event::Closed ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				_window.close();
+			_gui.handleEvent(e);
 		}
 		// calculates fps
 		if (show_fps_counter) {
@@ -43,6 +45,7 @@ void bwa::Game::run() {
 			}
 		}
 		_window.clear();
+		_gui.draw();
 		// displays fps if show_fps_counter is true
 		if (show_fps_counter)
 			_window.draw(_text);
