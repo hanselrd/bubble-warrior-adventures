@@ -11,6 +11,8 @@ namespace bwa {
 		void run();
 
 	private:
+		sf::Font _font;
+		sf::Text _text;
 		sf::RenderWindow _window;
 		sol::state _lua;
 	};
