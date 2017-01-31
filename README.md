@@ -3,8 +3,9 @@
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Motivation
-Video games have always been our passion. What better way to feed that passion by
-creating our own game to suit our playing styles and desires.
+Hmm, we didn't know you needed any motivation to create a game, but here goes!
+Video games have always been a passion of ours. They're natural stress relievers
+and who doesn't love a good storyline?
 
 ## Development Environment
 We are using [Visual Studio Community](https://www.visualstudio.com/downloads), but since our libraries are
@@ -13,6 +14,14 @@ cross-platform, you can easily use any editor and/or operating system. **Makefil
 ## Contributors
 * [Hansel De La Cruz](https://github.com/hanselrd)
 * [Kyle Jolicoeur](https://github.com/kjolicoeur)
+
+## Installation
+Clone the repo by doing the following:
+```bash
+git clone https://github.com/hanselrd/bubble-warrior-adventures --recursive
+```
+We are making use of git submodules so to clone the repo completely you
+need to pass in that flag.
 
 ## License
 MIT License
