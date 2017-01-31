@@ -30,8 +30,8 @@ We are using [Visual Studio Community](https://www.visualstudio.com/downloads), 
 cross-platform, you can easily use any editor and/or operating system. **Makefile not included!**
 
 ## Contributors
-* [Hansel De La Cruz](https://github.com/hanselrd)
-* [Kyle Jolicoeur](https://github.com/kjolicoeur)
+- [Hansel De La Cruz](https://github.com/hanselrd)
+- [Kyle Jolicoeur](https://github.com/kjolicoeur)
 
 ## Installation
 Clone the repo by pasting the following command in your terminal.
