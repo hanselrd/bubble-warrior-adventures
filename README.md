@@ -20,8 +20,9 @@ Clone the repo by doing the following:
 ```bash
 git clone https://github.com/hanselrd/bubble-warrior-adventures --recursive
 ```
-We are making use of git submodules so to clone the repo completely you
-need to pass in that flag.
+Then navigate to the newly created **bubble-warrior-adventures** and double-click
+the .sln file. Currently we do not support any other operating systems other
+than Windows. Sorry!
 
 ## License
 MIT License
