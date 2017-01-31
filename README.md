@@ -32,11 +32,12 @@ cross-platform, you can easily use any editor and/or operating system. **Makefil
 ## Contributors
 - [Hansel De La Cruz](https://github.com/hanselrd)
 - [Kyle Jolicoeur](https://github.com/kjolicoeur)
+- [Jennifer Green](https://github.com/goldenapplepie)
 
 ## Installation
 Clone the repo by pasting the following command in your terminal.
 ```bash
-git clone https://github.com/hanselrd/bubble-warrior-adventures --recursive
+git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
 ```
 Then navigate to the newly created **bubble-warrior-adventures** folder and double-click
 the **.sln** file. Currently we do not support any other operating systems other
