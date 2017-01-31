@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "resource.hpp"
 #include <string>
 #include <utility>
 
@@ -7,8 +8,8 @@ constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 bwa::Game::Game() {
 	_lua.script_file("config.lua");
 	sol::table resolution = _lua["resolution"];
-	_font.loadFromFile(_lua["game_fonts"]["normal"]);
-	_text.setFont(_font);
+	_font = Resource<sf::Font>::get(_lua["game_fonts"]["normal"]);
+	_text.setFont(*_font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
 	auto xy = std::make_pair(
@@ -27,6 +28,12 @@ void bwa::Game::run() {
 	sf::Clock clock, update_fps;
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
+
+	sf::CircleShape box;
+	box.setRadius(16.f);
+	box.setFillColor(sf::Color::Green);
+	box.setPosition({ 100.f, 100.f });
+
 	while (_window.isOpen()) {
 		sf::Event e;
 		while (_window.pollEvent(e)) {
@@ -45,6 +52,7 @@ void bwa::Game::run() {
 			}
 		}
 		_window.clear();
+		_window.draw(box);
 		_gui.draw();
 		// displays fps if show_fps_counter is true
 		if (show_fps_counter)

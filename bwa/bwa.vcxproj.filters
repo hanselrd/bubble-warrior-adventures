@@ -30,5 +30,8 @@
     <ClInclude Include="src\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\resource.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

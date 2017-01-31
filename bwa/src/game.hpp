@@ -1,6 +1,7 @@
 #pragma once
 #include <TGUI/TGUI.hpp>
 #include <sol.hpp>
+#include <memory>
 
 namespace bwa {
 	class Game final {
@@ -11,7 +12,7 @@ namespace bwa {
 		void run();
 
 	private:
-		sf::Font _font;
+		std::shared_ptr<sf::Font> _font;
 		sf::Text _text;
 		sf::RenderWindow _window;
 		tgui::Gui _gui;
