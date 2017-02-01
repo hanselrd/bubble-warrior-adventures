@@ -47,7 +47,7 @@ Everything lives inside the **bwa** namespace
 
 ### Includes
 
-Header files should be included in the following order in **alphabetical order**
+Header files should be included in the following format in **alphabetical order**
 ```cpp
 /*
     External libraries must be included first.
