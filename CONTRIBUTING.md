@@ -25,11 +25,11 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Requests
 
-1. You should **never** commit anything to the *master* branch no matter how small.
-    Instead fork the repository or *checkout* your own branch, make the appropiate 
+1. You should **never** commit anything to the *master* branch no matter how small,
+    instead Fork the repository or Checkout your own branch, make the appropiate 
     changes and submit a Pull Request. This is to preserve the *master* branch
-    with *stable* and *peer-reviewed* code.
-2. You **may not** merge in your *own* Pull Requests without the approval of another developer.
+    with stable and peer-reviewed code.
+2. You **may not** merge in your own Pull Requests without the approval of another developer.
 3. Pull Requests should have a descriptive title and a detailed body explaining
     the issue you set out to fix and how you decided on your changes.
 4. If you reject a Pull Request, provide the contributor with a reason and
@@ -58,10 +58,10 @@ Please note we have a code of conduct, please follow it in all your interactions
 * All file names must be in **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
     with the exception of assets and dependencies.
     An acceptable file name would be: **player_data.txt**.
-* C++ header files must end in *.hpp*, **not** *.h*, the file extension *.h* should only
-    be used when programming in *C*.
-* C++ source files must end in *.cpp*.
-* Lua files must end in *.lua*, even if the Lua interpreter does not enforce this.
+* C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
+    be used when programming in C.
+* C++ source files must end in `.cpp`.
+* Lua files must end in `.lua`, even if the Lua interpreter does not enforce this.
 
 ### Includes
 
@@ -116,10 +116,9 @@ in your code, the includes should be listed without any line spaces or comments.
 ### Comments
 
 Comments are highly encouraged when developing.
-They allow other developers to pick up from where you left off. In the *Industry*,
-they are a **must**. If you submit a Pull Request with *poorly* documented code, 
-chances are it will be rejected. Documentation can be achieved in a number of different ways. 
-You do not necessarily have to write comments, instead you should *strive* for 
+They allow other developers to pick up from where you left off.
+Documentation can be achieved in a number of different ways. 
+You do not necessarily have to write comments, instead you should strive for 
 descriptive names when creating functions or variables.
 
 ```cpp
