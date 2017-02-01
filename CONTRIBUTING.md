@@ -136,7 +136,7 @@ More information on commenting is provided in specific sections below.
 ### Namespaces
 
 You should **never** include a namespace for global use.
-Please note the code below shows what you should *not* do.
+Please note the following snippet of code shows what you should **not** do.
 
 ```cpp
 #include <map>
@@ -158,9 +158,9 @@ using namespace std;
 map<string, unsigned> map_;
 ```
 
-You should write out the namespace each and every time. 
-This allows everyone else to know where the code you are using comes from
-and avoids naming conflicts.
+You should write out namespaces each and every time. They are usually small
+('std::' is only *five* characters) and serve as *documentation*, letting everyone
+know where things come from. The following snippet shows what you *should* do.
 
 ```cpp
 #include <SFML/Graphics.hpp>
