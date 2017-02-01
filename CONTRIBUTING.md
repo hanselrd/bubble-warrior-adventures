@@ -78,8 +78,8 @@ Header files should be included in the following format in **alphabetical order*
 ...
 
 /*
-    C standard headers should come after the C++
-    standard libraries. I recommend using the C++
+    C standard headers must come after any C++
+    standard headers. I recommend using the C++
     equivalent. For example ctime instead of time.h
 */
 #include <assert.h>
