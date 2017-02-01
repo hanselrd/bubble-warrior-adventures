@@ -55,7 +55,8 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### File Naming
 
-* All file names must be in **snake_case** with the exception of assets and dependencies.
+* All file names must be in **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
+    with the exception of assets and dependencies.
     An acceptable file name would be: **player_data.txt**.
 * C++ header files must end in *.hpp*, **not** *.h*, the file extension *.h* should only
     be used when programming in *C*.
@@ -160,7 +161,7 @@ map<string, unsigned> map_;
 
 You should write out namespaces each and every time. They are usually small
 ('std::' is only *five* characters) and serve as *documentation*, letting everyone
-know where things come from. The following snippet shows what you *should* do.
+know where things come from. The following snippet shows what you **should** do.
 
 ```cpp
 #include <SFML/Graphics.hpp>
@@ -181,7 +182,7 @@ std::map<std::string, unsigned> map; // note how the variable name doesn't confl
 ### Classes
 
 Classes should be defined in the **bwa** namespace. They should be named
-using **PascalCase**
+using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
 
 ```cpp
 namespace bwa {
