@@ -64,9 +64,9 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### Includes
 
-Header files should be included in the following format in **alphabetical order**.
-Please note a line space was used between each section for *readability*.
-The includes should be listed without any spaces or comments in your code.
+Header files should be included using the following format in **alphabetical order**.
+Please note a line space was used between each section for *readability*, however, 
+in your code, the includes should be listed without any line spaces or comments.
 
 ```cpp
 /*
