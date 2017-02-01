@@ -23,9 +23,6 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Requests
 
-Developers are those with **write** permissions in this repository and the
-ability to approve or deny commits.
-
 1. You should **never** commit anything to *master* no matter how small.
     Instead fork or checkout your own branch and make the appropiate changes and
     submit a Pull Request. This is to preserve the *master* branch
