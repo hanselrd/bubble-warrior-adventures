@@ -7,6 +7,7 @@ When contributing to this repository, please first discuss the change you wish t
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
 ## Contents
+
 - [Pull Requests](#pull-requests)
 - [Coding Style](#coding-style)
     - [General](#general)
@@ -121,9 +122,31 @@ More information on commenting is provided in specific sections below.
 
 ### Namespaces
 
-You should **never** include a namespace for global use. You should write out
-the namespace each and every time. This allows everyone else to know where
-code you are referencing comes from and avoids naming conflicts.
+You should **never** include a namespace for global use.
+Please note the code below shows what you should *not* do.
+```cpp
+#include <map>
+#include <string>
+
+/*
+    This is what we refer to as 'including a namespace'
+    and should never be done.
+*/
+using namespace std;
+
+/*
+    This code offers nothing in terms of where 'map' and
+    string come from. What if we create our own 'map' and 'string'
+    classes? How would we differentiate them? For this reason,
+    this is not allowed and any Pull Request containing code like this
+    will be rejected.
+*/
+map<string, unsigned> map_;
+```
+
+You should write out the namespace each and every time. 
+This allows everyone else to know where the code you are using comes from
+and avoids naming conflicts.
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <map>
