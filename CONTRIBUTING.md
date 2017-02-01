@@ -64,7 +64,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 ### Includes
 
 Header files should be included in the following format in **alphabetical order**.
-Please note I used a line space between each section for *readability*.
+Please note a line space was used between each section for *readability*.
 The includes should be listed without any spaces or comments in your code.
 ```cpp
 /*
@@ -115,7 +115,7 @@ The includes should be listed without any spaces or comments in your code.
 Comments are highly encouraged when developing.
 They allow other developers to pick up from where you left off. In the *Industry*,
 they are a **must**. If you submit a Pull Request with *poorly* documented code, 
-chances are it will be rejected. Commenting can be achieved in a number of ways. 
+chances are it will be rejected. Documentation can be achieved in a number of different ways. 
 You do not necessarily have to write comments, instead you should *strive* for 
 descriptive names when creating functions or variables.
 
