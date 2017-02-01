@@ -64,7 +64,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 Header files should be included in the following format in **alphabetical order**.
 Please note I used a line space between each section for *readability*.
-The includes should be listed without any spaces or comments.
+The includes should be listed without any spaces or comments in your code.
 ```cpp
 /*
     External libraries must be included first.
