@@ -53,7 +53,7 @@ than Windows for development.
 ## Contributing
 
 Want to help us out? Refer to the 
-[contribution](https://github.com/hanselrd/bubble-warrior-adventures/blob/master/CONTRIBUTING.md)
+[contribution](CONTRIBUTING.md)
 guide.
 
 ## License

@@ -2,7 +2,7 @@
 
 When contributing to this repository, please first discuss the change you wish to make via
 [issue](https://github.com/hanselrd/bubble-warrior-adventures/issues) or
-[Gitter](https://gitter.im/bubble-warrior-adventures/Lobby) before making a change. 
+[Gitter](https://gitter.im/bubble-warrior-adventures/Lobby). 
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
@@ -23,13 +23,18 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Requests
 
-1. You should **never** commit anything to master no matter how small.
+Developers are those with **write** permissions in this repository and the
+ability to approve or deny commits.
+
+1. You should **never** commit anything to *master* no matter how small.
     Instead fork or checkout your own branch and make the appropiate changes and
-    submit a Pull Request. This is to preserve the master branch
-    with *stable* and *approved* code.
-2. You may not merge in your **own** Pull Request without the approval of another developer.
+    submit a Pull Request. This is to preserve the *master* branch
+    with *stable* and *peer-reviewed* code.
+2. You **may not** merge in your *own* Pull Requests without the approval of another developer.
 3. Pull Requests should have a descriptive title and a detailed body explaining
     the issue you set out to fix and how you decided on your changes.
+4. If you reject a Pull Request, provide the contributor with a reason and
+    offer constructive criticism.
 
 ## Coding Style
 
@@ -100,6 +105,16 @@ Header files should be included in the following format in **alphabetical order*
 ```
 
 ### Comments
+
+Comments are highly encouraged when developing.
+They allow another to developer pick up from where you left off. In the *Industry*,
+they are a **must** so they are a **must** here as well. If you submit a
+Pull Request with *poorly* documented code, chances are it will be rejected.
+Commenting can be achieved in a number of ways. You do not necessarily have
+to write comments, instead you should *strive* for descriptive names for your
+functions and variables so they comment themselves for you. More on this will be
+discussed below.
+
 ### Classes
 ### Functions
 ### Variables
