@@ -57,7 +57,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 * All file names must be in **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
     with the exception of assets and dependencies.
-    An acceptable file name would be: **player_data.txt**.
+    An acceptable file name would be: `player_data.txt`.
 * C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
     be used when programming in C.
 * C++ source files must end in `.cpp`.
