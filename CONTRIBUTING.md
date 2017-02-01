@@ -73,8 +73,6 @@ Header files should be included in the following format in **alphabetical order*
 #include <sol.hpp>
 #include <TGUI/TGUI.hpp>
 
-...
-
 /*
     C++ standard headers must come after any external
     library headers. Again notice the order.
@@ -90,8 +88,6 @@ Header files should be included in the following format in **alphabetical order*
 #include <type_traits>
 #include <utility>
 
-...
-
 /*
     C standard headers must come after any C++
     standard headers. I recommend using the C++
@@ -101,8 +97,6 @@ Header files should be included in the following format in **alphabetical order*
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-
-...
 
 /*
     Lastly any header files local to the project must go last.
