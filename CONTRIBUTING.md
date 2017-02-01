@@ -19,7 +19,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 - [Code of Conduct](#code-of-conduct)
     - [Our Pledge](#our-pledge)
     - [Our Standards](#our-standards)
-    - [Our Responsibilities](#our-responsibilites)
+    - [Our Responsibilities](#our-responsibilities)
 
 ## Pull Requests
 
