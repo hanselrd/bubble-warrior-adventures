@@ -160,7 +160,7 @@ and avoids naming conflicts.
 */
 sf::RenderWindow window;
 sf::View view;
-std::map<std::string, unsigned> map;
+std::map<std::string, unsigned> map; // note how the variable name doesn't conflict
 ```
 
 ### Classes
