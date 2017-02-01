@@ -42,6 +42,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 * Everything lives inside the **bwa** namespace.
 * Curly braces should start on the same line as a class or function declaration
     and end on its *own* line.
+    
     ```cpp
     void foo() { // <-- curly brace starts on same line
         ...
@@ -66,6 +67,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 Header files should be included in the following format in **alphabetical order**.
 Please note a line space was used between each section for *readability*.
 The includes should be listed without any spaces or comments in your code.
+
 ```cpp
 /*
     External libraries must be included first.
@@ -119,7 +121,6 @@ chances are it will be rejected. Documentation can be achieved in a number of di
 You do not necessarily have to write comments, instead you should *strive* for 
 descriptive names when creating functions or variables.
 
-Comments should be written in the following format
 ```cpp
 // For single-line comments, use '//' and use a space before starting your comment.
 /*
@@ -136,6 +137,7 @@ More information on commenting is provided in specific sections below.
 
 You should **never** include a namespace for global use.
 Please note the code below shows what you should *not* do.
+
 ```cpp
 #include <map>
 #include <string>
@@ -159,6 +161,7 @@ map<string, unsigned> map_;
 You should write out the namespace each and every time. 
 This allows everyone else to know where the code you are using comes from
 and avoids naming conflicts.
+
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <map>
@@ -179,6 +182,7 @@ std::map<std::string, unsigned> map; // note how the variable name doesn't confl
 
 Classes should be defined in the **bwa** namespace. They should be named
 using **PascalCase**
+
 ```cpp
 namespace bwa {
     class SuperAwesomeClass {
