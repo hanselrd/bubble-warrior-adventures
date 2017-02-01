@@ -47,8 +47,8 @@ Clone the repo by pasting the following command in your terminal.
 ```sh
 $ git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
 ```
-Then navigate to the newly created **bubble-warrior-adventures** folder and double-click
-the **bwa.sln** file. Currently we do not support any other operating systems other
+Then navigate to the newly created `bubble-warrior-adventures` folder and double-click
+the `bwa.sln` file. Currently we do not support any other operating systems other
 than Windows for development.
 
 ## Contributing
