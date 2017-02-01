@@ -104,13 +104,12 @@ Header files should be included in the following format in **alphabetical order*
 ### Comments
 
 Comments are highly encouraged when developing.
-They allow another to developer pick up from where you left off. In the *Industry*,
-they are a **must** so they are a **must** here as well. If you submit a
-Pull Request with *poorly* documented code, chances are it will be rejected.
-Commenting can be achieved in a number of ways. You do not necessarily have
-to write comments, instead you should *strive* for descriptive names for your
-functions and variables so they comment themselves for you. More on this will be
-discussed below.
+They allow another developer pick up from where you left off. In the *Industry*,
+they are a **must**. If you submit a Pull Request with *poorly* documented code, 
+chances are it will be rejected. Commenting can be achieved in a number of ways. 
+You do not necessarily have to write comments, instead you should *strive* for 
+descriptive names for your functions and variables so they comment themselves for you. 
+More information on commenting is provided in specific sections below.
 
 ### Classes
 ### Functions
