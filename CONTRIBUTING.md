@@ -123,7 +123,7 @@ Comments should be written in the following format
 ```cpp
 // For single-line comments, use '//' and use a space before starting your comment.
 /*
-    Multi-line comments should have '\*' and '\*/' on their own lines
+    Multi-line comments should have '\*' and '*\/' on their own lines
     and use one tab space before starting your comments.
     Multi-line comments are preferred, but single-line comments can be used
     for small comments within functions.
