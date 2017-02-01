@@ -44,13 +44,13 @@ Please note we have a code of conduct, please follow it in all your interactions
     and end on its *own* line.
 
     ```cpp
-    void foo() { // <-- curly brace starts on same line
+    void foo() { // curly brace starts on same line
         ...
-    } // <-- curly brace ends on its own line.
+    } // curly brace ends on its own line.
 
-    class FooBar { // <-- curly brace starts on same line
+    class FooBar { // curly brace starts on same line
         ...
-    }; // <-- curly brace ends on its own line, don't forget the semicolon!
+    }; // curly brace ends on its own line, don't forget the semicolon!
     ```
 
 ### File Naming
