@@ -2,17 +2,19 @@
 
 When contributing to this repository, please first discuss the change you wish to make via
 [issue](https://github.com/hanselrd/bubble-warrior-adventures/issues) or
-[Gitter](https://gitter.im/bubble-warrior-adventures/Lobby) before making a change. 
+[Gitter](https://gitter.im/bubble-warrior-adventures/Lobby). 
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
 ## Contents
+
 - [Pull Requests](#pull-requests)
 - [Coding Style](#coding-style)
     - [General](#general)
     - [File Naming](#file-naming)
     - [Includes](#includes)
     - [Comments](#comments)
+    - [Namespaces](#namespaces)
     - [Classes](#classes)
     - [Functions](#functions)
     - [Variables](#variables)
@@ -23,31 +25,50 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Requests
 
-1. You should **never** commit anything to master no matter how small.
-    Instead fork or checkout your own branch and make the appropiate changes and
-    submit a Pull Request. This is to preserve the master branch
-    with *stable* and *approved* code.
-2. You may not merge in your **own** Pull Request without the approval of another developer.
+1. You should **never** commit anything to the *master* branch no matter how small.
+    Instead fork the repository or *checkout* your own branch, make the appropiate 
+    changes and submit a Pull Request. This is to preserve the *master* branch
+    with *stable* and *peer-reviewed* code.
+2. You **may not** merge in your *own* Pull Requests without the approval of another developer.
 3. Pull Requests should have a descriptive title and a detailed body explaining
     the issue you set out to fix and how you decided on your changes.
+4. If you reject a Pull Request, provide the contributor with a reason and
+    offer constructive criticism.
 
 ## Coding Style
 
 ### General
 
-Everything lives inside the **bwa** namespace
+* Everything lives inside the **bwa** namespace.
+* Curly braces should start on the same line as a class or function declaration
+    and end on its *own* line.
+
+    ```cpp
+    void foo() { // curly brace starts on same line
+        ...
+    } // curly brace ends on its own line.
+
+    class FooBar { // curly brace starts on same line
+        ...
+    }; // curly brace ends on its own line, don't forget the semicolon!
+    ```
 
 ### File Naming
 
-* All file names must be in **snake_case** with the exception of assets and dependencies.
+* All file names must be in **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
+    with the exception of assets and dependencies.
+    An acceptable file name would be: **player_data.txt**.
 * C++ header files must end in *.hpp*, **not** *.h*, the file extension *.h* should only
     be used when programming in *C*.
-* C++ source files must end in *.cpp*
+* C++ source files must end in *.cpp*.
 * Lua files must end in *.lua*, even if the Lua interpreter does not enforce this.
 
 ### Includes
 
-Header files should be included in the following format in **alphabetical order**
+Header files should be included using the following format in **alphabetical order**.
+Please note a line space was used between each section for *readability*, however, 
+in your code, the includes should be listed without any line spaces or comments.
+
 ```cpp
 /*
     External libraries must be included first.
@@ -57,8 +78,6 @@ Header files should be included in the following format in **alphabetical order*
 #include <SFML/Network.hpp>
 #include <sol.hpp>
 #include <TGUI/TGUI.hpp>
-
-...
 
 /*
     C++ standard headers must come after any external
@@ -75,8 +94,6 @@ Header files should be included in the following format in **alphabetical order*
 #include <type_traits>
 #include <utility>
 
-...
-
 /*
     C standard headers must come after any C++
     standard headers. I recommend using the C++
@@ -86,9 +103,6 @@ Header files should be included in the following format in **alphabetical order*
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-
-...
-
 
 /*
     Lastly any header files local to the project must go last.
@@ -100,7 +114,84 @@ Header files should be included in the following format in **alphabetical order*
 ```
 
 ### Comments
+
+Comments are highly encouraged when developing.
+They allow other developers to pick up from where you left off. In the *Industry*,
+they are a **must**. If you submit a Pull Request with *poorly* documented code, 
+chances are it will be rejected. Documentation can be achieved in a number of different ways. 
+You do not necessarily have to write comments, instead you should *strive* for 
+descriptive names when creating functions or variables.
+
+```cpp
+// For single-line comments, use '//' and use a space before starting your comment.
+/*
+    Multi-line comments should have '/*' and '*\/' on their own lines
+    and use one tab space before starting your comments.
+    Multi-line comments are preferred, but single-line comments can be used
+    for small comments within functions.
+*/
+```
+
+More information on commenting is provided in specific sections below.
+
+### Namespaces
+
+You should **never** include a namespace for global use.
+Please note the following snippet of code shows what you should **not** do.
+
+```cpp
+#include <map>
+#include <string>
+
+/*
+    This is what we refer to as 'including a namespace'
+    and should never be done.
+*/
+using namespace std;
+
+/*
+    This code offers nothing in terms of where 'map' and
+    string come from. What if we create our own 'map' and 'string'
+    classes? How would we differentiate them? For this reason,
+    this is not allowed and any Pull Request containing code like this
+    will be rejected.
+*/
+map<string, unsigned> map_;
+```
+
+You should write out namespaces each and every time. They are usually small
+('std::' is only *five* characters) and serve as *documentation*, letting everyone
+know where things come from. The following snippet shows what you **should** do.
+
+```cpp
+#include <SFML/Graphics.hpp>
+#include <map>
+#include <string>
+
+/*
+    You might find writing the 'sf::' and 'std::' prefixes tedious, 
+    but they document for you where that specific code comes from.
+    By taking a quick glance you already know 'RenderWindow' is a SFML class,
+    'map' is a STL container and 'string' is the STL container for chars.
+*/
+sf::RenderWindow window;
+sf::View view;
+std::map<std::string, unsigned> map; // note how the variable name doesn't conflict
+```
+
 ### Classes
+
+Classes should be defined in the **bwa** namespace. They should be named
+using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
+
+```cpp
+namespace bwa {
+    class SuperAwesomeClass {
+        ...
+    };
+}
+```
+
 ### Functions
 ### Variables
 
