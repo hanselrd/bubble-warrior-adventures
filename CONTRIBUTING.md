@@ -26,7 +26,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 ## Pull Requests
 
 1. You should **never** commit anything to the *master* branch no matter how small,
-    instead Fork the repository or Checkout your own branch, make the appropiate 
+    instead, Fork the repository or Checkout your own branch, make the appropiate 
     changes and submit a Pull Request. This is to preserve the *master* branch
     with stable and peer-reviewed code.
 2. You **may not** merge in your own Pull Requests without the approval of another developer.
