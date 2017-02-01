@@ -42,7 +42,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 * Everything lives inside the **bwa** namespace.
 * Curly braces should start on the same line as a class or function declaration
     and end on its *own* line.
-    
+
     ```cpp
     void foo() { // <-- curly brace starts on same line
         ...
@@ -50,7 +50,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
     class FooBar { // <-- curly brace starts on same line
         ...
-    }; // <-- curly brace ends on own its line, don't forget the semicolon!
+    }; // <-- curly brace ends on its own line, don't forget the semicolon!
     ```
 
 ### File Naming
@@ -186,7 +186,7 @@ using **PascalCase**
 ```cpp
 namespace bwa {
     class SuperAwesomeClass {
-
+        ...
     };
 }
 ```
