@@ -112,7 +112,7 @@ The includes should be listed without any spaces or comments in your code.
 ### Comments
 
 Comments are highly encouraged when developing.
-They allow another developer to pick up from where you left off. In the *Industry*,
+They allow other developers to pick up from where you left off. In the *Industry*,
 they are a **must**. If you submit a Pull Request with *poorly* documented code, 
 chances are it will be rejected. Commenting can be achieved in a number of ways. 
 You do not necessarily have to write comments, instead you should *strive* for 
