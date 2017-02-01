@@ -45,11 +45,11 @@ Please note we have a code of conduct, please follow it in all your interactions
     ```cpp
     void foo() { // <-- curly brace starts on same line
         ...
-    } // <-- curly brace ends on own line.
+    } // <-- curly brace ends on its own line.
 
     class FooBar { // <-- curly brace starts on same line
         ...
-    }; // <-- curly brace ends on own line, don't forget the semicolon!
+    }; // <-- curly brace ends on own its line, don't forget the semicolon!
     ```
 
 ### File Naming
@@ -123,7 +123,7 @@ Comments should be written in the following format
 ```cpp
 // For single-line comments, use '//' and use a space before starting your comment.
 /*
-    Multi-line comments should have '/\*' and '\*/' on their own lines
+    Multi-line comments should have '\*' and '\*/' on their own lines
     and use one tab space before starting your comments.
     Multi-line comments are preferred, but single-line comments can be used
     for small comments within functions.
