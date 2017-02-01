@@ -1,6 +1,6 @@
-#include "game.hpp"
 #include <string>
 #include <utility>
+#include "game.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
