@@ -13,6 +13,7 @@ Please note we have a code of conduct, please follow it in all your interactions
     - [File Naming](#file-naming)
     - [Includes](#includes)
     - [Comments](#comments)
+    - [Namespaces](#namespaces)
     - [Classes](#classes)
     - [Functions](#functions)
     - [Variables](#variables)
@@ -37,14 +38,26 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### General
 
-Everything lives inside the **bwa** namespace
+* Everything lives inside the **bwa** namespace.
+* Curly braces should start on the same line as a class or function declaration
+    and end on its *own* line.
+    ```cpp
+    void foo() { // <-- curly brace starts on same line
+        ...
+    } // <-- curly brace ends on own line.
+
+    class FooBar { // <-- curly brace starts on same line
+        ...
+    }; // <-- curly brace ends on own line, don't forget the semicolon!
+    ```
 
 ### File Naming
 
 * All file names must be in **snake_case** with the exception of assets and dependencies.
+    An acceptable file name would be: **player_data.txt**.
 * C++ header files must end in *.hpp*, **not** *.h*, the file extension *.h* should only
     be used when programming in *C*.
-* C++ source files must end in *.cpp*
+* C++ source files must end in *.cpp*.
 * Lua files must end in *.lua*, even if the Lua interpreter does not enforce this.
 
 ### Includes
@@ -91,7 +104,6 @@ Header files should be included in the following format in **alphabetical order*
 
 ...
 
-
 /*
     Lastly any header files local to the project must go last.
     Don't forget to include them in alphabetical order.
@@ -111,7 +123,39 @@ You do not necessarily have to write comments, instead you should *strive* for
 descriptive names when creating functions or variables.
 More information on commenting is provided in specific sections below.
 
+### Namespaces
+
+You should **never** include a namespace for global use. You should write out
+the namespace each and every time. This allows everyone else to know where
+code you are referencing comes from and avoids naming conflicts.
+```cpp
+#include <SFML/Graphics.hpp>
+#include <map>
+#include <string>
+
+/*
+    You might find writing the 'sf::' and 'std::' prefixes tedious, 
+    but they document for you where that specific code comes from.
+    By taking a quick glance you already know 'RenderWindow' is a SFML class,
+    'map' is a STL container and 'string' is the STL container for chars.
+*/
+sf::RenderWindow window;
+sf::View view;
+std::map<std::string, unsigned> map;
+```
+
 ### Classes
+
+Classes should be defined in the **bwa** namespace. They should be named
+using **PascalCase**
+```cpp
+namespace bwa {
+    class SuperAwesomeClass {
+
+    };
+}
+```
+
 ### Functions
 ### Variables
 
