@@ -1,3 +1,4 @@
+#include <exception>
 #include <string>
 #include <utility>
 #include "game.hpp"
@@ -5,22 +6,30 @@
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
 bwa::Game::Game() {
+	// Loads the config into the sol::state
 	_lua.script_file("config.lua");
+	// Converts the config's x and y resolution into a table
 	sol::table resolution = _lua["resolution"];
-	_font.loadFromFile(_lua["game_fonts"]["normal"]);
+	// Checks for font file and sets _font to it
+	if (!_font.loadFromFile(_lua["game_fonts"]["normal"]))
+	{
+		throw std::invalid_argument(_FILE_NOT_FOUND_ERROR + _lua["game_fonts"]["normal"].get<std::string>());
+	}
 	_text.setFont(_font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
 	auto xy = std::make_pair(
 		resolution["x"].get<unsigned>(), 
 		resolution["y"].get<unsigned>());
-	if (_lua["fullscreen"].get<bool>())
+	if (_lua["fullscreen"].get<bool>()) {
 		_window.create({ xy.first, xy.second }, WINDOW_TITLE,
 			sf::Style::Fullscreen);
-	else
-		_window.create({ xy.first, xy.second }, WINDOW_TITLE);
+	}
+	else {
+	_window.create({ xy.first, xy.second }, WINDOW_TITLE);
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
+	}
 }
 
 void bwa::Game::run() {

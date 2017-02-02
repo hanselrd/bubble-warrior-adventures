@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <sol.hpp>
+#include <string>
 #include <TGUI/TGUI.hpp>
 
 namespace bwa {
@@ -11,6 +12,7 @@ namespace bwa {
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		void run();
+		const std::string _FILE_NOT_FOUND_ERROR = "**File not found, please find: ";
 
 	private:
 		sf::Font _font;
