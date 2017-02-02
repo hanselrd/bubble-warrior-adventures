@@ -255,7 +255,7 @@ namespace bwa {
 ```
 
 ```cpp
-// SuperAwesomeClass.cpp
+// super_awesome_class.cpp
 
 #include "super_awesome_class.hpp"
 
