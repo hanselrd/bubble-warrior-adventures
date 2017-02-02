@@ -218,7 +218,9 @@ prefixed by an `_` (underscore).
 namespace bwa {
     class SuperAwesomeClass {
     protected:
-        const int _SOME_INT;
+        static const int _SOME_STATIC_CONST_INT;
+        const int _SOME_CONST_INT;
+        static int _some_static_int;
         int _some_int;
     };
 }
