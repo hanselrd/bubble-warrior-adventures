@@ -16,8 +16,11 @@ Please note we have a code of conduct, please follow it in all your interactions
     - [Comments](#comments)
     - [Namespaces](#namespaces)
     - [Classes](#classes)
+        - [Methods](#methods)
+        - [Members](#members)
+        - [Complete Example](#complete-example)
     - [Functions](#functions)
-    - [Variables](#variables)
+    - [Variables and Parameters](#variables-and-parameters)
 - [Code of Conduct](#code-of-conduct)
     - [Our Pledge](#our-pledge)
     - [Our Standards](#our-standards)
@@ -25,11 +28,11 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Requests
 
-1. You should **never** commit anything to the *master* branch no matter how small.
-    Instead fork the repository or *checkout* your own branch, make the appropiate 
+1. You should **never** commit anything to the *master* branch no matter how small,
+    instead, fork the repository or checkout your own branch, make the appropiate 
     changes and submit a Pull Request. This is to preserve the *master* branch
-    with *stable* and *peer-reviewed* code.
-2. You **may not** merge in your *own* Pull Requests without the approval of another developer.
+    with stable and peer-reviewed code.
+2. You **may not** merge in your own Pull Requests without the approval of another developer.
 3. Pull Requests should have a descriptive title and a detailed body explaining
     the issue you set out to fix and how you decided on your changes.
 4. If you reject a Pull Request, provide the contributor with a reason and
@@ -39,9 +42,9 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### General
 
-* Everything lives inside the **bwa** namespace.
+* Everything lives inside the `bwa` namespace.
 * Curly braces should start on the same line as a class or function declaration
-    and end on its *own* line.
+    and end on their own line.
 
     ```cpp
     void foo() { // curly brace starts on same line
@@ -57,16 +60,16 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 * All file names must be in **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
     with the exception of assets and dependencies.
-    An acceptable file name would be: **player_data.txt**.
-* C++ header files must end in *.hpp*, **not** *.h*, the file extension *.h* should only
-    be used when programming in *C*.
-* C++ source files must end in *.cpp*.
-* Lua files must end in *.lua*, even if the Lua interpreter does not enforce this.
+    An acceptable file name would be: `player_data.txt`.
+* C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
+    be used when programming in C.
+* C++ source files must end in `.cpp`.
+* Lua files must end in `.lua`, even if the Lua interpreter does not enforce this.
 
 ### Includes
 
 Header files should be included using the following format in **alphabetical order**.
-Please note a line space was used between each section for *readability*, however, 
+Please note a line space was used between each section for readability, however, 
 in your code, the includes should be listed without any line spaces or comments.
 
 ```cpp
@@ -116,14 +119,14 @@ in your code, the includes should be listed without any line spaces or comments.
 ### Comments
 
 Comments are highly encouraged when developing.
-They allow other developers to pick up from where you left off. In the *Industry*,
-they are a **must**. If you submit a Pull Request with *poorly* documented code, 
-chances are it will be rejected. Documentation can be achieved in a number of different ways. 
-You do not necessarily have to write comments, instead you should *strive* for 
+They allow other developers to pick up from where you left off.
+Documentation can be achieved in a number of different ways. 
+You do not necessarily have to write comments, instead you should strive for 
 descriptive names when creating functions or variables.
 
 ```cpp
-// For single-line comments, use '//' and use a space before starting your comment.
+// For single-line comments, use '//' and a space before starting your comment.
+
 /*
     Multi-line comments should have '/*' and '*\/' on their own lines
     and use one tab space before starting your comments.
@@ -153,14 +156,14 @@ using namespace std;
     This code offers nothing in terms of where 'map' and
     string come from. What if we create our own 'map' and 'string'
     classes? How would we differentiate them? For this reason,
-    this is not allowed and any Pull Request containing code like this
+    this is not allowed and any Pull Requests containing code like this
     will be rejected.
 */
 map<string, unsigned> map_;
 ```
 
 You should write out namespaces each and every time. They are usually small
-('std::' is only *five* characters) and serve as *documentation*, letting everyone
+('std::' is only *five* characters) and serve as documentation, letting everyone
 know where things come from. The following snippet shows what you **should** do.
 
 ```cpp
@@ -176,12 +179,12 @@ know where things come from. The following snippet shows what you **should** do.
 */
 sf::RenderWindow window;
 sf::View view;
-std::map<std::string, unsigned> map; // note how the variable name doesn't conflict
+std::map<std::string, unsigned> map;
 ```
 
 ### Classes
 
-Classes should be defined in the **bwa** namespace. They should be named
+Classes should be defined in the `bwa` namespace and named
 using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
 
 ```cpp
@@ -192,8 +195,111 @@ namespace bwa {
 }
 ```
 
+#### Methods
+
+Class methods should be named using **lower [camelCase](https://en.wikipedia.org/wiki/Camel_case)**.
+They should also be named after a specific action. Some acceptable names would be:
+`run`, `update`, `loadMap` and etc.
+
+```cpp
+namespace bwa {
+    class SuperAwesomeClass {
+    public:
+        void doFoo();
+        void doBar();
+    };
+}
+```
+
+#### Members
+
+Class members should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
+and prefixed by an `_` (underscore). Members should always go below methods
+
+```cpp
+namespace bwa {
+    class SuperAwesomeClass {
+    protected:
+        static const int _SOME_STATIC_CONST_INT;
+        const int _SOME_CONST_INT;
+        static int _some_static_int;
+        int _some_int;
+    };
+}
+```
+
+#### Complete Example
+
+```cpp
+// super_awesome_class.hpp
+
+namespace bwa {
+    class SuperAwesomeClass {
+    public:
+        /*
+            Class methods go before any class members.
+        */
+        void doFoo();
+        void doBar();
+
+    protected:
+        /*
+            Take note on the spacing between
+            the doBar method and the protected keyword.
+        */
+        static const int _SOME_STATIC_CONST_INT;
+        const int _SOME_CONST_INT;
+        static int _some_static_int;
+        int _some_int;
+    };
+}
+```
+
+```cpp
+// super_awesome_class.cpp
+
+#include "super_awesome_class.hpp"
+
+void bwa::SuperAwesomeClass::doFoo() {
+    ...
+}
+
+void bwa::SuperAwesomeClass::doBar() {
+    ...
+}
+```
+
 ### Functions
-### Variables
+
+Functions do not belong to any class and are usually referred to as helpers.
+They should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
+and follow the same outline for a class method: descriptive and named after an action
+
+```cpp
+namespace bwa {
+    void load_data() {
+        ...
+    }
+}
+```
+
+### Variables and Parameters
+
+Variable names should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**.
+They should be descriptive and self-document their purpose. This also applies to
+function and class method parameters.
+
+```cpp
+/*
+    The purpose of this function is to outline
+    how variables and parameters should be named.
+    Yes, I know this function is useless.
+*/
+int compute_result(int num_points) {
+    int result = 0;
+    return result + num_points;
+}
+```
 
 ## Code of Conduct
 
