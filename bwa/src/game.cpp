@@ -15,7 +15,8 @@ bwa::Game::Game() {
 	// Checks for font file and sets _font to it
 	if (!_font.loadFromFile(_lua["game_fonts"]["normal"]))
 	{
-		throw std::invalid_argument(_FILE_NOT_FOUND_ERROR + _lua["game_fonts"]["normal"].get<std::string>());
+		throw std::invalid_argument(_FILE_NOT_FOUND_ERROR + 
+				_lua["game_fonts"]["normal"].get<std::string>());
 	}
 
 	// Setting the look of the FPS counter
@@ -30,7 +31,8 @@ bwa::Game::Game() {
 
 	// Create a fullscreen window if set to true in config
 	if (_lua["fullscreen"].get<bool>()) {
-		_window.create({ xy.first, xy.second }, WINDOW_TITLE,
+		_window.create({ xy.first, xy.second }, 
+			WINDOW_TITLE,
 			sf::Style::Fullscreen);
 	}
 
