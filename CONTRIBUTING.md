@@ -16,6 +16,8 @@ Please note we have a code of conduct, please follow it in all your interactions
     - [Comments](#comments)
     - [Namespaces](#namespaces)
     - [Classes](#classes)
+        - [Methods](#methods)
+        - [Members](#members)
     - [Functions](#functions)
     - [Variables](#variables)
 - [Code of Conduct](#code-of-conduct)
@@ -181,7 +183,7 @@ std::map<std::string, unsigned> map;
 ### Classes
 
 Classes should be defined in the `bwa` namespace and named
-using the **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)** format.
+using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
 
 ```cpp
 namespace bwa {
@@ -191,8 +193,10 @@ namespace bwa {
 }
 ```
 
+#### Methods
+
 Class methods should be named using **lower [camelCase](https://en.wikipedia.org/wiki/Camel_case)**.
-They should be named after a specific action. Some acceptable names would be:
+They should also be named after a specific action. Some acceptable names would be:
 `run`, `update`, `loadMap` and etc...
 
 ```cpp
@@ -201,6 +205,21 @@ namespace bwa {
     public:
         void doFoo();
         void doBar();
+    };
+}
+```
+
+#### Members
+
+Class members should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
+prefixed by an `_` (underscore).
+
+```cpp
+namespace bwa {
+    class SuperAwesomeClass {
+    protected:
+        const int _SOME_INT;
+        int _some_int;
     };
 }
 ```
