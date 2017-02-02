@@ -213,7 +213,7 @@ namespace bwa {
 #### Members
 
 Class members should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
-prefixed by an `_` (underscore). Members should always go below methods
+and prefixed by an `_` (underscore). Members should always go below methods
 
 ```cpp
 namespace bwa {
