@@ -15,16 +15,20 @@ bwa::Game::Game() {
 	{
 		throw std::invalid_argument(_FILE_NOT_FOUND_ERROR + _lua["game_fonts"]["normal"].get<std::string>());
 	}
+	// Setting the look of the FPS counter
 	_text.setFont(_font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
+	// pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
 		resolution["x"].get<unsigned>(), 
 		resolution["y"].get<unsigned>());
+	// Create a fullscreen window if set to true in config
 	if (_lua["fullscreen"].get<bool>()) {
 		_window.create({ xy.first, xy.second }, WINDOW_TITLE,
 			sf::Style::Fullscreen);
 	}
+	// Create a normal window if fullscreen is set to false in config
 	else {
 	_window.create({ xy.first, xy.second }, WINDOW_TITLE);
 	_window.setVerticalSyncEnabled(true);
@@ -33,9 +37,11 @@ bwa::Game::Game() {
 }
 
 void bwa::Game::run() {
+	// Create the clock and set it up for the FPS counter
 	sf::Clock clock, update_fps;
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
+	// Normal window event loop 
 	while (_window.isOpen()) {
 		sf::Event e;
 		while (_window.pollEvent(e)) {
@@ -44,7 +50,7 @@ void bwa::Game::run() {
 				_window.close();
 			_gui.handleEvent(e);
 		}
-		// calculates fps
+		// Calculates fps
 		if (show_fps_counter) {
 			current_time = clock.restart().asSeconds();
 			fps = 1.f / (current_time - last_time);
@@ -55,7 +61,7 @@ void bwa::Game::run() {
 		}
 		_window.clear();
 		_gui.draw();
-		// displays fps if show_fps_counter is true
+		// Displays fps if show_fps_counter is true
 		if (show_fps_counter)
 			_window.draw(_text);
 		_window.display();
