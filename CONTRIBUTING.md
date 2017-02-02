@@ -122,7 +122,7 @@ You do not necessarily have to write comments, instead you should strive for
 descriptive names when creating functions or variables.
 
 ```cpp
-// For single-line comments, use '//' and use a space before starting your comment.
+// For single-line comments, use '//' and a space before starting your comment.
 /*
     Multi-line comments should have '/*' and '*\/' on their own lines
     and use one tab space before starting your comments.
@@ -152,7 +152,7 @@ using namespace std;
     This code offers nothing in terms of where 'map' and
     string come from. What if we create our own 'map' and 'string'
     classes? How would we differentiate them? For this reason,
-    this is not allowed and any Pull Request containing code like this
+    this is not allowed and any Pull Requests containing code like this
     will be rejected.
 */
 map<string, unsigned> map_;
@@ -180,7 +180,7 @@ std::map<std::string, unsigned> map;
 
 ### Classes
 
-Classes should be defined in the `bwa` namespace. They should be named
+Classes should be defined in the `bwa` namespace and named
 using the **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)** format.
 
 ```cpp
@@ -191,8 +191,9 @@ namespace bwa {
 }
 ```
 
-Class methods should be named using lower [camelCase](https://en.wikipedia.org/wiki/Camel_case).
-They should be named after a specific action. For example: `run`, `stop`, `read`, etc...
+Class methods should be named using **lower [camelCase](https://en.wikipedia.org/wiki/Camel_case)**.
+They should be named after a specific action. Some acceptable names would be:
+`run`, `update`, `loadMap` and etc...
 
 ```cpp
 namespace bwa {
