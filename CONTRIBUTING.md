@@ -230,7 +230,7 @@ namespace bwa {
 #### Complete Example
 
 ```cpp
-\\ super_awesome_class.hpp
+// super_awesome_class.hpp
 
 namespace bwa {
     class SuperAwesomeClass {
@@ -255,7 +255,7 @@ namespace bwa {
 ```
 
 ```cpp
-\\ SuperAwesomeClass.cpp
+// SuperAwesomeClass.cpp
 
 #include "super_awesome_class.hpp"
 
