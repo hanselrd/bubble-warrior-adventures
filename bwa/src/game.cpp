@@ -27,6 +27,13 @@ void bwa::Game::run() {
 	sf::Clock clock, update_fps;
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
+	sf::Texture texture;
+	sf::IntRect heroRect(0, (64 * 31), (64*3), (64*3));
+	texture.loadFromFile("assets/sprites/golden_hero_female_no_shield_no_hat.png");
+	sf::Sprite heroSprite(texture, heroRect);
+	heroSprite.setPosition(400, 400);
+	sf::Clock clock2;
+
 	while (_window.isOpen()) {
 		sf::Event e;
 		while (_window.pollEvent(e)) {
@@ -44,8 +51,19 @@ void bwa::Game::run() {
 				update_fps.restart();
 			}
 		}
+		if (clock2.getElapsedTime().asSeconds() > 0.1f) {
+			if (heroRect.left == ((64*3) * 5))
+				heroRect.left = 0;
+			else heroRect.left += (64*3);
+			heroSprite.setTextureRect(heroRect);
+			clock2.restart();
+		}
+
 		_window.clear();
 		_gui.draw();
+		
+
+		_window.draw(heroSprite);
 		// displays fps if show_fps_counter is true
 		if (show_fps_counter)
 			_window.draw(_text);
