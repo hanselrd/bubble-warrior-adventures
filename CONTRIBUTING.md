@@ -39,9 +39,9 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### General
 
-* Everything lives inside the **bwa** namespace.
+* Everything lives inside the `bwa` namespace.
 * Curly braces should start on the same line as a class or function declaration
-    and end on its *own* line.
+    and end on their own line.
 
     ```cpp
     void foo() { // curly brace starts on same line
@@ -66,7 +66,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 ### Includes
 
 Header files should be included using the following format in **alphabetical order**.
-Please note a line space was used between each section for *readability*, however, 
+Please note a line space was used between each section for readability, however, 
 in your code, the includes should be listed without any line spaces or comments.
 
 ```cpp
@@ -159,7 +159,7 @@ map<string, unsigned> map_;
 ```
 
 You should write out namespaces each and every time. They are usually small
-('std::' is only *five* characters) and serve as *documentation*, letting everyone
+('std::' is only *five* characters) and serve as documentation, letting everyone
 know where things come from. The following snippet shows what you **should** do.
 
 ```cpp
@@ -175,18 +175,31 @@ know where things come from. The following snippet shows what you **should** do.
 */
 sf::RenderWindow window;
 sf::View view;
-std::map<std::string, unsigned> map; // note how the variable name doesn't conflict
+std::map<std::string, unsigned> map;
 ```
 
 ### Classes
 
-Classes should be defined in the **bwa** namespace. They should be named
-using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
+Classes should be defined in the `bwa` namespace. They should be named
+using the **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)** format.
 
 ```cpp
 namespace bwa {
     class SuperAwesomeClass {
         ...
+    };
+}
+```
+
+Class methods should be named using lower [camelCase](https://en.wikipedia.org/wiki/Camel_case)
+and be descripted. They should perform an action.
+
+```cpp
+namespace bwa {
+    class SuperAwesomeClass {
+    public:
+        void doFoo();
+        void doBar();
     };
 }
 ```
