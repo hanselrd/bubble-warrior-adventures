@@ -191,8 +191,8 @@ namespace bwa {
 }
 ```
 
-Class methods should be named using lower [camelCase](https://en.wikipedia.org/wiki/Camel_case)
-and be descripted. They should perform an action.
+Class methods should be named using lower [camelCase](https://en.wikipedia.org/wiki/Camel_case).
+They should be named after a specific action. For example: `run`, `stop`, `read`, etc...
 
 ```cpp
 namespace bwa {
