@@ -18,8 +18,9 @@ Please note we have a code of conduct, please follow it in all your interactions
     - [Classes](#classes)
         - [Methods](#methods)
         - [Members](#members)
+        - [Complete Example](#complete-example)
     - [Functions](#functions)
-    - [Variables](#variables)
+    - [Variables and Parameters](#variables-and-parameters)
 - [Code of Conduct](#code-of-conduct)
     - [Our Pledge](#our-pledge)
     - [Our Standards](#our-standards)
@@ -212,7 +213,7 @@ namespace bwa {
 #### Members
 
 Class members should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
-prefixed by an `_` (underscore).
+prefixed by an `_` (underscore). Members should always go below methods
 
 ```cpp
 namespace bwa {
@@ -226,8 +227,78 @@ namespace bwa {
 }
 ```
 
+#### Complete Example
+
+```cpp
+\\ super_awesome_class.hpp
+
+namespace bwa {
+    class SuperAwesomeClass {
+    public:
+        /*
+            Class methods go before any class members.
+        */
+        void doFoo();
+        void doBar();
+
+    protected:
+        /*
+            Take note on the spacing between
+            the doBar method and the protected keyword.
+        */
+        static const int _SOME_STATIC_CONST_INT;
+        const int _SOME_CONST_INT;
+        static int _some_static_int;
+        int _some_int;
+    };
+}
+```
+
+```cpp
+\\ SuperAwesomeClass.cpp
+
+#include "super_awesome_class.hpp"
+
+void bwa::SuperAwesomeClass::doFoo() {
+    ...
+}
+
+void bwa::SuperAwesomeClass::doBar() {
+    ...
+}
+```
+
 ### Functions
-### Variables
+
+Functions do not belong to any class and are usually referred to as helpers.
+They should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
+and follow the same outline for a class method: descriptive and named after an action
+
+```cpp
+namespace bwa {
+    void load_data() {
+        ...
+    }
+}
+```
+
+### Variables and Parameters
+
+Variable names should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**.
+They should be descriptive and self-document their purpose. This also applies to
+function and class method parameters.
+
+```cpp
+/*
+    The purpose of this function is to outline
+    how variables and parameters should be named.
+    Yes, I know this function is useless.
+*/
+int compute_result(int num_points) {
+    int result = 0;
+    return result + num_points;
+}
+```
 
 ## Code of Conduct
 
