@@ -2,8 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <sol.hpp>
-#include <string>
 #include <TGUI/TGUI.hpp>
+#include <string>
 
 namespace bwa {
 	class Game final {
