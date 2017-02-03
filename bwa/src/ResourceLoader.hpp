@@ -7,6 +7,16 @@
 #include <type_traits>
 #include <utility>
 
+/*
+	ResourceLoader utility class.
+	Currently only supports SFML objects.
+
+	Example usage:
+		auto texture = bwa::ResourceLoader<sf::Texture>::get("my_image.png");
+		sf::Sprite sprite;
+		sprite.setTexture(*texture);
+*/
+
 namespace bwa {
 	template <typename T>
 	class ResourceLoader final {
