@@ -1,5 +1,5 @@
 #include "Game.hpp" // relative header, check CONTRIBUTING.md
-#include <exception>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include "ResourceLoader.hpp"
@@ -12,8 +12,6 @@ bwa::Game::Game() {
 
 	// Converts the config's x and y resolution into a table
 	sol::table resolution = _lua["resolution"];
-
-	ResourceLoader<sf::Music>::get("bacon"); // compile error, why?
 
 	// Gets font from resource loader and binds it to _text
 	auto font = ResourceLoader<sf::Font>::get(_lua["game_fonts"]["normal"]);

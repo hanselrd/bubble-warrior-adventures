@@ -33,6 +33,9 @@
     <ClInclude Include="src\GameState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\_.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\ResourceLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,3 +1,5 @@
+#include <iostream>
+#include <stdexcept>
 #include "Game.hpp"
 
 int main(int argc, char** argv) {
@@ -6,7 +8,7 @@ int main(int argc, char** argv) {
 		g.run();
 	}
 	catch (const std::exception& e) {
-		std::cerr << "Exception thrown: " << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	return 0;
 }
