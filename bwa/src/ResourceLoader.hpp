@@ -53,6 +53,9 @@ namespace bwa {
 		struct ResourceLoader_impl<T, 
 			std::enable_if_t<has_loadFromFile_function<T>::value>> {
 		protected:
+			/*
+				Protected load function to be used internally
+			*/
 			static std::shared_ptr<T> load(const std::string& filename) {
 				auto ptr = std::make_shared<T>();
 				if (!ptr->loadFromFile(filename))
@@ -69,6 +72,9 @@ namespace bwa {
 		struct ResourceLoader_impl<T,
 			std::enable_if_t<has_openFromFile_function<T>::value>> {
 		protected:
+			/*
+				Protected load function to be used internally
+			*/
 			static std::shared_ptr<T> load(const std::string& filename) {
 				auto ptr = std::make_shared<T>();
 				if (!ptr->openFromFile(filename))
@@ -79,7 +85,7 @@ namespace bwa {
 	}
 
 	/*
-		The interface to load or get a resource.
+		The interface to get a resource.
 		It should be used like so:
 
 		auto tex = bwa::ResourceLoader<sf::Texture>::get("some_image.png");
@@ -88,6 +94,10 @@ namespace bwa {
 	*/
 	template <typename T>
 	struct ResourceLoader final : detail::ResourceLoader_impl<T> {
+		/*
+			The 'API' of this utility class. It's the only function
+			exposed publicly. Refer to the example above.
+		*/
 		static std::shared_ptr<T> get(const std::string& filename) {
 			if (_map.count(filename))
 				return _map.at(filename);
