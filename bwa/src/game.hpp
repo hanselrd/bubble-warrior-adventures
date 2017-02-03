@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <sol.hpp>
@@ -15,7 +16,6 @@ namespace bwa {
 		void run();
 
 	private:
-		std::shared_ptr<sf::Font> _font;
 		sf::Text _text;
 		sf::RenderWindow _window;
 		tgui::Gui _gui;

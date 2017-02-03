@@ -6,6 +6,16 @@
 #include <type_traits>
 #include <utility>
 
+/*
+	ResourceLoader is a utility template class
+	Currently only supports loading SFML resources
+	Some example usage:
+		
+		auto texture = bwa::ResourceLoader<sf::Texture>::get("some_image.png");
+		sf::Sprite sprite;
+		sprite.setTexture(*texture);
+*/
+
 namespace bwa {
 	namespace detail {
 		/*
@@ -23,7 +33,7 @@ namespace bwa {
 
 		/*
 			Checks if an object has a openFromFile function
-			For example sf::Music
+			For example: sf::Music
 		*/
 		template <typename T, typename Enable = std::void_t<>>
 		struct has_openFromFile_function
@@ -78,31 +88,33 @@ namespace bwa {
 			static std::shared_ptr<T> load(const std::string& filename) {
 				auto ptr = std::make_shared<T>();
 				if (!ptr->openFromFile(filename))
-					throw std::runtime_error("Failed to load '" + filename + "' as '" + typeid(T).name() + "'");
+					throw std::runtime_error("Failed to open '" + filename + "' as '" + typeid(T).name() + "'");
 				return std::move(ptr);
 			}
 		};
 	}
 
 	/*
-		The interface to get a resource.
-		It should be used like so:
-
-		auto tex = bwa::ResourceLoader<sf::Texture>::get("some_image.png");
-		
-		'tex' would be of the type 'std::shared_ptr<sf::Texture>'
+		The interface exposed to the outside world
 	*/
 	template <typename T>
 	struct ResourceLoader final : detail::ResourceLoader_impl<T> {
 		/*
 			The 'API' of this utility class. It's the only function
-			exposed publicly. Refer to the example above.
+			exposed publicly. Refer to the example up top.
 		*/
 		static std::shared_ptr<T> get(const std::string& filename) {
+			/*
+				Checks if 'filename' has already been loaded,
+				if not, it'll try to load it into _map and
+				return a pointer.
+			*/
 			if (_map.count(filename))
 				return _map.at(filename);
-			else
-				return load(filename);
+			else {
+				_map[filename] = load(filename);
+				return _map.at(filename);
+			}
 		}
 
 	private:

@@ -13,9 +13,11 @@ bwa::Game::Game() {
 	// Converts the config's x and y resolution into a table
 	sol::table resolution = _lua["resolution"];
 
-	// Gets font from resource loader
-	_font = ResourceLoader<sf::Font>::get(_lua["game_fonts"]["normal"]);
-	_text.setFont(*_font);
+	ResourceLoader<sf::Music>::get("bacon"); // compile error, why?
+
+	// Gets font from resource loader and binds it to _text
+	auto font = ResourceLoader<sf::Font>::get(_lua["game_fonts"]["normal"]);
+	_text.setFont(*font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
 
@@ -24,8 +26,7 @@ bwa::Game::Game() {
 		resolution["x"].get<unsigned>(), 
 		resolution["y"].get<unsigned>());
 
-	// Create a fullscreen window if set to true in config
-	// windowed if false.
+	// Create a fullscreen window if set to true in config, windowed if false.
 	if (_lua["fullscreen"].get<bool>())
 		_window.create({ xy.first, xy.second }, 
 			WINDOW_TITLE,
