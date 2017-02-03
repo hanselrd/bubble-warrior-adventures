@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <TGUI/Gui.hpp>
+#include <TGUI/TGui.hpp>
 #include "GameState.hpp"
 
 namespace bwa {

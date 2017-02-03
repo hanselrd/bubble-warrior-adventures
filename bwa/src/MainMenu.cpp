@@ -65,7 +65,7 @@ void bwa::MainMenu::loadDrawables(tgui::Gui & gui) {
 	gui.add(exit_button, "exit_button");
 
 	// Handles button actions
-	exit_button->connect("pressed", std::mem_fn(&MainMenu::buttonClicked), this, "exit");
+	exit_button->connect("pressed", &MainMenu::buttonClicked, this, "exit");
 }
 
 /*
