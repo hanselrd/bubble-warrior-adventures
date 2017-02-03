@@ -3,11 +3,17 @@
 #include "MainMenu.hpp"
 #include "ResourceLoader.hpp"
 
-
+/*
+	Basic constructor for MainMenu class.
+*/
 bwa::MainMenu::MainMenu() {
-	int x = 0;
 }
 
+/*
+	Overrides parent class's draw function.
+	Draws the gui of the main menu, and the visuals for
+	the entire screen
+*/
 void bwa::MainMenu::draw(sf::RenderWindow & window) {
 	tgui::Gui gui(window);
 	bwa::MainMenu::loadDrawables(gui);
@@ -17,9 +23,14 @@ void bwa::MainMenu::draw(sf::RenderWindow & window) {
 void bwa::MainMenu::handleEvents(sf::Event & e) {
 }
 
-void bwa::MainMenu::update(float delta){
+void bwa::MainMenu::update(float delta) {
 }
 
+/*
+	Helper function to add components to gui for the
+	draw() function. All components are stored in gui
+	so that gui.draw() will show all components
+*/
 void bwa::MainMenu::loadDrawables(tgui::Gui & gui) {
 	auto window_width = tgui::bindWidth(gui);
 	auto window_height = tgui::bindHeight(gui);
