@@ -74,7 +74,15 @@ in your code, the includes should be listed without any line spaces or comments.
 
 ```cpp
 /*
-    External libraries must be included first.
+	Relative header of the file should be included first.
+	The include below is allowed only if we are inside 'game.cpp'
+	which is game's implementation. Hence the use of the word
+	'relative'.
+*/
+#include "game.hpp"
+
+/*
+    External libraries must be included next.
     Notice how they are in alphabetical order.
 */
 #include <SFML/Graphics.hpp>

@@ -1,7 +1,7 @@
-#include "game.hpp" // relative header so exception to includes rule
+#include "game.hpp" // relative header, check CONTRIBUTING.md
 #include <string>
 #include <utility>
-#include "resource.hpp"
+#include "resource_loader.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
