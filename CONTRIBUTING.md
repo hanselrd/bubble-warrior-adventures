@@ -75,11 +75,11 @@ in your code, the includes should be listed without any line spaces or comments.
 ```cpp
 /*
 	Relative header of the file should be included first.
-	The include below is allowed only if we are inside 'game.cpp'
-	which is game's implementation. Hence the use of the word
+	The include below is allowed only if we are inside 'Game.cpp'
+	which is Game's implementation. Hence the use of the word
 	'relative'.
 */
-#include "game.hpp"
+#include "Game.hpp"
 
 /*
     External libraries must be included next.
@@ -239,7 +239,7 @@ namespace bwa {
 #### Complete Example
 
 ```cpp
-// super_awesome_class.hpp
+// SuperAwesomeClass.hpp
 
 namespace bwa {
     class SuperAwesomeClass {
@@ -264,9 +264,9 @@ namespace bwa {
 ```
 
 ```cpp
-// super_awesome_class.cpp
+// SuperAwesomeClass.cpp
 
-#include "super_awesome_class.hpp"
+#include "SuperAwesomeClass.hpp"
 
 void bwa::SuperAwesomeClass::doFoo() {
     ...
