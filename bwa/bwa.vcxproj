@@ -155,13 +155,13 @@
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\TitleScreen.cpp" />
+    <ClCompile Include="src\MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\GameState.hpp" />
     <ClInclude Include="src\ResourceLoader.hpp" />
-    <ClInclude Include="src\TitleScreen.hpp" />
+    <ClInclude Include="src\MainMenu.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

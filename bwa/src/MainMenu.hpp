@@ -5,13 +5,13 @@
 #include "GameState.hpp"
 
 namespace bwa {
-	class TitleScreen : public GameState {
+	class MainMenu : public GameState {
 	public:
-		TitleScreen();
+		MainMenu();
 		void draw(sf::RenderWindow &window);
 		void handleEvents(sf::Event &e);
 		void update(float delta);
-		void bwa::TitleScreen::loadDrawables(tgui::Gui & gui);
+		void bwa::MainMenu::loadDrawables(tgui::Gui & gui);
 	private:
 		void buttonClicked(std::string s);
 		tgui::Gui _gui;

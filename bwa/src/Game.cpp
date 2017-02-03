@@ -3,7 +3,7 @@
 #include <string>
 #include <utility>
 #include "ResourceLoader.hpp"
-#include "TitleScreen.hpp"
+#include "MainMenu.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
@@ -37,8 +37,8 @@ bwa::Game::Game() {
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
 
-	// Creates the initial GameState on the stack to be TitleScreen
-	_states.push(std::make_unique<TitleScreen>());
+	// Creates the initial GameState on the stack to be MainMenu
+	_states.push(std::make_unique<MainMenu>());
 }
 
 void bwa::Game::run() {
