@@ -13,7 +13,7 @@ namespace bwa {
 		void update(float delta);
 
 	private:
-		void loadDrawables(tgui::Gui& gui); // should be priv
+		void loadDrawables(tgui::Gui& gui);
 		void buttonClicked(std::string s);
 		tgui::Gui _gui;
 	};
