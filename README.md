@@ -3,47 +3,63 @@
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Contents
-- [Intro](#intro)
+
+- [Introduction](#introduction)
 - [Motivation](#motivation)
 - [Development Environment](#development-environment)
-- [Contributors](#contributors)
+- [Developers](#developers)
 - [Installation](#installation)
+- [Contributing](#contributing)
 - [License](#license)
 
-## Intro
+## Introduction
+
 This project was created for our Software Engineering course. We were tasked with
 creating a **PowerPoint** presentation detailing what our project was about,
 how the work would be split up and a guideline to follow. With the freedom given
 to us to choose our programming language and project we settled on using *C++* with a
-bit of *[Lua](https://www.lua.org/manual/5.3)* for simple scripting and a 
-role-playing game. We are using *[SFML](http://www.sfml-dev.org/index.php)*
-to handle window events, graphics and audio. We are currently working on the story
+bit of [Lua](https://www.lua.org) for simple scripting and a 
+role-playing game. We are using [SFML](http://www.sfml-dev.org/index.php)
+to handle window events, graphics and audio, and [TGUI](https://tgui.eu) to
+create and render in-game GUI components. We are currently working on the story
 to go with the game.
 
 ## Motivation
+
 Hmm, we didn't know you needed any motivation to create a game, but here goes!
 Video games have always been a passion of ours. They're natural stress relievers
 and who doesn't love a good storyline?
 
 ## Development Environment
-We are using [Visual Studio Community](https://www.visualstudio.com/downloads), but since our libraries are
-cross-platform, you can easily use any editor and/or operating system. **Makefile not included!**
 
-## Contributors
+We are using [Visual Studio Community](https://www.visualstudio.com/downloads),
+but since our libraries are cross-platform, you can easily use any editor 
+and/or operating system. **Makefile not included!**
+
+## Developers
+
 - [Hansel De La Cruz](https://github.com/hanselrd)
 - [Kyle Jolicoeur](https://github.com/kjolicoeur)
 - [Jennifer Green](https://github.com/goldenapplepie)
 
 ## Installation
+
 Clone the repo by pasting the following command in your terminal.
-```bash
-git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
+```sh
+$ git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
 ```
-Then navigate to the newly created **bubble-warrior-adventures** folder and double-click
-the **.sln** file. Currently we do not support any other operating systems other
+Then navigate to the newly created `bubble-warrior-adventures` folder and double-click
+the `bwa.sln` file. Currently we do not support any other operating systems other
 than Windows for development.
 
+## Contributing
+
+Want to help us out? Refer to the 
+[contribution](CONTRIBUTING.md)
+guide.
+
 ## License
+
 MIT License
 
 Copyright (c) 2017
