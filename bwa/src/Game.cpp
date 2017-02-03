@@ -43,12 +43,6 @@ void bwa::Game::run() {
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
 
-	// Test code to render a green circle
-	sf::CircleShape box;
-	box.setRadius(16.f);
-	box.setFillColor(sf::Color::Green);
-	box.setPosition({ 100.f, 100.f });
-
 	// Normal window event loop
 	while (_window.isOpen()) {
 		sf::Event e;
@@ -69,7 +63,6 @@ void bwa::Game::run() {
 			}
 		}
 		_window.clear();
-		_window.draw(box);
 		_gui.draw();
 
 		// Displays FPS if show_fps_counter is true
