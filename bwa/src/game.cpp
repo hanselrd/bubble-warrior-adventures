@@ -14,16 +14,8 @@ bwa::Game::Game() {
 	sol::table resolution = _lua["resolution"];
 
 	// Gets font from resource loader
-	_font = Resource<sf::Font>::get(_lua["game_fonts"]["normal"]);
+	_font = ResourceLoader<sf::Font>::get(_lua["game_fonts"]["normal"]);
 	_text.setFont(*_font);
-
-	// Checks for font file and sets _font to it
-	if (!_font.loadFromFile(_lua["game_fonts"]["normal"]))
-		throw std::invalid_argument(_FILE_NOT_FOUND_ERROR + 
-				_lua["game_fonts"]["normal"].get<std::string>());
-
-	// Setting the look of the FPS counter
-	_text.setFont(_font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
 

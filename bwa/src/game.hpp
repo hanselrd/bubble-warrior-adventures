@@ -13,7 +13,6 @@ namespace bwa {
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		void run();
-		const std::string _FILE_NOT_FOUND_ERROR = "**File not found, please find: ";
 
 	private:
 		std::shared_ptr<sf::Font> _font;
