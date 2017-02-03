@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include "ResourceLoader.hpp"
+#include "TitleScreen.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
@@ -35,6 +36,9 @@ bwa::Game::Game() {
 	// Lock FPS to monitor's refresh rate and binds _window to _gui
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
+
+	// Creates the initial GameState on the stack to be TitleScreen
+	_states.push(std::make_unique<TitleScreen>());
 }
 
 void bwa::Game::run() {
@@ -43,20 +47,19 @@ void bwa::Game::run() {
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
 
-	// Test code to render a green circle
-	sf::CircleShape box;
-	box.setRadius(16.f);
-	box.setFillColor(sf::Color::Green);
-	box.setPosition({ 100.f, 100.f });
-
 	// Normal window event loop
 	while (_window.isOpen()) {
 		sf::Event e;
 		while (_window.pollEvent(e)) {
+			
+			//If the user hits the x or presses Esc, close the window
 			if (e.type == sf::Event::Closed ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-				_window.close();
-			_gui.handleEvent(e);
+				{
+					_window.close();
+				}
+			_states.top()->handleEvents(e);
+			_states.top()->update(fps);
 		}
 
 		// Calculates fps
@@ -69,12 +72,13 @@ void bwa::Game::run() {
 			}
 		}
 		_window.clear();
-		_window.draw(box);
+		_states.top()->draw(_window);
 		_gui.draw();
 
 		// Displays FPS if show_fps_counter is true
 		if (show_fps_counter)
 			_window.draw(_text);
 		_window.display();
-	}
+
+	} // End normal window event loop
 }
