@@ -28,14 +28,10 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Requests
 
-1. You should **never** commit anything to the *master* branch no matter how small,
-    instead, fork the repository or checkout your own branch, make the appropiate 
-    changes and submit a Pull Request. This is to preserve the *master* branch
-    with stable and peer-reviewed code.
-2. You **may not** merge in your own Pull Requests without the approval of another developer.
-3. Pull Requests should have a descriptive title and a detailed body explaining
+1. You **may not** merge in your own Pull Requests without the approval of another developer.
+2. Pull Requests should have a descriptive title and a detailed body explaining
     the issue you set out to fix and how you decided on your changes.
-4. If you reject a Pull Request, provide the contributor with a reason and
+3. If you reject a Pull Request, provide the contributor with a reason and
     offer constructive criticism.
 
 ## Coding Style
@@ -58,9 +54,6 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### File Naming
 
-* All file names must be in **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
-    with the exception of assets and dependencies.
-    An acceptable file name would be: `player_data.txt`.
 * C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
     be used when programming in C.
 * C++ source files must end in `.cpp`.

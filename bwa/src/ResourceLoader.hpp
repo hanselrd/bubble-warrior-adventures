@@ -97,9 +97,11 @@ namespace bwa {
 				*/
 				if (!load(filename))
 					throw std::runtime_error("Could not load: " + filename);
-			else {
-				return _cache.at(filename);
-			}
+			
+			/*
+				Returns the resource from the cache
+			*/
+			return _cache.at(filename);
 		}
 
 	private:
