@@ -3,6 +3,7 @@
 #include <SFML/Window.hpp>
 #include <sol.hpp>
 #include <TGUI/TGUI.hpp>
+#include <memory>
 #include <string>
 
 namespace bwa {
@@ -12,10 +13,8 @@ namespace bwa {
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		void run();
-		const std::string _FILE_NOT_FOUND_ERROR = "**File not found, please find: ";
 
 	private:
-		sf::Font _font;
 		sf::Text _text;
 		sf::RenderWindow _window;
 		tgui::Gui _gui;

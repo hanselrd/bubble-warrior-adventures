@@ -6,8 +6,6 @@ namespace bwa {
 	public:
 		virtual void draw(sf::Window &window) = 0;
 		virtual void handleEvents(sf::Event &e) = 0;
-		virtual void update() = 0;
-		
-	protected:
+		virtual void update(float delta) = 0;
 	};
 }
