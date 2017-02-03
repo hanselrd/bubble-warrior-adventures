@@ -17,11 +17,13 @@ bwa::MainMenu::MainMenu() {
 	the entire screen
 */
 void bwa::MainMenu::draw(sf::RenderWindow & window) {
+	window.clear();
 	_gui.setWindow(window);
 	_gui.draw();
 }
 
 void bwa::MainMenu::handleEvents(sf::Event & e) {
+	_gui.handleEvent(e);
 }
 
 void bwa::MainMenu::update(float delta) {
