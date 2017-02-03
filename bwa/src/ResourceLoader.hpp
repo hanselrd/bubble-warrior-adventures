@@ -15,6 +15,9 @@
 		auto texture = bwa::ResourceLoader<sf::Texture>::get("my_image.png");
 		sf::Sprite sprite;
 		sprite.setTexture(*texture);
+
+	You can also preload resources into the cache and get them later:
+		bool success = bwa::ResourceLoader<sf::Texture>::load("my_image.png");
 */
 
 namespace bwa {
@@ -75,7 +78,7 @@ namespace bwa {
 		/*
 			Unlike the load functions, which only loads
 			the resource and doesn't return it, this function
-			returns a pointer to your resource that
+			returns a pointer to your resource and it
 			can be shared throughout the game. If the resource
 			exists it'll fetch it from the cache. If not it'll
 			load it first and then return it to you.
