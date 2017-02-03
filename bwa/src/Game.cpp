@@ -2,8 +2,8 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
-#include "ResourceLoader.hpp"
 #include "MainMenu.hpp"
+#include "ResourceLoader.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
