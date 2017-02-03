@@ -7,7 +7,8 @@
 /*
 	Basic constructor for MainMenu class.
 */
-bwa::MainMenu::MainMenu() {
+bwa::MainMenu::MainMenu(sf::RenderWindow& window) {
+	_gui.setWindow(window);
 	bwa::MainMenu::loadDrawables(_gui);
 }
 
@@ -16,13 +17,11 @@ bwa::MainMenu::MainMenu() {
 	Draws the gui of the main menu, and the visuals for
 	the entire screen
 */
-void bwa::MainMenu::draw(sf::RenderWindow & window) {
-	window.clear();
-	_gui.setWindow(window);
+void bwa::MainMenu::draw(sf::RenderWindow& window) {
 	_gui.draw();
 }
 
-void bwa::MainMenu::handleEvents(sf::Event & e) {
+void bwa::MainMenu::handleEvents(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 

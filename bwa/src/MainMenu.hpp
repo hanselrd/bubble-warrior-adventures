@@ -7,12 +7,13 @@
 namespace bwa {
 	class MainMenu : public GameState {
 	public:
-		MainMenu();
+		MainMenu(sf::RenderWindow& window);
 		void draw(sf::RenderWindow &window);
 		void handleEvents(sf::Event &e);
 		void update(float delta);
-		void bwa::MainMenu::loadDrawables(tgui::Gui & gui);
+
 	private:
+		void loadDrawables(tgui::Gui& gui);
 		void buttonClicked(std::string s);
 		tgui::Gui _gui;
 	};

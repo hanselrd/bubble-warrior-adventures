@@ -38,7 +38,7 @@ bwa::Game::Game() {
 	_gui.setWindow(_window);
 
 	// Creates the initial GameState on the stack to be MainMenu
-	_states.push(std::make_unique<MainMenu>());
+	_states.push(std::make_unique<MainMenu>(std::ref(_window)));
 }
 
 void bwa::Game::run() {
