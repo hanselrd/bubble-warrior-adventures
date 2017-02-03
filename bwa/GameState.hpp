@@ -2,7 +2,7 @@
 #include <SFML/Window.hpp>
 
 namespace bwa {
-	class GameStates {
+	class GameState {
 	public:
 		virtual void draw(sf::Window &window) = 0;
 		virtual void handleEvents(sf::Event &e) = 0;
