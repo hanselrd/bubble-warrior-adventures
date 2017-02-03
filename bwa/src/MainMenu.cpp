@@ -66,6 +66,9 @@ void bwa::MainMenu::loadDrawables(tgui::Gui & gui) {
 	gui.add(exit_button, "exit_button");
 
 	// Handles button actions
+	continue_button->connect("pressed", &MainMenu::buttonClicked, this, "continue");
+	new_game_button->connect("pressed", &MainMenu::buttonClicked, this, "new game");
+	options_button->connect("pressed", &MainMenu::buttonClicked, this, "options");
 	exit_button->connect("pressed", &MainMenu::buttonClicked, this, "exit");
 }
 
@@ -76,8 +79,20 @@ void bwa::MainMenu::loadDrawables(tgui::Gui & gui) {
 */
 void bwa::MainMenu::buttonClicked(std::string s) {
 	// ***** not all options coded yet
-	std::cout << "hey" << std::endl;
-	if (!s.compare("exit")) {
+	if (!s.compare("continue")){
+		std::cout << "Continue button hit" << std::endl;
+		// ***** Insert code to change the Game class's stack to include continue
+	}
+	else if (!s.compare("new game")) {
+		std::cout << "New game button hit" << std::endl;
+		// ***** Insert code to change the Game class's stack to include new game
+	}
+	else if (!s.compare("options")) {
+		std::cout << "Options button hit" << std::endl;
+		// ***** Insert code to change the Game class's stack to include options
+	}
+	else if (!s.compare("exit")) {
+		std::cout << "Exit button hit" << std::endl;
 		// ***** Insert code to change the Game class's stack to include exiting
 	}
 }
