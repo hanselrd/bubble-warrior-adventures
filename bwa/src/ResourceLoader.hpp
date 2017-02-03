@@ -117,7 +117,7 @@ namespace bwa {
 	};
 
 	/*
-		Declares the _map in ResourceLoader
+		Instantiates the static _map in ResourceLoader
 		by calling its default ctor.
 	*/
 	template <typename T>
