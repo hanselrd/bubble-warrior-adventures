@@ -27,24 +27,23 @@ bwa::Game::Game() {
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
 
-	// pull the x and y window resolution coordinates from the config
+	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
 		resolution["x"].get<unsigned>(), 
 		resolution["y"].get<unsigned>());
 
 	// Create a fullscreen window if set to true in config
-	if (_lua["fullscreen"].get<bool>()) {
+	// windowed if false.
+	if (_lua["fullscreen"].get<bool>())
 		_window.create({ xy.first, xy.second }, 
 			WINDOW_TITLE,
 			sf::Style::Fullscreen);
-	}
+	else
+		_window.create({ xy.first, xy.second }, WINDOW_TITLE);
 
-	// Create a normal window if fullscreen is set to false in config
-	else {
-	_window.create({ xy.first, xy.second }, WINDOW_TITLE);
+	// Lock FPS to monitor's refresh rate and binds _window to _gui
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
-	}
 }
 
 void bwa::Game::run() {
@@ -53,6 +52,7 @@ void bwa::Game::run() {
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
 
+	// Test code to render a green circle
 	sf::CircleShape box;
 	box.setRadius(16.f);
 	box.setFillColor(sf::Color::Green);
@@ -81,7 +81,7 @@ void bwa::Game::run() {
 		_window.draw(box);
 		_gui.draw();
 
-		// Displays fps if show_fps_counter is true
+		// Displays FPS if show_fps_counter is true
 		if (show_fps_counter)
 			_window.draw(_text);
 		_window.display();
