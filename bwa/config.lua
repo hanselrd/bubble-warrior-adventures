@@ -13,7 +13,7 @@ config.resolution = {
 }
 
 -- Loads all the assets
-config.assets = require "assets"
+config.assets = require("assets")
 
 -- Display FPS counter
 config.show_fps_counter = true

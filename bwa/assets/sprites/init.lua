@@ -1,4 +1,4 @@
-local utility = require "utility"
+local utility = require("utility")
 
 --[[
     All the sprites in this directory,
