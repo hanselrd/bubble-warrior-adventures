@@ -61,7 +61,7 @@ namespace bwa {
 	public:
 		/*
 			Overload for SFML objects that export a
-			loadFromFile function ex: (sf::Texture)
+			loadFromFile function ex: (sf::Texture).
 		*/
 		template <typename U = T>
 		static auto load(const std::string& filename) -> decltype(std::declval<U>().loadFromFile("")) {
@@ -72,7 +72,7 @@ namespace bwa {
 
 		/*
 			Overload for SFML objects that export a
-			openFromFile function ex: (sf::Music)
+			openFromFile function ex: (sf::Music).
 		*/
 		template <typename U = T, int = 0>
 		static auto load(const std::string& filename) -> decltype(std::declval<U>().openFromFile("")) {
@@ -99,13 +99,13 @@ namespace bwa {
 			if (!_cache.count(filename))
 				/*
 					Checks if load was successful, if not,
-					throws 'std::runtime_error'
+					throws 'std::runtime_error'.
 				*/
 				if (!load(filename))
 					throw std::runtime_error("Could not load: " + filename);
 			
 			/*
-				Returns the resource from the cache
+				Returns the resource from the cache.
 			*/
 			return _cache.at(filename);
 		}
@@ -121,7 +121,7 @@ namespace bwa {
 
 	/*
 		Instantiates the static _cache in ResourceLoader
-		by calling its default ctor.
+		by calling its default constructor.
 	*/
 	template <typename T>
 	std::map<std::string, std::shared_ptr<T>> ResourceLoader<T>::_cache;
