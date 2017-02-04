@@ -4,6 +4,7 @@
 #include <utility>
 #include "MainMenu.hpp"
 #include "ResourceLoader.hpp"
+#include "TitleScreen.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
@@ -38,7 +39,7 @@ bwa::Game::Game() {
 	_gui.setWindow(_window);
 
 	// Creates the initial GameState on the stack to be MainMenu
-	_states.push(std::make_unique<MainMenu>(std::ref(_window)));
+	_states.push(std::make_unique<TitleScreen>(std::ref(_window)));
 }
 
 void bwa::Game::run() {
