@@ -83,6 +83,7 @@ void bwa::Game::run() {
 				update_fps.restart();
 			}
 		}
+    
 		_window.clear();
 		_gui.draw();
 
