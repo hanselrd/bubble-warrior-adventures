@@ -15,9 +15,9 @@ namespace bwa {
 		void run();
 
 	private:
-		sf::Text _text;
 		sf::RenderWindow _window;
-		tgui::Gui _gui;
+		sf::Text _text;
 		sol::state _lua;
+		tgui::Gui _gui;
 	};
 }
