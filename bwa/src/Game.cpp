@@ -8,7 +8,10 @@ constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
 bwa::Game::Game() {
 	// Loads the ability to require modules in lua
-	_lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table);
+	_lua.open_libraries(sol::lib::base, 
+		sol::lib::package, 
+		sol::lib::table,
+		sol::lib::string);
 
 	// Loads the 'utility' module into lua
 	_lua.require_file("utility", "scripts/utility.lua");
@@ -20,7 +23,7 @@ bwa::Game::Game() {
 	sol::table resolution = _lua["config"]["resolution"];
 
 	// Gets font from resource loader and binds it to _text
-	auto font = ResourceLoader<sf::Font>::get(_lua["config"]["fonts"][1]);
+	auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
 	_text.setFont(*font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");

@@ -1,9 +1,9 @@
 local utility = {}
 
 function utility.prepend(t, dir)
-    for k, v in pairs(t) do
+    for i, v in ipairs(t) do
         -- Prepends 'dir' to each string in 't'
-        v = dir .. v
+        t[i] = dir .. v
     end
 end
 

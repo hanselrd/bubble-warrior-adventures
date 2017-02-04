@@ -4,7 +4,7 @@ local dir = "assets/"
 local assets = {}
 
 assets.fonts = require "assets.fonts"
-utility.prepend(assets.font, dir)
+utility.prepend(assets.fonts, dir)
 
 assets.sprites = require "assets.sprites"
 utility.prepend(assets.sprites, dir)
