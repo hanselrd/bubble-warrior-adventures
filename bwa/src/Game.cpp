@@ -22,6 +22,18 @@ bwa::Game::Game() {
 	// Converts the config's x and y resolution into a table
 	sol::table resolution = _lua["config"]["resolution"];
 
+	// Gets the fonts and sprites tables from assets table
+	sol::table assets = _lua["config"]["assets"];
+	sol::table fonts = assets["fonts"];
+	sol::table sprites = assets["sprites"];
+
+	// Auto loading
+	for (const auto& font : fonts)
+		ResourceLoader<sf::Font>::load(font.second.as<std::string>());
+
+	for (const auto& sprite : sprites)
+		ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
+
 	// Gets font from resource loader and binds it to _text
 	auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
 	_text.setFont(*font);

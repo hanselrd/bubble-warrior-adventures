@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -46,8 +47,13 @@ namespace bwa {
 				If call to 'f' was successfull, store the loaded
 				resource in _cache.
 			*/
-			if (success)
+			if (success) {
 				_cache.insert(std::make_pair(key, ptr));
+				/*
+					For debugging, will be removed.
+				*/
+				std::cout << "Loaded: " << key << " as '" << typeid(T).name() << "'" << std::endl;
+			}
 
 			return success;
 		}
