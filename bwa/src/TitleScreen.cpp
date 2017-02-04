@@ -5,25 +5,49 @@
 #include "ResourceLoader.hpp"
 
 /*
-	Default constructor for TitleScreen
+	Default constructor for TitleScreen.
+	Loads all gui components.
 */
 bwa::TitleScreen::TitleScreen(sf::RenderWindow &window) {
 	_gui.setWindow(window);
 	bwa::TitleScreen::loadDrawables(_gui);
 }
+
+/*
+	Overloads parent draw() function. Draws the gui components
+*/
 void bwa::TitleScreen::draw(sf::RenderWindow &window) {
 	_gui.draw();
 }
+
+/*
+	Handles gui event based on _gui's connect() function components
+*/
 void bwa::TitleScreen::handleEvents(sf::Event &e) {
 	_gui.handleEvent(e);
 }
+
+/*
+	To be implemented
+*/
 void bwa::TitleScreen::update(float delta) {
 
 }
+
+/*
+	Loads all gui components, sets their display,
+	and sets up mouse events with respect to _gui components
+*/
 void bwa::TitleScreen::loadDrawables(tgui::Gui &gui) {
+	// Pulls the window dimmensions from the window
 	auto window_width = tgui::bindWidth(gui);
 	auto window_height = tgui::bindHeight(gui);
 
+	// To be used for the background of the window
+	tgui::Picture::Ptr background = std::make_shared<tgui::Picture>();
+	gui.add(background);
+
+	// "Bubble Warrior" text component
 	tgui::Label::Ptr title = std::make_shared<tgui::Label>();
 	title->setTextSize(72);
 	title->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
@@ -33,6 +57,7 @@ void bwa::TitleScreen::loadDrawables(tgui::Gui &gui) {
 	title->setTextColor(sf::Color::Green);
 	gui.add(title);
 
+	// "Adventures" text component
 	tgui::Label::Ptr title2 = std::make_shared<tgui::Label>();
 	title2->setTextSize(72);
 	title2->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
@@ -42,6 +67,7 @@ void bwa::TitleScreen::loadDrawables(tgui::Gui &gui) {
 	title2->setTextColor(sf::Color::Green);
 	gui.add(title2);
 
+	// "Click to continue" text component
 	tgui::Label::Ptr click_to_continue = std::make_shared<tgui::Label>();
 	click_to_continue->setTextSize(38);
 	click_to_continue->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);

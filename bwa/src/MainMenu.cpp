@@ -1,6 +1,6 @@
 #include <TGUI/TGUI.hpp>
-#include <memory>
 #include <functional>
+#include <memory>
 #include "MainMenu.hpp"
 #include "ResourceLoader.hpp"
 
@@ -25,6 +25,9 @@ void bwa::MainMenu::handleEvents(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 
+/*
+	To be implemented
+*/
 void bwa::MainMenu::update(float delta) {
 }
 

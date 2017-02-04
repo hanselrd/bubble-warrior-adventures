@@ -1,6 +1,6 @@
 #pragma once
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <TGUI/TGUI.hpp>
 #include "GameState.hpp"
 
