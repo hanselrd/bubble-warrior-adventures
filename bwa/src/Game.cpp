@@ -9,14 +9,35 @@
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
 bwa::Game::Game() {
+	// Loads the ability to require modules in lua
+	_lua.open_libraries(sol::lib::base, 
+		sol::lib::package, 
+		sol::lib::table,
+		sol::lib::string);
+
+	// Loads the 'utility' module into lua
+	_lua.require_file("utility", "scripts/utility.lua");
+
 	// Loads the config into the sol::state
-	_lua.script_file("config.lua");
+	_lua.require_file("config", "config.lua");
 
 	// Converts the config's x and y resolution into a table
-	sol::table resolution = _lua["resolution"];
+	sol::table resolution = _lua["config"]["resolution"];
+
+	// Gets the fonts and sprites tables from assets table
+	sol::table assets = _lua["config"]["assets"];
+	sol::table fonts = assets["fonts"];
+	sol::table sprites = assets["sprites"];
+
+	// Auto loading
+	for (const auto& font : fonts)
+		ResourceLoader<sf::Font>::load(font.second.as<std::string>());
+
+	for (const auto& sprite : sprites)
+		ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
 
 	// Gets font from resource loader and binds it to _text
-	auto font = ResourceLoader<sf::Font>::get(_lua["game_fonts"]["normal"]);
+	auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
 	_text.setFont(*font);
 	_text.setFillColor(sf::Color::Yellow);
 	_text.setString("FPS:");
@@ -27,7 +48,7 @@ bwa::Game::Game() {
 		resolution["y"].get<unsigned>());
 
 	// Create a fullscreen window if set to true in config, windowed if false.
-	if (_lua["fullscreen"].get<bool>())
+	if (_lua["config"]["fullscreen"].get<bool>())
 		_window.create({ xy.first, xy.second }, 
 			WINDOW_TITLE,
 			sf::Style::Fullscreen);
@@ -46,7 +67,7 @@ void bwa::Game::run() {
 	// Create the clock and set it up for the FPS counter
 	sf::Clock clock, update_fps;
 	float last_time = 0.f, current_time, fps;
-	bool show_fps_counter = _lua["show_fps_counter"];
+	bool show_fps_counter = _lua["config"]["show_fps_counter"];
 
 	// Normal window event loop
 	while (_window.isOpen()) {
@@ -72,6 +93,7 @@ void bwa::Game::run() {
 				update_fps.restart();
 			}
 		}
+    
 		_window.clear();
 		_states.top()->draw(_window);
 		_gui.draw();

@@ -17,6 +17,7 @@ namespace bwa {
 		void run();
 
 	private:
+		sf::RenderWindow _window;
 		sf::Text _text;
 		sf::RenderWindow _window;
 		tgui::Gui _gui;
