@@ -16,7 +16,7 @@ bwa::test::test(sf::RenderWindow &window) {
 	// Creates a player entity for this "window" gamestate
 	_player = FriendlyEntity(texture, entityRect);
 	// Sets the position here (will be changed later)
-	_player.setPosition(window.getSize().x/2, window.getSize().y/2);
+	_player.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
 }
 
 void bwa::test::draw(sf::RenderWindow &window) {
