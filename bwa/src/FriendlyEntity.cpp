@@ -29,6 +29,7 @@ bwa::FriendlyEntity::FriendlyEntity(sf::Texture &texture, sf::IntRect &texture_r
 }
 
 /*
+	(Left entity movement)
 	This function takes the coordinates of the sprite's
 	current location on the texture files (.png), and 
 	changes it to the next coordinates, and also moves the sprite.
@@ -67,6 +68,7 @@ void bwa::FriendlyEntity::animateLeft()
 }
 
 /*
+	(Right entity movement)
 	This function takes the coordinates of the sprite's
 	current location on the texture files (.png), and
 	changes it to the next coordinates, and also moves the sprite.
@@ -105,6 +107,7 @@ void bwa::FriendlyEntity::animateRight()
 }
 
 /*
+	(Forward entity movement)
 	This function takes the coordinates of the sprite's
 	current location on the texture files (.png), and
 	changes it to the next coordinates, and also moves the sprite.
@@ -143,6 +146,7 @@ void bwa::FriendlyEntity::animateUp()
 }
 
 /*
+	(Downward entity movement)
 	This function takes the coordinates of the sprite's
 	current location on the texture files (.png), and
 	changes it to the next coordinates, and also moves the sprite.
