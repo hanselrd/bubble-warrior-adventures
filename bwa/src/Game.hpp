@@ -19,9 +19,8 @@ namespace bwa {
 	private:
 		sf::RenderWindow _window;
 		sf::Text _text;
-		sf::RenderWindow _window;
-		tgui::Gui _gui;
 		sol::state _lua;
+		tgui::Gui _gui;
 		std::stack<std::unique_ptr<GameState>> _states;
 	};
 }
