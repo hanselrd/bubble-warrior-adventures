@@ -1,7 +1,7 @@
 #pragma once
+#include <SFML/Window.hpp>
 #include "GameState.hpp"
 #include "FriendlyEntity.hpp"
-#include <SFML/Window.hpp>
 
 namespace bwa {
 	class test : public GameState {
@@ -11,7 +11,7 @@ namespace bwa {
 		void handleEvents(sf::Event &e);
 		void update(float delta);
 
-		bwa::FriendlyEntity _entity;
+		bwa::FriendlyEntity _player;
 		sf::Texture texture;
 		sf::IntRect heroRect;
 	};

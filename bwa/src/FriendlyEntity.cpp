@@ -1,3 +1,5 @@
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include "FriendlyEntity.hpp"
 
 bwa::FriendlyEntity::FriendlyEntity() {
@@ -96,6 +98,7 @@ void bwa::FriendlyEntity::animateUp()
 void bwa::FriendlyEntity::animateDown()
 {
 	if (_clock.getElapsedTime().asSeconds() > 0.1f) {
+
 		// If the sprite isnt facing down, make it face down
 		if (_sprite.getTextureRect().top != (64 * 10))
 		{
@@ -103,6 +106,7 @@ void bwa::FriendlyEntity::animateDown()
 			sf::Vector2i new_rect_dimensions = sf::Vector2i(_sprite.getTextureRect().width, _sprite.getTextureRect().height);
 			_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 		}
+
 		// If the sprite is at the end of the "loop", reset it
 		if (_sprite.getTextureRect().left == ((64 * 1) * 8))
 		{
@@ -110,6 +114,7 @@ void bwa::FriendlyEntity::animateDown()
 			sf::Vector2i new_rect_dimensions = sf::Vector2i(_sprite.getTextureRect().width, _sprite.getTextureRect().height);
 			_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 		}
+
 		// If the sprite is somewhere in the loop, progress it
 		else {
 			sf::Vector2i new_rect_coords = sf::Vector2i(_sprite.getTextureRect().left + 64, _sprite.getTextureRect().top);
@@ -121,6 +126,31 @@ void bwa::FriendlyEntity::animateDown()
 	_sprite.move(0, 2);
 }
 
+void bwa::FriendlyEntity::animateStanding() {
+	// Stores the bounds of the current sprite from the texture
+	sf::IntRect current_sprite = _sprite.getTextureRect();
+
+	if (current_sprite.top == (64 * 8)) {
+		sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+		sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+		_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+	}
+	else if (current_sprite.top == (64 * 9)) {
+		sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+		sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+		_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+	}
+	else if (current_sprite.top == (64 * 10)) {
+		sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+		sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+		_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+	}
+	else if (current_sprite.top == (64 * 11)) {
+		sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+		sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+		_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+	}
+}
 void bwa::FriendlyEntity::setPosition(float x, float y)
 {
 	_sprite.setPosition(x,y);

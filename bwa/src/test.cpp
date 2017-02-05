@@ -2,35 +2,46 @@
 #include "ResourceLoader.hpp"
 #include "test.hpp"
 
+/*
+	This class takes place of a gamestate where the main game
+	would be played. Used to test animations and user key input.
+*/
 bwa::test::test(sf::RenderWindow &window) {
+	// Change this to use resource loader
 	texture.loadFromFile("assets/sprites/golden_hero_male_no_shield_no_hat.png");
-
+	// Change this to use resource loader?
+	// The sprite's frame from the texture
 	sf::IntRect entityRect = sf::IntRect(0, (64 * 8), (64), (64));
 
-	_entity = FriendlyEntity(texture, entityRect);
-	_entity.setPosition(window.getSize().x/2, window.getSize().y/2);
+	// Creates a player entity for this "window" gamestate
+	_player = FriendlyEntity(texture, entityRect);
+	// Sets the position here (will be changed later)
+	_player.setPosition(window.getSize().x/2, window.getSize().y/2);
 }
+
 void bwa::test::draw(sf::RenderWindow &window) {
 	window.clear();
-	_entity.draw(window);
+	_player.draw(window);
 }
 
 void bwa::test::handleEvents(sf::Event & e)
 {
 	if (e.type == sf::Event::KeyPressed) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			_entity.animateUp();
+			_player.animateUp();
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			_entity.animateDown();
+			_player.animateDown();
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			_entity.animateLeft();
+			_player.animateLeft();
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			_entity.animateRight();
+			_player.animateRight();
 		}
-
+	}
+	else if (e.type == sf::Event::KeyReleased) {
+		_player.animateStanding();
 	}
 }
 
