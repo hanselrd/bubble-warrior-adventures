@@ -5,6 +5,8 @@
 #include <TGUI/TGUI.hpp>
 #include <memory>
 #include <string>
+#include <stack>
+#include "GameState.hpp"
 
 namespace bwa {
 	class Game final {
@@ -19,5 +21,6 @@ namespace bwa {
 		sf::Text _text;
 		sol::state _lua;
 		tgui::Gui _gui;
+		std::stack<std::unique_ptr<GameState>> _states;
 	};
 }
