@@ -9,6 +9,7 @@
 bwa::FriendlyEntity::FriendlyEntity() {
 	_health = 1;
 	_damage = 1;
+	_movement_speed = 2;
 	_invincible = true;
 	_x_coordinate = 0;
 	_y_coordinate = 0;
@@ -22,6 +23,7 @@ bwa::FriendlyEntity::FriendlyEntity() {
 bwa::FriendlyEntity::FriendlyEntity(sf::Texture &texture, sf::IntRect &texture_rect) {
 	_health = 1;
 	_damage = 1;
+	_movement_speed = 2;
 	_invincible = true;
 	_texture = texture;
 	_sprite.setTexture(texture);
@@ -41,7 +43,7 @@ void bwa::FriendlyEntity::animateLeft()
 		// If the sprite isnt facing up, make it face up
 		if (_sprite.getTextureRect().top != (64 * 9))
 		{
-			sf::Vector2i new_rect_coords = sf::Vector2i(_sprite.getTextureRect().left, (64 * 9));
+			sf::Vector2i new_rect_coords = sf::Vector2i((64 * 1), (64 * 9));
 			sf::Vector2i new_rect_dimensions = sf::Vector2i(_sprite.getTextureRect().width, _sprite.getTextureRect().height);
 			_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 		}
@@ -64,7 +66,7 @@ void bwa::FriendlyEntity::animateLeft()
 	}
 
 	// Move the sprite to the left
-	_x_coordinate -= 2;
+	_x_coordinate -= _movement_speed;
 }
 
 /*
@@ -80,7 +82,7 @@ void bwa::FriendlyEntity::animateRight()
 		// If the sprite isnt facing right, make it face right
 		if (_sprite.getTextureRect().top != (64 * 11))
 		{
-			sf::Vector2i new_rect_coords = sf::Vector2i(_sprite.getTextureRect().left, (64 * 11));
+			sf::Vector2i new_rect_coords = sf::Vector2i((64 * 1), (64 * 11));
 			sf::Vector2i new_rect_dimensions = sf::Vector2i(_sprite.getTextureRect().width, _sprite.getTextureRect().height);
 			_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 		}
@@ -103,7 +105,7 @@ void bwa::FriendlyEntity::animateRight()
 	}
 
 	// Move the sprite to the right
-	_x_coordinate += 2;
+	_x_coordinate += _movement_speed;
 }
 
 /*
@@ -119,7 +121,7 @@ void bwa::FriendlyEntity::animateUp()
 		// If the sprite isnt facing up, make it face up
 		if (_sprite.getTextureRect().top != (64 * 8))
 		{
-			sf::Vector2i new_rect_coords = sf::Vector2i(_sprite.getTextureRect().left, (64 * 8));
+			sf::Vector2i new_rect_coords = sf::Vector2i((64 * 1), (64 * 8));
 			sf::Vector2i new_rect_dimensions = sf::Vector2i(_sprite.getTextureRect().width, _sprite.getTextureRect().height);
 			_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 		}
@@ -142,7 +144,7 @@ void bwa::FriendlyEntity::animateUp()
 	}
 
 	// Move the sprite upwards
-	_y_coordinate -= 2;
+	_y_coordinate -= _movement_speed;
 }
 
 /*
@@ -158,7 +160,7 @@ void bwa::FriendlyEntity::animateDown()
 		// If the sprite isnt facing down, make it face down
 		if (_sprite.getTextureRect().top != (64 * 10))
 		{
-			sf::Vector2i new_rect_coords = sf::Vector2i(0, (64 * 10));
+			sf::Vector2i new_rect_coords = sf::Vector2i((64 * 1), (64 * 10));
 			sf::Vector2i new_rect_dimensions = sf::Vector2i(_sprite.getTextureRect().width, _sprite.getTextureRect().height);
 			_sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 		}
@@ -180,7 +182,7 @@ void bwa::FriendlyEntity::animateDown()
 		_clock.restart();
 	}
 	// Move the sprite 2 pixels down
-	_y_coordinate += 2;
+	_y_coordinate += _movement_speed;
 }
 
 /*

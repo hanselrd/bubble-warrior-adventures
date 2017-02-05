@@ -16,6 +16,7 @@ namespace bwa {
 		int _damage;
 		int _health;
 		bool _invincible; // True means yes
+		float _movement_speed;
 		float _x_coordinate;
 		float _y_coordinate;
 
