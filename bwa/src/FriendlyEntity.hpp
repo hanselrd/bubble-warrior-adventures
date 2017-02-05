@@ -5,11 +5,14 @@
 namespace bwa {
 	class FriendlyEntity : public EntityBase {
 	public:
-		FriendlyEntity(sf::Texture &texture);
+		FriendlyEntity();
+		FriendlyEntity(sf::Texture &texture, sf::IntRect &texture_rect);
+
 		void animateLeft();
 		void animateRight();
 		void animateUp();
 		void animateDown();
+		void setPosition(float x, float y);
 		void draw(sf::RenderWindow &window);
 	};
 }

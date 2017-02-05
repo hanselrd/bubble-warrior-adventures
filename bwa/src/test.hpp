@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.hpp"
+#include "FriendlyEntity.hpp"
 #include <SFML/Window.hpp>
 
 namespace bwa {
@@ -10,9 +11,8 @@ namespace bwa {
 		void handleEvents(sf::Event &e);
 		void update(float delta);
 
-		sf::Clock clock2;
+		bwa::FriendlyEntity _entity;
 		sf::Texture texture;
-		sf::Sprite heroSprite;
 		sf::IntRect heroRect;
 	};
 }

@@ -14,7 +14,8 @@ namespace bwa {
 		int _health;
 		int _x_coordinate;
 		int _y_coordinate;
-		sf::Texture _texture;
+		sf::Clock _clock;
 		sf::Sprite _sprite;
+		sf::Texture _texture;
 	};
 }
