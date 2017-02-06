@@ -5,6 +5,7 @@
 #include <TGUI/TGUI.hpp>
 #include <memory>
 #include <string>
+#include "StateHandler.hpp"
 
 namespace bwa {
 	class Game final {
@@ -12,6 +13,7 @@ namespace bwa {
 		Game();
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
+
 		void run();
 
 	private:
@@ -19,5 +21,6 @@ namespace bwa {
 		sf::Text _text;
 		sol::state _lua;
 		tgui::Gui _gui;
+		StateHandler _stateHandler;
 	};
 }
