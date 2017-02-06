@@ -18,7 +18,6 @@ namespace bwa {
 
 	private:
 		sf::RenderWindow _window;
-		sf::Text _text;
 		sol::state _lua;
 		tgui::Gui _gui;
 		StateHandler _stateHandler;

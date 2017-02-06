@@ -36,10 +36,14 @@ bwa::Game::Game() {
 		ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
 
 	// Gets font from resource loader and binds it to _text
-	auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
-	_text.setFont(*font);
-	_text.setFillColor(sf::Color::Yellow);
-	_text.setString("FPS:");
+	// auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
+	// _text.setFont(*font);
+	// _text.setFillColor(sf::Color::Yellow);
+	// _text.setString("FPS:");
+	auto lblFps = std::make_shared<tgui::Label>();
+	lblFps->setText("FPS:");
+	lblFps->setTextColor(sf::Color::Yellow);
+	_gui.add(lblFps, "lblFps");
 
 	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
@@ -87,7 +91,8 @@ void bwa::Game::run() {
 		// Calculates fps
 		if (showFpsCounter) {
 			if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
-				_text.setString("FPS: " + std::to_string(unsigned(1.f / delta)));
+				auto lblFps = _gui.get<tgui::Label>("lblFps");
+				lblFps->setText("FPS: " + std::to_string(unsigned(1.f / delta)));
 				updateFps.restart();
 			}
 		}
@@ -96,9 +101,6 @@ void bwa::Game::run() {
 		_stateHandler.draw(_window);
 		_gui.draw();
 
-		// Displays FPS if show_fps_counter is true
-		if (showFpsCounter)
-			_window.draw(_text);
 		_window.display();
 	}
 }
