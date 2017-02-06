@@ -290,7 +290,7 @@ namespace bwa {
 
 ### Variables and Parameters
 
-Variable names should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**.
+Variable names should be named using lower **[camel Case](https://en.wikipedia.org/wiki/Camel_case)**.
 They should be descriptive and self-document their purpose. This also applies to
 function and class method parameters.
 
