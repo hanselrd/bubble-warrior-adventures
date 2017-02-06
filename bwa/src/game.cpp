@@ -29,7 +29,7 @@ void bwa::Game::run() {
 	bool show_fps_counter = _lua["show_fps_counter"];
 	sf::Texture texture;
 	sf::IntRect heroRect(0, (64 * 8), (64), (64));
-	texture.loadFromFile("assets/sprites/golden_hero_female_no_shield_no_hat.png");
+	texture.loadFromFile("assets/sprites/golden_hero_female_no_shield.png");
 	sf::Sprite heroSprite(texture, heroRect);
 	heroSprite.setPosition(400, 400);
 	sf::Clock clock2;
@@ -41,23 +41,22 @@ void bwa::Game::run() {
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				_window.close();
 			_gui.handleEvent(e);
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				heroRect.top = (64 * 9);
-				heroSprite.move(-5, 0);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				heroRect.top = (64 * 11);
-				heroSprite.move(5, 0);
-			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 				heroRect.top = (64 * 8);
 				heroSprite.move(0, -5);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				heroRect.top = (64 * 9);
+				heroSprite.move(-5, 0);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 				heroRect.top = (64 * 10);
 				heroSprite.move(0, 5);
 			}
-
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				heroRect.top = (64 * 11);
+				heroSprite.move(5, 0);
+			}
 		}
 		// calculates fps
 		if (show_fps_counter) {
