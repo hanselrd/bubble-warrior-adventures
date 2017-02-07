@@ -32,27 +32,31 @@ bwa::InitState::InitState(sf::RenderWindow& window, const sol::state& lua) {
 	lblTitle2->setTextColor(sf::Color::Black);
 	_gui.add(lblTitle2);
 
+	// Constants for button location
+	constexpr unsigned BUTTON_HEIGHT = 60;
+	constexpr unsigned BUTTON_Y_OFFSET = 260;
+
 	// Play button
 	auto btnPlay = std::make_shared<tgui::Button>();
-	btnPlay->setSize(windowWidth, 50);
-	btnPlay->setPosition(0, windowHeight - 200);
+	btnPlay->setSize(windowWidth, BUTTON_HEIGHT);
+	btnPlay->setPosition(0, windowHeight - BUTTON_Y_OFFSET);
 	btnPlay->setText("Play");
 	_gui.add(btnPlay);
 
-	// Credits button
-	auto btnCredits = std::make_shared<tgui::Button>();
-	btnCredits->setSize(windowWidth, 50);
-	btnCredits->setPosition(0, windowHeight - 150);
-	btnCredits->setText("Credits");
-	_gui.add(btnCredits);
+	// Options button
+	auto btnOptions = std::make_shared<tgui::Button>();
+	btnOptions->setSize(windowWidth, BUTTON_HEIGHT);
+	btnOptions->setPosition(0, windowHeight - BUTTON_Y_OFFSET + BUTTON_HEIGHT);
+	btnOptions->setText("Options");
+	_gui.add(btnOptions);
 
-	// Quit button
-	auto btnQuit = std::make_shared<tgui::Button>();
-	btnQuit->setSize(windowWidth, 50);
-	btnQuit->setPosition(0, windowHeight - 100);
-	btnQuit->setText("Quit");
-	btnQuit->connect("pressed", [&] { window.close(); });
-	_gui.add(btnQuit);
+	// Exit button
+	auto btnExit = std::make_shared<tgui::Button>();
+	btnExit->setSize(windowWidth, BUTTON_HEIGHT);
+	btnExit->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 2));
+	btnExit->setText("Exit");
+	btnExit->connect("pressed", [&] { window.close(); });
+	_gui.add(btnExit);
 }
 
 void bwa::InitState::handleEvents(sf::Event& e) {
