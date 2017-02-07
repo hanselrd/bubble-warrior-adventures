@@ -1,5 +1,4 @@
 #include "Game.hpp" // relative header, check CONTRIBUTING.md
-#include <stdexcept>
 #include <string>
 #include <utility>
 #include "InitState.hpp"
@@ -29,21 +28,11 @@ bwa::Game::Game() {
 	sol::table sprites = assets["sprites"];
 
 	// Auto loading
-	for (const auto& font : fonts)
-		ResourceLoader<sf::Font>::load(font.second.as<std::string>());
+	// for (const auto& font : fonts)
+	//	ResourceLoader<sf::Font>::load(font.second.as<std::string>());
 
-	for (const auto& sprite : sprites)
-		ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
-
-	// Gets font from resource loader and binds it to _text
-	// auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
-	// _text.setFont(*font);
-	// _text.setFillColor(sf::Color::Yellow);
-	// _text.setString("FPS:");
-	auto lblFps = std::make_shared<tgui::Label>();
-	lblFps->setText("FPS:");
-	lblFps->setTextColor(sf::Color::Yellow);
-	_gui.add(lblFps, "lblFps");
+	// for (const auto& sprite : sprites)
+	//	ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
 
 	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
@@ -67,10 +56,18 @@ bwa::Game::Game() {
 }
 
 void bwa::Game::run() {
-	// Create the clock and set it up for the FPS counter
+	// Create the clock and set up the FPS counter
 	sf::Clock clock, updateFps;
 	float lastTime = 0.f, currentTime, delta;
-	bool showFpsCounter = _lua["config"]["show_fps_counter"];
+	bool showFpsCounter = _lua["config"]["showFpsCounter"];
+
+	if (showFpsCounter) {
+		auto lblFps = std::make_shared<tgui::Label>();
+		lblFps->setText("FPS:");
+		lblFps->setTextColor(sf::Color::Yellow);
+		lblFps->setTextSize(30);
+		_gui.add(lblFps, "lblFps");
+	}
 
 	// Normal window event loop
 	while (_window.isOpen()) {

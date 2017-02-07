@@ -16,6 +16,6 @@ config.resolution = {
 config.assets = require("assets")
 
 -- Display FPS counter
-config.show_fps_counter = true
+config.showFpsCounter = true
 
 return config
