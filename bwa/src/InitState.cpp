@@ -43,12 +43,12 @@ bwa::InitState::InitState(sf::RenderWindow& window, const sol::state& lua) {
 	btnPlay->setText("Play");
 	_gui.add(btnPlay);
 
-	// Options button
-	auto btnOptions = std::make_shared<tgui::Button>();
-	btnOptions->setSize(windowWidth, BUTTON_HEIGHT);
-	btnOptions->setPosition(0, windowHeight - BUTTON_Y_OFFSET + BUTTON_HEIGHT);
-	btnOptions->setText("Options");
-	_gui.add(btnOptions);
+	// Settings button
+	auto btnSettings = std::make_shared<tgui::Button>();
+	btnSettings->setSize(windowWidth, BUTTON_HEIGHT);
+	btnSettings->setPosition(0, windowHeight - BUTTON_Y_OFFSET + BUTTON_HEIGHT);
+	btnSettings->setText("Settings");
+	_gui.add(btnSettings);
 
 	// Credits button
 	auto btnCredits = std::make_shared<tgui::Button>();
