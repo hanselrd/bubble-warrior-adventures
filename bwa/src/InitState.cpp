@@ -44,7 +44,7 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window, 
 	btnPlay->setSize(windowWidth, BUTTON_HEIGHT);
 	btnPlay->setPosition(0, windowHeight - BUTTON_Y_OFFSET);
 	btnPlay->setText("Play");
-	btnPlay->connect("pressed", [&] {_stateHandler.pushState<PlayState>(std::ref(window)); });
+	btnPlay->connect("pressed", [&] { _stateHandler.pushState<PlayState>(std::ref(window)); });
 	_gui.add(btnPlay);
 
 	// Settings button
