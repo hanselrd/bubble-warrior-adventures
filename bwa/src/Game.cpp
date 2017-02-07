@@ -56,7 +56,6 @@ void bwa::Game::run() {
 	// Create FPS string iff showFpsCounter is true in the config
 	if (showFpsCounter) {
 		auto lblFps = std::make_shared<tgui::Label>();
-		lblFps->setText("FPS:");
 		lblFps->setTextColor(sf::Color::Yellow);
 		lblFps->setTextSize(30);
 		_gui.add(lblFps, "lblFps");
@@ -84,7 +83,7 @@ void bwa::Game::run() {
 		if (showFpsCounter) {
 			if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
 				auto lblFps = _gui.get<tgui::Label>("lblFps");
-				lblFps->setText("FPS: " + std::to_string(unsigned(1.f / delta)));
+				lblFps->setText(std::to_string(unsigned(1.f / delta)));
 				updateFps.restart();
 			}
 		}
