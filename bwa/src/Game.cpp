@@ -64,6 +64,8 @@ void bwa::Game::run() {
 
 	// Normal window event loop
 	while (_window.isOpen()) {
+		_stateHandler.handleTransitions();
+
 		sf::Event e;
 		while (_window.pollEvent(e)) {
 			if (e.type == sf::Event::Closed ||

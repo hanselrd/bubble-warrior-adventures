@@ -17,22 +17,24 @@ namespace bwa {
 		void draw(sf::RenderWindow& window);
 
 		template <typename State, typename... Args>
-		void pushState(Args&&... args) {
-			auto state = std::make_unique<State>(std::forward<Args>(args)...);
-			if (!_states.empty())
-				_states.top()->pause();
-			_states.push(std::move(state));
-		}
+		void pushState(Args&&... args);
 
-		void popState() {
-			if (!_states.empty()) {
-				_states.pop();
-				if (!_states.empty())
-					_states.top()->resume();
-			}
-		}
+		void popState();
+		void handleTransitions();
 
 	private:
+		enum class Event {
+			Null,
+			Push,
+			Pop
+		} _event;
+		std::unique_ptr<GameState> _temp;
 		std::stack<std::unique_ptr<GameState>> _states;
 	};
+
+	template<typename State, typename ...Args>
+	inline void StateHandler::pushState(Args&& ...args) {
+		_temp = std::make_unique<State>(std::ref(*this), std::forward<Args>(args)...);
+		_event = Event::Push;
+	}
 }

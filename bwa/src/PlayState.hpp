@@ -4,7 +4,7 @@
 namespace bwa {
 	class PlayState final : public GameState {
 	public:
-		PlayState(sf::RenderWindow& window);
+		PlayState(StateHandler& stateHandler, sf::RenderWindow& window);
 		PlayState(const PlayState&) = delete;
 		PlayState& operator=(const PlayState&) = delete;
 

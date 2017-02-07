@@ -32,7 +32,7 @@ namespace bwa {
 			it will be overwritten.
 		*/
 		template <typename F, typename... Args>
-		static bool loadHelper(const std::string& key, F&& f, Args&&... args) {
+		static inline bool loadHelper(const std::string& key, F&& f, Args&&... args) {
 			auto ptr = std::make_shared<T>();
 
 			/*
@@ -64,7 +64,7 @@ namespace bwa {
 			loadFromFile function ex: (sf::Texture).
 		*/
 		template <typename U = T>
-		static auto load(const std::string& filename) -> decltype(std::declval<U>().loadFromFile("")) {
+		static inline auto load(const std::string& filename) -> decltype(std::declval<U>().loadFromFile("")) {
 			return loadHelper(filename, [](U* ptr, const std::string& filename) {
 				return ptr->loadFromFile(filename);
 			}, filename);
@@ -75,7 +75,7 @@ namespace bwa {
 			openFromFile function ex: (sf::Music).
 		*/
 		template <typename U = T, int = 0>
-		static auto load(const std::string& filename) -> decltype(std::declval<U>().openFromFile("")) {
+		static inline auto load(const std::string& filename) -> decltype(std::declval<U>().openFromFile("")) {
 			return loadHelper(filename, [](U* ptr, const std::string& filename) {
 				return ptr->openFromFile(filename);
 			}, filename);
@@ -89,7 +89,7 @@ namespace bwa {
 			exists it'll fetch it from the cache. If not it'll
 			load it first and then return it to you.
 		*/
-		static std::shared_ptr<T> get(const std::string& filename) {
+		static inline std::shared_ptr<T> get(const std::string& filename) {
 			/*
 				Checks if 'filename' hasn't been loaded,
 				if it hasn't then it calls the load function

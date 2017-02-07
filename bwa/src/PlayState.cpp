@@ -1,6 +1,7 @@
 #include "PlayState.hpp"
 
-bwa::PlayState::PlayState(sf::RenderWindow& window) {
+bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
+	: GameState(stateHandler) {
 	_gui.setWindow(window);
 	auto lblName = std::make_shared<tgui::Label>();
 	lblName->setText("PlayState");
