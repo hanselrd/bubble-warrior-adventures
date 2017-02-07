@@ -7,7 +7,7 @@
 - [Introduction](#introduction)
 - [Motivation](#motivation)
 - [Development Environment](#development-environment)
-- [Developers](#developers)
+- [Contributors](#contributors)
 - [Installation](#installation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -36,7 +36,7 @@ We are using [Visual Studio Community](https://www.visualstudio.com/downloads),
 but since our libraries are cross-platform, you can easily use any editor 
 and/or operating system. **Makefile not included!**
 
-## Developers
+## Contributors
 
 - [Hansel De La Cruz](https://github.com/hanselrd)
 - [Kyle Jolicoeur](https://github.com/kjolicoeur)

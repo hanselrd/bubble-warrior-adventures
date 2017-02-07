@@ -39,7 +39,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 ### General
 
 * Everything lives inside the `bwa` namespace.
-* Curly braces should start on the same line as a class or function declaration
+* Curly braces should start on the same line of a declaration
     and end on their own line.
 
     ```cpp
@@ -47,9 +47,13 @@ Please note we have a code of conduct, please follow it in all your interactions
         ...
     } // curly brace ends on its own line.
 
-    class FooBar { // curly brace starts on same line
+    class FooBar {
         ...
-    }; // curly brace ends on its own line, don't forget the semicolon!
+    };
+
+    if (foo_bar) {
+        ...
+    }
     ```
 
 ### File Naming
@@ -155,7 +159,7 @@ using namespace std;
 
 /*
     This code offers nothing in terms of where 'map' and
-    string come from. What if we create our own 'map' and 'string'
+    'string' come from. What if we create our own 'map' and 'string'
     classes? How would we differentiate them? For this reason,
     this is not allowed and any Pull Requests containing code like this
     will be rejected.
@@ -286,7 +290,7 @@ namespace bwa {
 
 ### Variables and Parameters
 
-Variable names should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**.
+Variable names should be named using lower **[camel Case](https://en.wikipedia.org/wiki/Camel_case)**.
 They should be descriptive and self-document their purpose. This also applies to
 function and class method parameters.
 

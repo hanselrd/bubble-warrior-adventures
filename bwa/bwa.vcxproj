@@ -154,12 +154,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameState.cpp" />
+    <ClCompile Include="src\InitState.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PlayState.cpp" />
+    <ClCompile Include="src\StateHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\GameState.hpp" />
+    <ClInclude Include="src\InitState.hpp" />
+    <ClInclude Include="src\PlayState.hpp" />
     <ClInclude Include="src\ResourceLoader.hpp" />
+    <ClInclude Include="src\StateHandler.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

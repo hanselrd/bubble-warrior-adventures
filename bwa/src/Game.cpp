@@ -1,8 +1,7 @@
 #include "Game.hpp" // relative header, check CONTRIBUTING.md
-#include <stdexcept>
 #include <string>
 #include <utility>
-#include "ResourceLoader.hpp"
+#include "InitState.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
@@ -27,19 +26,6 @@ bwa::Game::Game() {
 	sol::table fonts = assets["fonts"];
 	sol::table sprites = assets["sprites"];
 
-	// Auto loading
-	for (const auto& font : fonts)
-		ResourceLoader<sf::Font>::load(font.second.as<std::string>());
-
-	for (const auto& sprite : sprites)
-		ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
-
-	// Gets font from resource loader and binds it to _text
-	auto font = ResourceLoader<sf::Font>::get(_lua["config"]["assets"]["fonts"][1]);
-	_text.setFont(*font);
-	_text.setFillColor(sf::Color::Yellow);
-	_text.setString("FPS:");
-
 	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
 		resolution["x"].get<unsigned>(), 
@@ -56,13 +42,25 @@ bwa::Game::Game() {
 	// Lock FPS to monitor's refresh rate and binds _window to _gui
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
+
+	// Sets initial state
+	_stateHandler.pushState<InitState>(std::ref(_window), std::ref(_lua));
 }
 
 void bwa::Game::run() {
-	// Create the clock and set it up for the FPS counter
-	sf::Clock clock, update_fps;
-	float last_time = 0.f, current_time, fps;
-	bool show_fps_counter = _lua["config"]["show_fps_counter"];
+	// Create the clock and set up the FPS counter
+	sf::Clock clock, updateFps;
+	float lastTime = 0.f, currentTime, delta;
+	bool showFpsCounter = _lua["config"]["showFpsCounter"];
+
+	// Create FPS string iff showFpsCounter is true in the config
+	if (showFpsCounter) {
+		auto lblFps = std::make_shared<tgui::Label>();
+		lblFps->setText("FPS:");
+		lblFps->setTextColor(sf::Color::Yellow);
+		lblFps->setTextSize(30);
+		_gui.add(lblFps, "lblFps");
+	}
 
 	// Normal window event loop
 	while (_window.isOpen()) {
@@ -71,25 +69,28 @@ void bwa::Game::run() {
 			if (e.type == sf::Event::Closed ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				_window.close();
+			_stateHandler.handleEvents(e);
 			_gui.handleEvent(e);
 		}
 
-		// Calculates fps
-		if (show_fps_counter) {
-			current_time = clock.restart().asSeconds();
-			fps = 1.f / (current_time - last_time);
-			if (update_fps.getElapsedTime() > sf::seconds(1.f)) {
-				_text.setString("FPS: " + std::to_string(unsigned(fps)));
-				update_fps.restart();
+		// Calculate delta and pass to current state's update
+		currentTime = clock.restart().asSeconds();
+		delta = currentTime - lastTime;
+		_stateHandler.update(delta);
+
+		// Update FPS string iff showFpsCounter is true
+		if (showFpsCounter) {
+			if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
+				auto lblFps = _gui.get<tgui::Label>("lblFps");
+				lblFps->setText("FPS: " + std::to_string(unsigned(1.f / delta)));
+				updateFps.restart();
 			}
 		}
     
+		// Clear and render to the window
 		_window.clear();
+		_stateHandler.draw(_window);
 		_gui.draw();
-
-		// Displays FPS if show_fps_counter is true
-		if (show_fps_counter)
-			_window.draw(_text);
 		_window.display();
 	}
 }
