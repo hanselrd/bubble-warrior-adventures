@@ -27,7 +27,7 @@ bwa::Game::Game() {
 	sol::table fonts = assets["fonts"];
 	sol::table sprites = assets["sprites"];
 
-	// Auto loading
+	// Auto loading (commented out for speed since not used right now)
 	// for (const auto& font : fonts)
 	//	ResourceLoader<sf::Font>::load(font.second.as<std::string>());
 
@@ -61,6 +61,7 @@ void bwa::Game::run() {
 	float lastTime = 0.f, currentTime, delta;
 	bool showFpsCounter = _lua["config"]["showFpsCounter"];
 
+	// Create FPS string iff showFpsCounter is true in the config
 	if (showFpsCounter) {
 		auto lblFps = std::make_shared<tgui::Label>();
 		lblFps->setText("FPS:");
@@ -85,7 +86,7 @@ void bwa::Game::run() {
 		delta = currentTime - lastTime;
 		_stateHandler.update(delta);
 
-		// Calculates fps
+		// Update FPS string iff showFpsCounter is true
 		if (showFpsCounter) {
 			if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
 				auto lblFps = _gui.get<tgui::Label>("lblFps");
@@ -94,6 +95,7 @@ void bwa::Game::run() {
 			}
 		}
     
+		// Clear and render to the window
 		_window.clear();
 		_stateHandler.draw(_window);
 		_gui.draw();
