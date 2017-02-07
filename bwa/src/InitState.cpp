@@ -1,6 +1,9 @@
 #include "InitState.hpp"
+#include "PlayState.hpp"
+#include "StateHandler.hpp"
 
-bwa::InitState::InitState(sf::RenderWindow& window, const sol::state& lua) {
+bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window, const sol::state& lua)
+	: GameState(stateHandler) {
 	_gui.setWindow(window);
 
 	// Pulls the window dimensions from the window
@@ -41,6 +44,7 @@ bwa::InitState::InitState(sf::RenderWindow& window, const sol::state& lua) {
 	btnPlay->setSize(windowWidth, BUTTON_HEIGHT);
 	btnPlay->setPosition(0, windowHeight - BUTTON_Y_OFFSET);
 	btnPlay->setText("Play");
+	btnPlay->connect("pressed", [&] {_stateHandler.pushState<PlayState>(std::ref(window)); });
 	_gui.add(btnPlay);
 
 	// Settings button

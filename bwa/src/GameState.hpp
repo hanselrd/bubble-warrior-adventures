@@ -3,9 +3,11 @@
 #include <TGUI/TGUI.hpp>
 
 namespace bwa {
+	class StateHandler;
+
 	class GameState {
 	public:
-		GameState() = default;
+		GameState(StateHandler& stateHandler);
 		GameState(const GameState&) = delete;
 		GameState& operator=(const GameState&) = delete;
 
@@ -17,5 +19,6 @@ namespace bwa {
 
 	protected:
 		tgui::Gui _gui;
+		StateHandler& _stateHandler;
 	};
 }
