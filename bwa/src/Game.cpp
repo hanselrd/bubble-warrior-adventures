@@ -2,7 +2,6 @@
 #include <string>
 #include <utility>
 #include "InitState.hpp"
-#include "ResourceLoader.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
@@ -27,13 +26,6 @@ bwa::Game::Game() {
 	sol::table fonts = assets["fonts"];
 	sol::table sprites = assets["sprites"];
 
-	// Auto loading (commented out for speed since not used right now)
-	// for (const auto& font : fonts)
-	//	ResourceLoader<sf::Font>::load(font.second.as<std::string>());
-
-	// for (const auto& sprite : sprites)
-	//	ResourceLoader<sf::Texture>::load(sprite.second.as<std::string>());
-
 	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
 		resolution["x"].get<unsigned>(), 
@@ -52,7 +44,7 @@ bwa::Game::Game() {
 	_gui.setWindow(_window);
 
 	// Sets initial state
-	_stateHandler.pushState<InitState>(std::ref(_window));
+	_stateHandler.pushState<InitState>(std::ref(_window), std::ref(_lua));
 }
 
 void bwa::Game::run() {
@@ -99,7 +91,6 @@ void bwa::Game::run() {
 		_window.clear();
 		_stateHandler.draw(_window);
 		_gui.draw();
-
 		_window.display();
 	}
 }

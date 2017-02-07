@@ -1,5 +1,4 @@
 #include "PlayState.hpp"
-#include <iostream>
 
 bwa::PlayState::PlayState(sf::RenderWindow& window) {
 	_gui.setWindow(window);

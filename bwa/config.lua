@@ -18,4 +18,10 @@ config.assets = require("assets")
 -- Display FPS counter
 config.showFpsCounter = true
 
+-- InitState settings
+config.InitState = {
+	-- Background image
+	background = config.assets["sprites"][9]
+}
+
 return config
