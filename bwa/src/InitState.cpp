@@ -33,8 +33,8 @@ bwa::InitState::InitState(sf::RenderWindow& window, const sol::state& lua) {
 	_gui.add(lblTitle2);
 
 	// Constants for button location
-	constexpr unsigned BUTTON_HEIGHT = 60;
-	constexpr unsigned BUTTON_Y_OFFSET = 260;
+	constexpr unsigned BUTTON_HEIGHT = 50;
+	constexpr unsigned BUTTON_Y_OFFSET = 240;
 
 	// Play button
 	auto btnPlay = std::make_shared<tgui::Button>();
@@ -50,10 +50,17 @@ bwa::InitState::InitState(sf::RenderWindow& window, const sol::state& lua) {
 	btnOptions->setText("Options");
 	_gui.add(btnOptions);
 
+	// Credits button
+	auto btnCredits = std::make_shared<tgui::Button>();
+	btnCredits->setSize(windowWidth, BUTTON_HEIGHT);
+	btnCredits->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 2));
+	btnCredits->setText("Credits");
+	_gui.add(btnCredits);
+
 	// Exit button
 	auto btnExit = std::make_shared<tgui::Button>();
 	btnExit->setSize(windowWidth, BUTTON_HEIGHT);
-	btnExit->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 2));
+	btnExit->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 3));
 	btnExit->setText("Exit");
 	btnExit->connect("pressed", [&] { window.close(); });
 	_gui.add(btnExit);
