@@ -218,8 +218,9 @@ namespace bwa {
 
 #### Members
 
-Class members should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_case)**
-and prefixed by an `_` (underscore). Members should always go below methods
+Class members should be named using lower **[camelCase](https://en.wikipedia.org/wiki/Camel_case)**,
+except for constants, and prefixed by an `_` (underscore).
+Members should always go below methods.
 
 ```cpp
 namespace bwa {
@@ -227,8 +228,8 @@ namespace bwa {
     protected:
         static const int _SOME_STATIC_CONST_INT;
         const int _SOME_CONST_INT;
-        static int _some_static_int;
-        int _some_int;
+        static int _someStaticInt;
+        int _someInt;
     };
 }
 ```
