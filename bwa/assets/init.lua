@@ -1,4 +1,3 @@
-local utility = require("utility")
 local dir = "assets/"
 
 local assets = {}

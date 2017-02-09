@@ -12,8 +12,12 @@ bwa::Game::Game() {
 		sol::lib::table,
 		sol::lib::string);
 
-	// Loads the 'utility' module into lua
-	_lua.require_file("utility", "scripts/utility.lua");
+	// Loads the 'utility' module into lua with 'prepend' function
+	auto utility = _lua.create_named_table("utility");
+	utility.set_function("prepend", [&](sol::table& t, const std::string& str, sol::this_state thislua) {
+		for (auto& item : t)
+			t[item.first] = sol::make_object(thislua, str + item.second.as<std::string>());
+	});
 
 	// Loads the config into the sol::state
 	_lua.require_file("config", "config.lua");
