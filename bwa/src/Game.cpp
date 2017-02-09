@@ -12,8 +12,12 @@ bwa::Game::Game() {
 		sol::lib::table,
 		sol::lib::string);
 
-	// Loads the 'utility' module into lua
-	_lua.require_file("utility", "scripts/utility.lua");
+	// Loads the 'utility' module into lua with 'prepend' function
+	auto utility = _lua.create_named_table("utility");
+	utility.set_function("prepend", [&](sol::table& t, const std::string& str, sol::this_state thislua) {
+		for (auto& item : t)
+			t[item.first] = sol::make_object(thislua, str + item.second.as<std::string>());
+	});
 
 	// Loads the config into the sol::state
 	_lua.require_file("config", "config.lua");
@@ -56,7 +60,6 @@ void bwa::Game::run() {
 	// Create FPS string iff showFpsCounter is true in the config
 	if (showFpsCounter) {
 		auto lblFps = std::make_shared<tgui::Label>();
-		lblFps->setText("FPS:");
 		lblFps->setTextColor(sf::Color::Yellow);
 		lblFps->setTextSize(30);
 		_gui.add(lblFps, "lblFps");
@@ -84,7 +87,7 @@ void bwa::Game::run() {
 		if (showFpsCounter) {
 			if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
 				auto lblFps = _gui.get<tgui::Label>("lblFps");
-				lblFps->setText("FPS: " + std::to_string(unsigned(1.f / delta)));
+				lblFps->setText(std::to_string(unsigned(1.f / delta)));
 				updateFps.restart();
 			}
 		}

@@ -1,5 +1,3 @@
-local utility = require("utility")
-
 --[[
     All the sprites in this directory,
     eventually this will also store information

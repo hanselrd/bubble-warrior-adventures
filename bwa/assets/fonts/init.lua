@@ -1,5 +1,3 @@
-local utility = require("utility")
-
 --[[
     All the fonts in this directory.
     Nothing really fancy going on here.
