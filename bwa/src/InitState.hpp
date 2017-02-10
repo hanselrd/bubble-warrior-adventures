@@ -5,7 +5,7 @@
 namespace bwa {
 	class InitState final : public GameState {
 	public:
-		InitState(StateHandler& stateHandler, sf::RenderWindow& window, const sol::state& lua);
+		InitState(StateHandler& stateHandler, sf::RenderWindow& window, sol::state& lua);
 		InitState(const InitState&) = delete;
 		InitState& operator=(const InitState&) = delete;
 

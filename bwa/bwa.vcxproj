@@ -89,12 +89,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\sol2;$(ProjectDir)dependencies\TGUI-0.7\include;$(ProjectDir)dependencies\SFML-2.4.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)deps\cppcodec;$(ProjectDir)deps\pugixml\src;$(ProjectDir)deps\sol2;$(ProjectDir)deps\TGUI-0.7\include;$(ProjectDir)deps\SFML-2.4.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\SFML-2.4.1\lib;$(ProjectDir)dependencies\TGUI-0.7\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)deps\SFML-2.4.1\lib;$(ProjectDir)deps\TGUI-0.7\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;tgui-s.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -120,14 +120,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\sol2;$(ProjectDir)dependencies\TGUI-0.7\include;$(ProjectDir)dependencies\SFML-2.4.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)deps\cppcodec;$(ProjectDir)deps\pugixml\src;$(ProjectDir)deps\sol2;$(ProjectDir)deps\TGUI-0.7\include;$(ProjectDir)deps\SFML-2.4.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\SFML-2.4.1\lib;$(ProjectDir)dependencies\TGUI-0.7\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)deps\SFML-2.4.1\lib;$(ProjectDir)deps\TGUI-0.7\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;tgui-s.lib;sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;sfml-audio-s.lib;sfml-network-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -153,6 +153,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="deps\pugixml\src\pugixml.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\InitState.cpp" />
@@ -161,6 +162,8 @@
     <ClCompile Include="src\StateHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="deps\pugixml\src\pugiconfig.hpp" />
+    <ClInclude Include="deps\pugixml\src\pugixml.hpp" />
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\GameState.hpp" />
     <ClInclude Include="src\InitState.hpp" />

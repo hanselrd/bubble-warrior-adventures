@@ -1,7 +1,8 @@
 #include "GameState.hpp"
 
-bwa::GameState::GameState(bwa::StateHandler& stateHandler)
-	: _stateHandler(stateHandler) {}
+bwa::GameState::GameState(bwa::StateHandler& stateHandler, sol::state& lua)
+	: _stateHandler(stateHandler)
+	, _lua(lua) {}
 
 void bwa::GameState::pause() {
 	// default pause behavior

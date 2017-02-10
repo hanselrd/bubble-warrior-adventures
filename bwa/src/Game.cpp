@@ -14,7 +14,7 @@ bwa::Game::Game() {
 
 	// Loads the 'utility' module into lua with 'prepend' function
 	auto utility = _lua.create_named_table("utility");
-	utility.set_function("prepend", [&](sol::table& t, const std::string& str, sol::this_state thislua) {
+	utility.set_function("prepend", [](sol::table& t, const std::string& str, sol::this_state thislua) {
 		for (auto& item : t)
 			t[item.first] = sol::make_object(thislua, str + item.second.as<std::string>());
 	});
