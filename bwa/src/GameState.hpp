@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <sol.hpp>
 #include <TGUI/TGUI.hpp>
 
 namespace bwa {
@@ -8,7 +7,7 @@ namespace bwa {
 
 	class GameState {
 	public:
-		GameState(StateHandler& stateHandler, sol::state& lua);
+		GameState(StateHandler& stateHandler);
 		GameState(const GameState&) = delete;
 		GameState& operator=(const GameState&) = delete;
 
@@ -19,7 +18,6 @@ namespace bwa {
 		virtual void resume();
 
 	protected:
-		sol::state& _lua;
 		tgui::Gui _gui;
 		StateHandler& _stateHandler;
 	};

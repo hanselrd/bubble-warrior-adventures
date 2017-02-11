@@ -1,6 +1,7 @@
 #include "PlayState.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <pugixml.hpp>
+#include <sol.hpp>
 #include <algorithm>
 #include <cctype>
 #include <cstdint>
@@ -9,9 +10,12 @@
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
 
-bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window, sol::state& lua)
-	: GameState(stateHandler, lua) {
+bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
+	: GameState(stateHandler) {
 	_gui.setWindow(window);
+
+	// Gets the lua state from ResourceCache
+	auto luaConfig = ResourceCache<sol::state>::get("config");
 
 	auto lblName = std::make_shared<tgui::Label>();
 	lblName->setText("PlayState");
@@ -24,7 +28,7 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window, 
 	btnGoBack->setText("Main Menu");
 	btnGoBack->connect("pressed", [&] { _stateHandler.popState(); });
 	_gui.add(btnGoBack, "btnGoBack");
-	
+
 	/*pugi::xml_document doc;
 	auto result = doc.load_file("assets/maps/world.tmx");
 	if (result) {

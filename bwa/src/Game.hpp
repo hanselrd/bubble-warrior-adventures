@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <sol.hpp>
 #include <TGUI/TGUI.hpp>
 #include <memory>
 #include <string>
@@ -17,7 +16,6 @@ namespace bwa {
 
 	private:
 		sf::RenderWindow _window;
-		sol::state _lua;
 		tgui::Gui _gui;
 		StateHandler _stateHandler;
 	};

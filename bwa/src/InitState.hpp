@@ -1,11 +1,10 @@
 #pragma once
-#include <sol.hpp>
 #include "GameState.hpp"
 
 namespace bwa {
 	class InitState final : public GameState {
 	public:
-		InitState(StateHandler& stateHandler, sf::RenderWindow& window, sol::state& lua);
+		InitState(StateHandler& stateHandler, sf::RenderWindow& window);
 		InitState(const InitState&) = delete;
 		InitState& operator=(const InitState&) = delete;
 

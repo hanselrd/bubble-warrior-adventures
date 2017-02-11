@@ -1,128 +1,46 @@
 #pragma once
-#include <sol.hpp>
-#include <functional>
-#include <iostream>
 #include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 #include <utility>
-
-/*
-	ResourceCache utility class.
-
-	Example usage:
-		auto texture = bwa::ResourceCache<sf::Texture>::get("my_image.png");
-		sf::Sprite sprite;
-		sprite.setTexture(*texture);
-
-	You can also preload resources into the cache and get them later:
-		bool success = bwa::ResourceCache<sf::Texture>::load("my_image.png");
-*/
 
 namespace bwa {
 	template <typename T>
-	class ResourceCache final {
-	private:
+	struct ResourceCache final {
 		/*
-			Private internal helper that
-			lets you store a resource under 'key'
-			in the _cache. If it already exists
-			it will be overwritten.
+			Creates a resource with the arguments passed in and
+			stores it in the cache under the string 'key'. If 'key'
+			is already taken then it will overwrite it.
 		*/
-		template <typename F, typename... Args>
-		static inline bool loadHelper(const std::string& key, F&& f, Args&&... args) {
-			auto ptr = std::make_shared<T>();
-
-			/*
-				Calls 'f' using the arguments, if any, in 'Args' and
-				stores whether it was successful or not in the variable
-				success. This also ensures that 'f' must return a bool
-				or a type convertible to one.
-			*/
-			bool success = std::forward<F>(f)(ptr.get(), std::forward<Args>(args)...);
-			
-			/*
-				If call to 'f' was successfull, store the loaded
-				resource in _cache.
-			*/
-			if (success) {
-				_cache.insert(std::make_pair(key, ptr));
-				/*
-					For debugging, will be removed.
-				*/
-				std::cout << "Loaded: " << key << " as '" << typeid(T).name() << "'" << std::endl;
-			}
-
-			return success;
-		}
-
-	public:
-		/*
-			Overload for SFML objects that export a
-			loadFromFile function ex: (sf::Texture).
-		*/
-		template <typename U = T>
-		static inline auto load(const std::string& filename) -> decltype(std::declval<U>().loadFromFile("")) {
-			return loadHelper(filename, [](U* ptr, const std::string& filename) {
-				return ptr->loadFromFile(filename);
-			}, filename);
+		template <typename... Args>
+		static inline std::shared_ptr<T> create(const std::string& key, Args&&... args) {
+			auto res = std::make_shared<T>(std::forward<Args>(args)...);
+			_cache.insert(std::make_pair(key, res));
+			return std::move(res);
 		}
 
 		/*
-			Overload for SFML objects that export a
-			openFromFile function ex: (sf::Music).
+			Checks if a resource exists under the string 'key'.
 		*/
-		template <typename U = T, int = 0>
-		static inline auto load(const std::string& filename) -> decltype(std::declval<U>().openFromFile("")) {
-			return loadHelper(filename, [](U* ptr, const std::string& filename) {
-				return ptr->openFromFile(filename);
-			}, filename);
+		static inline bool exists(const std::string& key) {
+			return _cache.count(key) != 0;
 		}
 
 		/*
-			Unlike the load functions, which only loads
-			the resource and doesn't return it, this function
-			returns a pointer to your resource and it
-			can be shared throughout the game. If the resource
-			exists it'll fetch it from the cache. If not it'll
-			load it first and then return it to you.
+			Gets a resource under the string 'key'. If it doesn't exist,
+			an exception is thrown.
 		*/
-		static inline std::shared_ptr<T> get(const std::string& filename) {
-			/*
-				Checks if 'filename' hasn't been loaded,
-				if it hasn't then it calls the load function
-				which will go to the correct overload depending
-				on type T.
-			*/
-			if (!_cache.count(filename))
-				/*
-					Checks if load was successful, if not,
-					throws 'std::runtime_error'.
-				*/
-				if (!load(filename))
-					throw std::runtime_error("Could not load: " + filename);
-			
-			/*
-				Returns the resource from the cache.
-			*/
-			return _cache.at(filename);
+		static inline std::shared_ptr<T> get(const std::string& key) {
+			if (!exists(key))
+				throw std::runtime_error("Could not get: '" + key + "'" + " as '" + typeid(T).name() + "'");
+			return _cache.at(key);
 		}
 
 	private:
-		/*
-			ResourceCache checks this map with the specific
-			type you used to instantiate it for a string equal to
-			the filename. If it finds it, it will return a resource.
-		*/
 		static std::map<std::string, std::shared_ptr<T>> _cache;
 	};
 
-	/*
-		Instantiates the static _cache in ResourceCache
-		by calling its default constructor.
-	*/
 	template <typename T>
 	std::map<std::string, std::shared_ptr<T>> ResourceCache<T>::_cache;
 }
