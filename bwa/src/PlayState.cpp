@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <functional>
 #include <vector>
-#include "ResourceLoader.hpp"
+#include "ResourceCache.hpp"
 #include "StateHandler.hpp"
 
 bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window, sol::state& lua)
@@ -24,8 +24,8 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window, 
 	btnGoBack->setText("Main Menu");
 	btnGoBack->connect("pressed", [&] { _stateHandler.popState(); });
 	_gui.add(btnGoBack, "btnGoBack");
-
-	pugi::xml_document doc;
+	
+	/*pugi::xml_document doc;
 	auto result = doc.load_file("assets/maps/world.tmx");
 	if (result) {
 		for (const auto& layer : doc.child("map").children("layer")) {
@@ -42,7 +42,7 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window, 
 		for (const auto& it : map) {
 			std::cout << it.attribute("name").as_string() << std::endl;
 		}
-	}
+	}*/
 }
 
 void bwa::PlayState::handleEvents(sf::Event& e) {

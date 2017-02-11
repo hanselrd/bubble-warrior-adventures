@@ -1,4 +1,5 @@
 #pragma once
+#include <sol.hpp>
 #include <functional>
 #include <iostream>
 #include <map>
@@ -9,21 +10,20 @@
 #include <utility>
 
 /*
-	ResourceLoader utility class.
-	Currently only supports SFML objects.
+	ResourceCache utility class.
 
 	Example usage:
-		auto texture = bwa::ResourceLoader<sf::Texture>::get("my_image.png");
+		auto texture = bwa::ResourceCache<sf::Texture>::get("my_image.png");
 		sf::Sprite sprite;
 		sprite.setTexture(*texture);
 
 	You can also preload resources into the cache and get them later:
-		bool success = bwa::ResourceLoader<sf::Texture>::load("my_image.png");
+		bool success = bwa::ResourceCache<sf::Texture>::load("my_image.png");
 */
 
 namespace bwa {
 	template <typename T>
-	class ResourceLoader final {
+	class ResourceCache final {
 	private:
 		/*
 			Private internal helper that
@@ -112,7 +112,7 @@ namespace bwa {
 
 	private:
 		/*
-			ResourceLoader checks this map with the specific
+			ResourceCache checks this map with the specific
 			type you used to instantiate it for a string equal to
 			the filename. If it finds it, it will return a resource.
 		*/
@@ -120,9 +120,9 @@ namespace bwa {
 	};
 
 	/*
-		Instantiates the static _cache in ResourceLoader
+		Instantiates the static _cache in ResourceCache
 		by calling its default constructor.
 	*/
 	template <typename T>
-	std::map<std::string, std::shared_ptr<T>> ResourceLoader<T>::_cache;
+	std::map<std::string, std::shared_ptr<T>> ResourceCache<T>::_cache;
 }

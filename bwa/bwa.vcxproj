@@ -168,7 +168,7 @@
     <ClInclude Include="src\GameState.hpp" />
     <ClInclude Include="src\InitState.hpp" />
     <ClInclude Include="src\PlayState.hpp" />
-    <ClInclude Include="src\ResourceLoader.hpp" />
+    <ClInclude Include="src\ResourceCache.hpp" />
     <ClInclude Include="src\StateHandler.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
