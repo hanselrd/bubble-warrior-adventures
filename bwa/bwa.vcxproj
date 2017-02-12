@@ -160,6 +160,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\StateHandler.cpp" />
+    <ClCompile Include="src\Tmx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\pugixml\src\pugiconfig.hpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="src\Game.hpp" />
     <ClInclude Include="src\GameState.hpp" />
     <ClInclude Include="src\InitState.hpp" />
+    <ClInclude Include="src\Tmx.hpp" />
     <ClInclude Include="src\PlayState.hpp" />
     <ClInclude Include="src\ResourceCache.hpp" />
     <ClInclude Include="src\StateHandler.hpp" />

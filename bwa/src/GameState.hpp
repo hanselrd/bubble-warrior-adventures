@@ -7,7 +7,7 @@ namespace bwa {
 
 	class GameState {
 	public:
-		GameState(StateHandler& stateHandler);
+		explicit GameState(StateHandler& stateHandler);
 		GameState(const GameState&) = delete;
 		GameState& operator=(const GameState&) = delete;
 

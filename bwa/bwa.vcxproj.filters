@@ -43,6 +43,9 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tmx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.hpp">
@@ -67,6 +70,9 @@
       <Filter>pugixml</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceCache.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tmx.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

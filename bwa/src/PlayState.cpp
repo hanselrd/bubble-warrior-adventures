@@ -1,14 +1,8 @@
 #include "PlayState.hpp"
-#include <cppcodec/base64_default_rfc4648.hpp>
-#include <pugixml.hpp>
 #include <sol.hpp>
-#include <algorithm>
-#include <cctype>
-#include <cstdint>
-#include <functional>
-#include <vector>
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
+#include "Tmx.hpp"
 
 bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
@@ -37,28 +31,12 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	_view.setSize(window.getSize().x, window.getSize().y);
 	_view.zoom(0.5);
 
-	pugi::xml_document doc;
-	auto result = doc.load_file("assets/maps/world.tmx");
-	if (result) {
-		for (const auto& node : doc.child("map")) {
-			std::cout << node.attribute("name").as_string() << std::endl;
-		}
-	}
-
-	/*for (const auto& layer : doc.child("map").children("layer")) {
-		std::string data = layer.child("data").child_value();
-		data.erase(std::remove_if(std::begin(data), std::end(data), std::bind(std::isspace<char>, std::placeholders::_1, std::locale::classic())), std::end(data));
-		std::vector<std::uint8_t> decoded = base64::decode(data);
-		std::vector<std::uint32_t> gids(decoded.size() / 4);
-		std::memcpy(gids.data(), decoded.data(), decoded.size());
-		for (auto &gid : gids)
-			std::cout << gid << " ";
-		std::cout << std::endl;
-	}
-	auto map = doc.child("map");
-	for (const auto& it : map) {
-		std::cout << it.attribute("name").as_string() << std::endl;
-	}*/
+	// change to use luaConfig eventually
+	auto tmxWorld = ResourceCache<tmx::Map>::create("world", "assets/maps/world.tmx");
+	std::cout << tmxWorld->getWidth() << std::endl;
+	std::cout << tmxWorld->getHeight() << std::endl;
+	std::cout << tmxWorld->getTileWidth() << std::endl;
+	std::cout << tmxWorld->getTileHeight() << std::endl;
 }
 
 void bwa::PlayState::handleEvent(sf::Event& e) {

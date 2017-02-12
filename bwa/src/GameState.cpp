@@ -1,6 +1,6 @@
 #include "GameState.hpp"
 
-bwa::GameState::GameState(bwa::StateHandler& stateHandler)
+bwa::GameState::GameState(StateHandler& stateHandler)
 	: _stateHandler(stateHandler) {}
 
 void bwa::GameState::pause() {

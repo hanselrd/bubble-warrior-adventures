@@ -4,7 +4,7 @@
 namespace bwa {
 	class InitState final : public GameState {
 	public:
-		InitState(StateHandler& stateHandler, sf::RenderWindow& window);
+		explicit InitState(StateHandler& stateHandler, sf::RenderWindow& window);
 		InitState(const InitState&) = delete;
 		InitState& operator=(const InitState&) = delete;
 
