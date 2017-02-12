@@ -50,6 +50,9 @@ bwa::Game::Game() {
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
 
+	// Loads the GUI theme
+	ResourceCache<tgui::Theme>::create("default", "assets/themes/Black.txt");
+
 	// Sets initial state
 	_stateHandler.pushState<InitState>(std::ref(_window));
 }
@@ -65,7 +68,8 @@ void bwa::Game::run() {
 
 	// Create FPS string iff showFpsCounter is true in the config
 	if (showFpsCounter) {
-		auto lblFps = std::make_shared<tgui::Label>();
+		auto theme = ResourceCache<tgui::Theme>::get("default");
+		tgui::Label::Ptr lblFps = theme->load("Label");
 		lblFps->setTextColor(sf::Color::Yellow);
 		lblFps->setTextSize(30);
 		_gui.add(lblFps, "lblFps");

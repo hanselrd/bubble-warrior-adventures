@@ -15,13 +15,16 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	auto windowWidth = tgui::bindWidth(_gui);
 	auto windowHeight = tgui::bindHeight(_gui);
 
+	// Gets the default theme from the ResourceCache
+	auto theme = ResourceCache<tgui::Theme>::get("default");
+
 	// To be used for the background of the window
 	auto background = std::make_shared<tgui::Picture>();
 	background->setTexture((*luaConfig)["config"]["InitState"]["background"].get<std::string>());
 	_gui.add(background);
 
 	// "Bubble Warrior" text component
-	auto lblTitle1 = std::make_shared<tgui::Label>();
+	tgui::Label::Ptr lblTitle1 = theme->load("Label");
 	lblTitle1->setTextSize(72);
 	lblTitle1->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
 	lblTitle1->setSize(windowWidth, 500);
@@ -31,7 +34,7 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	_gui.add(lblTitle1);
 
 	// "Adventures" text component
-	auto lblTitle2 = std::make_shared<tgui::Label>();
+	tgui::Label::Ptr lblTitle2 = theme->load("Label");
 	lblTitle2->setTextSize(72);
 	lblTitle2->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
 	lblTitle2->setSize(windowWidth, 500);
@@ -45,31 +48,31 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	constexpr unsigned BUTTON_Y_OFFSET = 240;
 
 	// Play button
-	auto btnPlay = std::make_shared<tgui::Button>();
-	btnPlay->setSize(windowWidth, BUTTON_HEIGHT);
+	tgui::Button::Ptr btnPlay = theme->load("Button");
+	btnPlay->setSize(windowWidth / 2, BUTTON_HEIGHT);
 	btnPlay->setPosition(0, windowHeight - BUTTON_Y_OFFSET);
 	btnPlay->setText("Play");
 	btnPlay->connect("pressed", [&] { _stateHandler.pushState<PlayState>(std::ref(window)); });
 	_gui.add(btnPlay);
 
 	// Settings button
-	auto btnSettings = std::make_shared<tgui::Button>();
-	btnSettings->setSize(windowWidth, BUTTON_HEIGHT);
-	btnSettings->setPosition(0, windowHeight - BUTTON_Y_OFFSET + BUTTON_HEIGHT);
+	tgui::Button::Ptr btnSettings = theme->load("Button");
+	btnSettings->setSize(windowWidth / 2, BUTTON_HEIGHT);
+	btnSettings->setPosition(windowWidth / 2, windowHeight - BUTTON_Y_OFFSET + BUTTON_HEIGHT);
 	btnSettings->setText("Settings");
 	_gui.add(btnSettings);
 
 	// Credits button
-	auto btnCredits = std::make_shared<tgui::Button>();
-	btnCredits->setSize(windowWidth, BUTTON_HEIGHT);
+	tgui::Button::Ptr btnCredits = theme->load("Button");
+	btnCredits->setSize(windowWidth / 2, BUTTON_HEIGHT);
 	btnCredits->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 2));
 	btnCredits->setText("Credits");
 	_gui.add(btnCredits);
 
 	// Exit button
-	auto btnExit = std::make_shared<tgui::Button>();
-	btnExit->setSize(windowWidth, BUTTON_HEIGHT);
-	btnExit->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 3));
+	tgui::Button::Ptr btnExit = theme->load("Button");
+	btnExit->setSize(windowWidth / 2, BUTTON_HEIGHT);
+	btnExit->setPosition(windowWidth / 2, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 3));
 	btnExit->setText("Exit");
 	btnExit->connect("pressed", [&] { window.close(); });
 	_gui.add(btnExit);
