@@ -8,7 +8,7 @@ namespace bwa {
 		InitState(const InitState&) = delete;
 		InitState& operator=(const InitState&) = delete;
 
-		void handleEvents(sf::Event& e) override;
+		void handleEvent(sf::Event& e) override;
 		void update(float delta) override;
 		void draw(sf::RenderWindow& window) override;
 	};

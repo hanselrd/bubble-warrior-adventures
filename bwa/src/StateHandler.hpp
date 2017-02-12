@@ -12,7 +12,7 @@ namespace bwa {
 		StateHandler(const StateHandler&) = delete;
 		StateHandler& operator=(const StateHandler&) = delete;
 
-		void handleEvents(sf::Event& e);
+		void handleEvent(sf::Event& e);
 		void update(float delta);
 		void draw(sf::RenderWindow& window);
 
@@ -20,7 +20,7 @@ namespace bwa {
 		void pushState(Args&&... args);
 
 		void popState();
-		void handleTransitions();
+		void handleTransition();
 
 	private:
 		enum class Event {

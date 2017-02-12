@@ -1,8 +1,8 @@
 #include "StateHandler.hpp"
 
-void bwa::StateHandler::handleEvents(sf::Event& e) {
+void bwa::StateHandler::handleEvent(sf::Event& e) {
 	if (!_states.empty())
-		_states.top()->handleEvents(e);
+		_states.top()->handleEvent(e);
 }
 
 void bwa::StateHandler::update(float delta) {
@@ -19,7 +19,7 @@ void bwa::StateHandler::popState() {
 	_event = Event::Pop;
 }
 
-void bwa::StateHandler::handleTransitions() {
+void bwa::StateHandler::handleTransition() {
 	switch (_event) {
 	case Event::Push:
 		if (!_states.empty())

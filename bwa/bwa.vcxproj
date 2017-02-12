@@ -157,7 +157,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\InitState.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\StateHandler.cpp" />
   </ItemGroup>

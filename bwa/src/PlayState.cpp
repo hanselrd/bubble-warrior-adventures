@@ -17,17 +17,24 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	// Gets the lua state from ResourceCache
 	auto luaConfig = ResourceCache<sol::state>::get("config");
 
-	auto lblName = std::make_shared<tgui::Label>();
-	lblName->setText("PlayState");
-	lblName->setTextSize(40);
-	lblName->setPosition(0, 300);
-	_gui.add(lblName, "lblName");
+	auto lblCoords = std::make_shared<tgui::Label>();
+	lblCoords->setTextColor(sf::Color::Blue);
+	lblCoords->setTextSize(30);
+	lblCoords->setPosition(0, 30);
+	_gui.add(lblCoords, "lblCoords");
 
 	auto btnGoBack = std::make_shared<tgui::Button>();
-	btnGoBack->setPosition(300, 0);
+	btnGoBack->setPosition(0, 60);
 	btnGoBack->setText("Main Menu");
 	btnGoBack->connect("pressed", [&] { _stateHandler.popState(); });
 	_gui.add(btnGoBack, "btnGoBack");
+
+	_rect.setSize({ 20, 20 });
+	_rect.setPosition(100, 100);
+	_rect.setFillColor(sf::Color::Blue);
+
+	_view.setCenter(_rect.getPosition());
+	_view.setSize(window.getSize().x, window.getSize().y);
 
 	/*pugi::xml_document doc;
 	auto result = doc.load_file("assets/maps/world.tmx");
@@ -49,13 +56,29 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	}*/
 }
 
-void bwa::PlayState::handleEvents(sf::Event& e) {
+void bwa::PlayState::handleEvent(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 
 void bwa::PlayState::update(float delta) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		_rect.move(0, -70 * delta);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		_rect.move(-70 * delta, 0);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		_rect.move(0, 70 * delta);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		_rect.move(70 * delta, 0);
+
+	auto rectPos = _rect.getPosition();
+	auto lblCoords = _gui.get<tgui::Label>("lblCoords");
+	lblCoords->setText('(' + std::to_string(rectPos.x) + ',' + std::to_string(rectPos.y) + ')');
+
+	_view.setCenter(_rect.getPosition());
 }
 
 void bwa::PlayState::draw(sf::RenderWindow& window) {
+	window.setView(_view);
+	window.draw(_rect);
 	_gui.draw();
 }

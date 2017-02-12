@@ -11,7 +11,7 @@ namespace bwa {
 		GameState(const GameState&) = delete;
 		GameState& operator=(const GameState&) = delete;
 
-		virtual void handleEvents(sf::Event& e) = 0;
+		virtual void handleEvent(sf::Event& e) = 0;
 		virtual void update(float delta) = 0;
 		virtual void draw(sf::RenderWindow& window) = 0;
 		virtual void pause();

@@ -75,7 +75,7 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	_gui.add(btnExit);
 }
 
-void bwa::InitState::handleEvents(sf::Event& e) {
+void bwa::InitState::handleEvent(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 

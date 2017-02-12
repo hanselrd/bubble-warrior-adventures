@@ -73,14 +73,14 @@ void bwa::Game::run() {
 
 	// Normal window event loop
 	while (_window.isOpen()) {
-		_stateHandler.handleTransitions();
+		_stateHandler.handleTransition();
 
 		sf::Event e;
 		while (_window.pollEvent(e)) {
 			if (e.type == sf::Event::Closed ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 				_window.close();
-			_stateHandler.handleEvents(e);
+			_stateHandler.handleEvent(e);
 			_gui.handleEvent(e);
 		}
 
