@@ -21,7 +21,7 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	btnGoBack->setPosition(0, 60);
 	btnGoBack->setText("Main Menu");
 	btnGoBack->connect("pressed", [&] { _stateHandler.popState(); });
-	_gui.add(btnGoBack, "btnGoBack");
+	_gui.add(btnGoBack);
 
 	_rect.setSize({ 16, 16 });
 	_rect.setPosition(100, 100);

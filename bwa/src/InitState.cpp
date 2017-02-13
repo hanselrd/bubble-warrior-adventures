@@ -69,13 +69,48 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	btnCredits->setText("Credits");
 	_gui.add(btnCredits);
 
+	// Exit confirmation
+	tgui::MessageBox::Ptr msgboxExitConfirmation = theme->load("MessageBox");
+
 	// Exit button
 	tgui::Button::Ptr btnExit = theme->load("Button");
 	btnExit->setSize(windowWidth / 2, BUTTON_HEIGHT);
 	btnExit->setPosition(windowWidth / 2, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 3));
 	btnExit->setText("Exit");
-	btnExit->connect("pressed", [&] { window.close(); });
+	btnExit->connect("pressed", [=] { 
+		msgboxExitConfirmation->show();
+		btnPlay->disable();
+		btnSettings->disable();
+		btnCredits->disable();
+		btnExit->disable();
+	});
 	_gui.add(btnExit);
+
+	// Exit confirmation continued
+	msgboxExitConfirmation->setTitle("Exit Confirmation");
+	msgboxExitConfirmation->setText("Are you sure you want to exit?");
+	msgboxExitConfirmation->addButton("OK");
+	msgboxExitConfirmation->addButton("Cancel");
+	msgboxExitConfirmation->hide();
+	msgboxExitConfirmation->connect("buttonpressed", [=, &window](const std::string& text) {
+		if (text == "OK")
+			window.close();
+		else if (text == "Cancel") {
+			btnPlay->enable();
+			btnSettings->enable();
+			btnCredits->enable();
+			btnExit->enable();
+		}
+		msgboxExitConfirmation->hide();
+	});
+	msgboxExitConfirmation->connect("closed", [=] {
+		btnPlay->enable();
+		btnSettings->enable();
+		btnCredits->enable();
+		btnExit->enable();
+		msgboxExitConfirmation->hide();
+	});
+	_gui.add(msgboxExitConfirmation);
 }
 
 void bwa::InitState::handleEvent(sf::Event& e) {

@@ -79,6 +79,7 @@ void bwa::Game::run() {
 	while (_window.isOpen()) {
 		_stateHandler.handleTransition();
 
+		// Handle window events and delegate them to individual states
 		sf::Event e;
 		while (_window.pollEvent(e)) {
 			if (e.type == sf::Event::Closed ||

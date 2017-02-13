@@ -89,6 +89,7 @@ MessageBox {
     ChildWindow : "ChildWindow";
     Button      : "Button";
     TextColor   : rgb(190, 190, 190);
+    CloseButton : "ChildWindowCloseButton";
 }
 
 Panel {
