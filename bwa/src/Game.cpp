@@ -51,7 +51,7 @@ bwa::Game::Game() {
 	_gui.setWindow(_window);
 
 	// Loads the GUI theme
-	ResourceCache<tgui::Theme>::create("default", "assets/themes/Black.txt");
+	ResourceCache<tgui::Theme>::create("default", "assets/themes/black.conf");
 
 	// Sets initial state
 	_stateHandler.pushState<InitState>(std::ref(_window));

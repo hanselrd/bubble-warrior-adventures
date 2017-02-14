@@ -18,99 +18,111 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	// Gets the default theme from the ResourceCache
 	auto theme = ResourceCache<tgui::Theme>::get("default");
 
-	// To be used for the background of the window
+	// Background image
 	auto background = std::make_shared<tgui::Picture>();
 	background->setTexture((*luaConfig)["config"]["InitState"]["background"].get<std::string>());
 	_gui.add(background);
 
+	// Loads the font for the title
+	auto titleFont = ResourceCache<sf::Font>::create("titleFont");
+	titleFont->loadFromFile((*luaConfig)["config"]["InitState"]["titleFont"]);
+
 	// "Bubble Warrior" text component
 	tgui::Label::Ptr lblTitle1 = theme->load("Label");
+	lblTitle1->setFont(*titleFont);
 	lblTitle1->setTextSize(72);
+	lblTitle1->setTextColor(sf::Color::Black);
 	lblTitle1->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
 	lblTitle1->setSize(windowWidth, 500);
-	lblTitle1->setPosition(0, windowHeight / 5);
+	lblTitle1->setPosition(0, windowHeight / 6);
 	lblTitle1->setText("Bubble Warrior");
-	lblTitle1->setTextColor(sf::Color::Black);
 	_gui.add(lblTitle1);
 
 	// "Adventures" text component
 	tgui::Label::Ptr lblTitle2 = theme->load("Label");
+	lblTitle2->setFont(*titleFont);
 	lblTitle2->setTextSize(72);
+	lblTitle2->setTextColor(sf::Color(0x001b0bff));
 	lblTitle2->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
 	lblTitle2->setSize(windowWidth, 500);
 	lblTitle2->setPosition(0, windowHeight * 7 / 20);
-	lblTitle2->setText("Adventures!");
-	lblTitle2->setTextColor(sf::Color::Black);
+	lblTitle2->setText("Adventures");
 	_gui.add(lblTitle2);
 
-	// Constants for button location
-	constexpr unsigned BUTTON_HEIGHT = 50;
-	constexpr unsigned BUTTON_Y_OFFSET = 240;
+	// Button constants
+	constexpr unsigned BUTTON_HEIGHT = 50,
+					   BUTTON_PADDING = 40;
 
 	// Play button
 	tgui::Button::Ptr btnPlay = theme->load("Button");
-	btnPlay->setSize(windowWidth / 2, BUTTON_HEIGHT);
-	btnPlay->setPosition(0, windowHeight - BUTTON_Y_OFFSET);
+	btnPlay->setSize(windowWidth / 2 - BUTTON_PADDING, BUTTON_HEIGHT);
+	btnPlay->setPosition(BUTTON_PADDING, windowHeight * 3 / 5);
 	btnPlay->setText("Play");
 	btnPlay->connect("pressed", [&] { _stateHandler.pushState<PlayState>(std::ref(window)); });
 	_gui.add(btnPlay);
 
 	// Settings button
 	tgui::Button::Ptr btnSettings = theme->load("Button");
-	btnSettings->setSize(windowWidth / 2, BUTTON_HEIGHT);
-	btnSettings->setPosition(windowWidth / 2, windowHeight - BUTTON_Y_OFFSET + BUTTON_HEIGHT);
+	btnSettings->setSize(windowWidth / 2 - BUTTON_PADDING * 2, BUTTON_HEIGHT);
+	btnSettings->setPosition(windowWidth / 2 + BUTTON_PADDING,
+		windowHeight * 3 / 5);
 	btnSettings->setText("Settings");
 	_gui.add(btnSettings);
 
 	// Credits button
 	tgui::Button::Ptr btnCredits = theme->load("Button");
-	btnCredits->setSize(windowWidth / 2, BUTTON_HEIGHT);
-	btnCredits->setPosition(0, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 2));
+	btnCredits->setSize(windowWidth / 2 - BUTTON_PADDING, BUTTON_HEIGHT);
+	btnCredits->setPosition(BUTTON_PADDING,
+		windowHeight * 3 / 5 + BUTTON_HEIGHT + BUTTON_PADDING);
 	btnCredits->setText("Credits");
 	_gui.add(btnCredits);
 
 	// Exit confirmation
-	tgui::MessageBox::Ptr msgboxExitConfirmation = theme->load("MessageBox");
+	tgui::MessageBox::Ptr msgboxExit = theme->load("MessageBox");
 
 	// Exit button
 	tgui::Button::Ptr btnExit = theme->load("Button");
-	btnExit->setSize(windowWidth / 2, BUTTON_HEIGHT);
-	btnExit->setPosition(windowWidth / 2, windowHeight - BUTTON_Y_OFFSET + (BUTTON_HEIGHT * 3));
+	btnExit->setSize(windowWidth / 2 - BUTTON_PADDING * 2, BUTTON_HEIGHT);
+	btnExit->setPosition(windowWidth / 2 + BUTTON_PADDING,
+		windowHeight * 3 / 5 + BUTTON_HEIGHT + BUTTON_PADDING);
 	btnExit->setText("Exit");
-	btnExit->connect("pressed", [=] { 
-		msgboxExitConfirmation->show();
+	btnExit->connect("pressed", [=] {
 		btnPlay->disable();
 		btnSettings->disable();
 		btnCredits->disable();
 		btnExit->disable();
+		auto msgboxExitOffset = msgboxExit->getSizeLayout() / 2;
+		msgboxExit->setPosition(windowWidth / 2 - msgboxExitOffset.x,
+			windowHeight / 2 - msgboxExitOffset.y);
+		msgboxExit->show();
 	});
 	_gui.add(btnExit);
 
 	// Exit confirmation continued
-	msgboxExitConfirmation->setTitle("Exit Confirmation");
-	msgboxExitConfirmation->setText("Are you sure you want to exit?");
-	msgboxExitConfirmation->addButton("OK");
-	msgboxExitConfirmation->addButton("Cancel");
-	msgboxExitConfirmation->hide();
-	msgboxExitConfirmation->connect("buttonpressed", [=, &window](const std::string& text) {
-		if (text == "OK")
+	msgboxExit->setTitle("Exit Confirmation");
+	msgboxExit->setText("Are you sure you want to exit?");
+	msgboxExit->addButton("Yes");
+	msgboxExit->addButton("No");
+	msgboxExit->hide();
+	msgboxExit->connect("buttonpressed", [=, &window](const std::string& text) {
+		if (text == "Yes")
 			window.close();
-		else if (text == "Cancel") {
+		else if (text == "No") {
 			btnPlay->enable();
 			btnSettings->enable();
 			btnCredits->enable();
 			btnExit->enable();
 		}
-		msgboxExitConfirmation->hide();
+		msgboxExit->hide();
 	});
-	msgboxExitConfirmation->connect("closed", [=] {
+	msgboxExit->connect("closed", [=] {
 		btnPlay->enable();
 		btnSettings->enable();
 		btnCredits->enable();
 		btnExit->enable();
-		msgboxExitConfirmation->hide();
+		msgboxExit->hide();
 	});
-	_gui.add(msgboxExitConfirmation);
+	_gui.add(msgboxExit);
 }
 
 void bwa::InitState::handleEvent(sf::Event& e) {

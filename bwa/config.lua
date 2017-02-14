@@ -8,6 +8,7 @@ config.fullscreen = false
 config.resolution = {
 	-- Window width
 	x = 800,
+
 	-- Window height
 	y = 600
 }
@@ -21,7 +22,10 @@ config.showFpsCounter = true
 -- InitState settings
 config.InitState = {
 	-- Background image
-	background = config.assets["sprites"][9]
+	background = config.assets["sprites"][9],
+
+	-- Title font
+	titleFont = config.assets["fonts"][4]
 }
 
 return config
