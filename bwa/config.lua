@@ -19,13 +19,13 @@ config.assets = require("assets")
 -- Display FPS counter
 config.showFpsCounter = true
 
--- InitState settings
-config.InitState = {
+-- TitleScreen settings
+config.TitleScreen = {
 	-- Background image
 	background = config.assets["sprites"][9],
 
 	-- Title font
-	titleFont = config.assets["fonts"][4]
+	font = config.assets["fonts"][4]
 }
 
 return config

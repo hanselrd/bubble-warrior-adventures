@@ -34,9 +34,6 @@
     <ClCompile Include="src\PlayState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InitState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="deps\pugixml\src\pugixml.cpp">
       <Filter>pugixml</Filter>
     </ClCompile>
@@ -44,6 +41,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Tmx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,9 +60,6 @@
     <ClInclude Include="src\PlayState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InitState.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="deps\pugixml\src\pugixml.hpp">
       <Filter>pugixml</Filter>
     </ClInclude>
@@ -73,6 +70,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tmx.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleScreen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

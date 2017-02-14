@@ -2,8 +2,8 @@
 #include <sol.hpp>
 #include <string>
 #include <utility>
-#include "InitState.hpp"
 #include "ResourceCache.hpp"
+#include "TitleScreen.hpp"
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
@@ -54,7 +54,7 @@ bwa::Game::Game() {
 	ResourceCache<tgui::Theme>::create("default", "assets/themes/black.conf");
 
 	// Sets initial state
-	_stateHandler.pushState<InitState>(std::ref(_window));
+	_stateHandler.pushState<TitleScreen>(std::ref(_window));
 }
 
 void bwa::Game::run() {

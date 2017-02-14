@@ -1,10 +1,10 @@
-#include "InitState.hpp"
+#include "TitleScreen.hpp"
 #include <sol.hpp>
 #include "PlayState.hpp"
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
 
-bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
+bwa::TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
 	_gui.setWindow(window);
 	
@@ -20,12 +20,12 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 
 	// Background image
 	auto background = std::make_shared<tgui::Picture>();
-	background->setTexture((*luaConfig)["config"]["InitState"]["background"].get<std::string>());
+	background->setTexture((*luaConfig)["config"]["TitleScreen"]["background"].get<std::string>());
 	_gui.add(background);
 
 	// Loads the font for the title
 	auto titleFont = ResourceCache<sf::Font>::create("titleFont");
-	titleFont->loadFromFile((*luaConfig)["config"]["InitState"]["titleFont"]);
+	titleFont->loadFromFile((*luaConfig)["config"]["TitleScreen"]["font"]);
 
 	// "Bubble Warrior" text component
 	tgui::Label::Ptr lblTitle1 = theme->load("Label");
@@ -125,13 +125,13 @@ bwa::InitState::InitState(StateHandler& stateHandler, sf::RenderWindow& window)
 	_gui.add(msgboxExit);
 }
 
-void bwa::InitState::handleEvent(sf::Event& e) {
+void bwa::TitleScreen::handleEvent(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 
-void bwa::InitState::update(float delta) {
+void bwa::TitleScreen::update(float delta) {
 }
 
-void bwa::InitState::draw(sf::RenderWindow& window) {
+void bwa::TitleScreen::draw(sf::RenderWindow& window) {
 	_gui.draw();
 }
