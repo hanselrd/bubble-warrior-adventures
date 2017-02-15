@@ -7,10 +7,6 @@
 
 class StateHandler {
 public:
-	StateHandler() = default;
-	StateHandler(const StateHandler&) = delete;
-	StateHandler& operator=(const StateHandler&) = delete;
-
 	void handleEvent(sf::Event& e);
 	void update(float delta);
 	void draw(sf::RenderWindow& window);

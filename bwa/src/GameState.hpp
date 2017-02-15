@@ -7,9 +7,6 @@ class StateHandler;
 class GameState {
 public:
 	explicit GameState(StateHandler& stateHandler);
-	GameState(const GameState&) = delete;
-	GameState& operator=(const GameState&) = delete;
-
 	virtual void handleEvent(sf::Event& e) = 0;
 	virtual void update(float delta) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
