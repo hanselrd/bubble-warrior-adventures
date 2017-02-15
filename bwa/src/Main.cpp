@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv) {
 	try {
-		bwa::Game g;
+		Game g;
 		g.run();
 	}
 	catch (const std::exception& e) {

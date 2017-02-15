@@ -2,7 +2,7 @@
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <stdexcept>
 
-bwa::tmx::Map::Map(const std::string& filename) {
+tmx::Map::Map(const std::string& filename) {
 	auto success = _doc.load_file(filename.c_str());
 
 	if (success) {
@@ -40,18 +40,18 @@ bwa::tmx::Map::Map(const std::string& filename) {
 	}*/
 }
 
-unsigned bwa::tmx::Map::getWidth() const {
+unsigned tmx::Map::getWidth() const {
 	return _width;
 }
 
-unsigned bwa::tmx::Map::getHeight() const {
+unsigned tmx::Map::getHeight() const {
 	return _height;
 }
 
-unsigned bwa::tmx::Map::getTileWidth() const {
+unsigned tmx::Map::getTileWidth() const {
 	return _tilewidth;
 }
 
-unsigned bwa::tmx::Map::getTileHeight() const {
+unsigned tmx::Map::getTileHeight() const {
 	return _tileheight;
 }

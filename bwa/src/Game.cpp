@@ -7,7 +7,7 @@
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
-bwa::Game::Game() {
+Game::Game() {
 	// Creates the lua state and sets it up
 	auto luaConfig = ResourceCache<sol::state>::create("config");
 	luaConfig->open_libraries(sol::lib::base, 
@@ -57,7 +57,7 @@ bwa::Game::Game() {
 	_stateHandler.pushState<TitleScreen>(std::ref(_window));
 }
 
-void bwa::Game::run() {
+void Game::run() {
 	// Gets the lua state from ResourceCache
 	auto luaConfig = ResourceCache<sol::state>::get("config");
 

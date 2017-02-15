@@ -1,25 +1,25 @@
 #include "StateHandler.hpp"
 
-void bwa::StateHandler::handleEvent(sf::Event& e) {
+void StateHandler::handleEvent(sf::Event& e) {
 	if (!_states.empty())
 		_states.top()->handleEvent(e);
 }
 
-void bwa::StateHandler::update(float delta) {
+void StateHandler::update(float delta) {
 	if (!_states.empty())
 		_states.top()->update(delta);
 }
 
-void bwa::StateHandler::draw(sf::RenderWindow& window) {
+void StateHandler::draw(sf::RenderWindow& window) {
 	if (!_states.empty())
 		_states.top()->draw(window);
 }
 
-void bwa::StateHandler::popState() {
+void StateHandler::popState() {
 	_event = Event::Pop;
 }
 
-void bwa::StateHandler::handleTransition() {
+void StateHandler::handleTransition() {
 	switch (_event) {
 	case Event::Push:
 		if (!_states.empty())

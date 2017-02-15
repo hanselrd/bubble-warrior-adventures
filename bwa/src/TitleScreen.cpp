@@ -4,7 +4,7 @@
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
 
-bwa::TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
+TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
 	_gui.setWindow(window);
 	
@@ -125,13 +125,13 @@ bwa::TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& wind
 	_gui.add(msgboxExit);
 }
 
-void bwa::TitleScreen::handleEvent(sf::Event& e) {
+void TitleScreen::handleEvent(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 
-void bwa::TitleScreen::update(float delta) {
+void TitleScreen::update(float delta) {
 }
 
-void bwa::TitleScreen::draw(sf::RenderWindow& window) {
+void TitleScreen::draw(sf::RenderWindow& window) {
 	_gui.draw();
 }

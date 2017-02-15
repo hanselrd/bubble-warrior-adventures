@@ -5,18 +5,16 @@
 #include <string>
 #include "StateHandler.hpp"
 
-namespace bwa {
-	class Game final {
-	public:
-		Game();
-		Game(const Game&) = delete;
-		Game& operator=(const Game&) = delete;
+class Game final {
+public:
+	Game();
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
 
-		void run();
+	void run();
 
-	private:
-		sf::RenderWindow _window;
-		tgui::Gui _gui;
-		StateHandler _stateHandler;
-	};
-}
+private:
+	sf::RenderWindow _window;
+	tgui::Gui _gui;
+	StateHandler _stateHandler;
+};

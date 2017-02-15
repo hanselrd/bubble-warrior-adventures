@@ -4,7 +4,7 @@
 #include "StateHandler.hpp"
 #include "Tmx.hpp"
 
-bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
+PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
 	_gui.setWindow(window);
 
@@ -39,11 +39,11 @@ bwa::PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	std::cout << tmxWorld->getTileHeight() << std::endl;
 }
 
-void bwa::PlayState::handleEvent(sf::Event& e) {
+void PlayState::handleEvent(sf::Event& e) {
 	_gui.handleEvent(e);
 }
 
-void bwa::PlayState::update(float delta) {
+void PlayState::update(float delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		_rect.move(0, -70 * delta);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -60,7 +60,7 @@ void bwa::PlayState::update(float delta) {
 	_view.setCenter(_rect.getPosition());
 }
 
-void bwa::PlayState::draw(sf::RenderWindow& window) {
+void PlayState::draw(sf::RenderWindow& window) {
 	window.setView(_view);
 	window.draw(_rect);
 	_gui.draw();
