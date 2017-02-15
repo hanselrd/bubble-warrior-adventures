@@ -1,4 +1,4 @@
-#include "Game.hpp" // relative header, check CONTRIBUTING.md
+#include "Game.hpp"
 #include <sol.hpp>
 #include <string>
 #include <utility>
