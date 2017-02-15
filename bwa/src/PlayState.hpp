@@ -12,6 +12,7 @@ public:
 	void draw(sf::RenderWindow& window) override;
 
 private:
-	sf::RectangleShape _rect;
+	sf::RectangleShape _box;
+	sf::CircleShape _player;
 	sf::View _view;
 };

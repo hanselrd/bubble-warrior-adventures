@@ -55,3 +55,7 @@ unsigned tmx::Map::getTileWidth() const {
 unsigned tmx::Map::getTileHeight() const {
 	return _tileheight;
 }
+
+const std::vector<std::shared_ptr<tmx::Layer>>& tmx::Map::getLayers() const {
+	return _layers;
+}
