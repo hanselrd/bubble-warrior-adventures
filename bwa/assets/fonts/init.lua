@@ -1,6 +1,5 @@
 --[[
     All the fonts in this directory.
-    Nothing really fancy going on here.
 --]]
 local fonts = {
     "animeace.ttf",
@@ -9,7 +8,7 @@ local fonts = {
     "GFSCUS1D.ttf"
 }
 
--- Prepends 'fonts/' to every string in fonts table
+-- Prepends 'fonts/' to every string in the table
 utility.prepend(fonts, "fonts/")
 
 return fonts

@@ -12,13 +12,10 @@ local sprites = {
     "golden_hero_male_no_shield.png",
     "golden_hero_male_no_shield_no_hat.png",
     "regular_hero_female.png",
-    "regular_hero_male.png",
-    "1692638-800x600.jpg",
-    "1692638-1024x768.jpg",
-    "1692638-1366x768.jpg"
+    "regular_hero_male.png"
 }
 
--- Prepends 'sprites/' to every string in sprites table
+-- Prepends 'sprites/' to every string in the table
 utility.prepend(sprites, "sprites/")
 
 return sprites

@@ -13,19 +13,22 @@ config.resolution = {
 	y = 600
 }
 
+-- Display FPS counter
+config.showFpsCounter = true
+
 -- Loads all the assets
 config.assets = require("assets")
 
--- Display FPS counter
-config.showFpsCounter = true
+-- Default GUI theme
+config.theme = config.assets.themes[1]
 
 -- TitleScreen settings
 config.TitleScreen = {
 	-- Background image
-	background = config.assets["sprites"][9],
+	background = config.assets.backgrounds[1],
 
 	-- Title font
-	font = config.assets["fonts"][4]
+	font = config.assets.fonts[4]
 }
 
 return config

@@ -28,11 +28,6 @@ Game::Game() {
 	// Converts the config's x and y resolution into a table
 	sol::table resolution = (*luaConfig)["config"]["resolution"];
 
-	// Gets the fonts and sprites tables from assets table
-	sol::table assets = (*luaConfig)["config"]["assets"];
-	sol::table fonts = assets["fonts"];
-	sol::table sprites = assets["sprites"];
-
 	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
 		resolution["x"].get<unsigned>(), 
@@ -50,8 +45,8 @@ Game::Game() {
 	_window.setVerticalSyncEnabled(true);
 	_gui.setWindow(_window);
 
-	// Loads the GUI theme
-	ResourceCache<tgui::Theme>::create("default", "assets/themes/black.conf");
+	// Loads the default GUI theme
+	ResourceCache<tgui::Theme>::create("default", (*luaConfig)["config"]["theme"].get<std::string>());
 
 	// Sets initial state
 	_stateHandler.pushState<TitleScreen>(std::ref(_window));
