@@ -240,6 +240,3 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-
-# Dependency builds
-bwa/deps/build/
