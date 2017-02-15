@@ -38,7 +38,6 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### General
 
-* Everything lives inside the `bwa` namespace.
 * Curly braces should start on the same line of a declaration
     and end on their own line.
 
@@ -189,15 +188,12 @@ std::map<std::string, unsigned> map;
 
 ### Classes
 
-Classes should be defined in the `bwa` namespace and named
-using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
+Classes should be named using **[PascalCase](https://en.wikipedia.org/wiki/PascalCase)**.
 
 ```cpp
-namespace bwa {
-    class SuperAwesomeClass {
-        ...
-    };
-}
+class SuperAwesomeClass {
+    ...
+};
 ```
 
 #### Methods
@@ -207,13 +203,11 @@ They should also be named after a specific action. Some acceptable names would b
 `run`, `update`, `loadMap` and etc.
 
 ```cpp
-namespace bwa {
-    class SuperAwesomeClass {
-    public:
-        void doFoo();
-        void doBar();
-    };
-}
+class SuperAwesomeClass {
+public:
+    void doFoo();
+    void doBar();
+};
 ```
 
 #### Members
@@ -223,15 +217,13 @@ except for constants, and prefixed by an `_` (underscore).
 Members should always go below methods.
 
 ```cpp
-namespace bwa {
-    class SuperAwesomeClass {
-    protected:
-        static const int _SOME_STATIC_CONST_INT;
-        const int _SOME_CONST_INT;
-        static int _someStaticInt;
-        int _someInt;
-    };
-}
+class SuperAwesomeClass {
+protected:
+    static const int _SOME_STATIC_CONST_INT;
+    const int _SOME_CONST_INT;
+    static int _someStaticInt;
+    int _someInt;
+};
 ```
 
 #### Complete Example
@@ -239,26 +231,24 @@ namespace bwa {
 ```cpp
 // SuperAwesomeClass.hpp
 
-namespace bwa {
-    class SuperAwesomeClass {
-    public:
-        /*
-            Class methods go before any class members.
-        */
-        void doFoo();
-        void doBar();
+class SuperAwesomeClass {
+public:
+    /*
+        Class methods go before any class members.
+    */
+    void doFoo();
+    void doBar();
 
-    protected:
-        /*
-            Take note on the spacing between
-            the doBar method and the protected keyword.
-        */
-        static const int _SOME_STATIC_CONST_INT;
-        const int _SOME_CONST_INT;
-        static int _some_static_int;
-        int _some_int;
-    };
-}
+protected:
+    /*
+        Take note on the spacing between
+        the doBar method and the protected keyword.
+    */
+    static const int _SOME_STATIC_CONST_INT;
+    const int _SOME_CONST_INT;
+    static int _some_static_int;
+    int _some_int;
+};
 ```
 
 ```cpp
@@ -266,11 +256,11 @@ namespace bwa {
 
 #include "SuperAwesomeClass.hpp"
 
-void bwa::SuperAwesomeClass::doFoo() {
+void SuperAwesomeClass::doFoo() {
     ...
 }
 
-void bwa::SuperAwesomeClass::doBar() {
+void SuperAwesomeClass::doBar() {
     ...
 }
 ```
@@ -282,10 +272,8 @@ They should be named using **[snake_case](https://en.wikipedia.org/wiki/Snake_ca
 and follow the same outline for a class method: descriptive and named after an action
 
 ```cpp
-namespace bwa {
-    void load_data() {
-        ...
-    }
+void load_data() {
+    ...
 }
 ```
 
