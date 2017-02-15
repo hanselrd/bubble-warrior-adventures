@@ -1,3 +1,9 @@
-[submodule "bwa/dependencies/sol2"]
-	path = bwa/dependencies/sol2
+[submodule "bwa/deps/sol2"]
+	path = bwa/deps/sol2
 	url = https://github.com/ThePhD/sol2.git
+[submodule "bwa/deps/cppcodec"]
+	path = bwa/deps/cppcodec
+	url = https://github.com/tplgy/cppcodec.git
+[submodule "bwa/deps/pugixml"]
+	path = bwa/deps/pugixml
+	url = https://github.com/zeux/pugixml.git

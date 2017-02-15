@@ -1,12 +1,12 @@
 #include "GameState.hpp"
 
-bwa::GameState::GameState(bwa::StateHandler& stateHandler)
+GameState::GameState(StateHandler& stateHandler)
 	: _stateHandler(stateHandler) {}
 
-void bwa::GameState::pause() {
+void GameState::pause() {
 	// default pause behavior
 }
 
-void bwa::GameState::resume() {
+void GameState::resume() {
 	// default resume behavior
 }

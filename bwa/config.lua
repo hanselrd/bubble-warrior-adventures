@@ -8,20 +8,27 @@ config.fullscreen = false
 config.resolution = {
 	-- Window width
 	x = 800,
+
 	-- Window height
 	y = 600
 }
 
--- Loads all the assets
-config.assets = require("assets")
-
 -- Display FPS counter
 config.showFpsCounter = true
 
--- InitState settings
-config.InitState = {
+-- Loads all the assets
+config.assets = require("assets")
+
+-- Default GUI theme
+config.theme = config.assets.themes[1]
+
+-- TitleScreen settings
+config.TitleScreen = {
 	-- Background image
-	background = config.assets["sprites"][9]
+	background = config.assets.backgrounds[1],
+
+	-- Title font
+	font = config.assets.fonts[4]
 }
 
 return config
