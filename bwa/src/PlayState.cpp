@@ -20,7 +20,7 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	auto btnGoBack = std::make_shared<tgui::Button>();
 	btnGoBack->setPosition(0, 60);
 	btnGoBack->setText("Main Menu");
-	btnGoBack->connect("pressed", [&] { _stateHandler.popState(); });
+	btnGoBack->connect("pressed", [&] { _stateHandler.pop(); });
 	_gui.add(btnGoBack);
 
 	_rect.setSize({ 16, 16 });

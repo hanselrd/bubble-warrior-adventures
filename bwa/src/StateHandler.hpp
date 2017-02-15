@@ -16,23 +16,31 @@ public:
 	void draw(sf::RenderWindow& window);
 
 	template <typename State, typename... Args>
-	void pushState(Args&&... args);
+	inline void change(Args&&... args) {
+		helper<State>(Event::Change, std::forward<Args>(args)...);
+	}
 
-	void popState();
+	template <typename State, typename... Args>
+	inline void push(Args&&... args) {
+		helper<State>(Event::Push, std::forward<Args>(args)...);
+	}
+
+	void pop();
 	void handleTransition();
 
 private:
 	enum class Event {
 		Null,
+		Change,
 		Push,
 		Pop
 	} _event;
 	std::unique_ptr<GameState> _temp;
 	std::stack<std::unique_ptr<GameState>> _states;
-};
 
-template<typename State, typename ...Args>
-inline void StateHandler::pushState(Args&& ...args) {
-	_temp = std::make_unique<State>(std::ref(*this), std::forward<Args>(args)...);
-	_event = Event::Push;
-}
+	template <typename State, typename... Args>
+	inline void helper(const Event e, Args&&... args) {
+		_temp = std::make_unique<State>(std::ref(*this), std::forward<Args>(args)...);
+		_event = e;
+	}
+};

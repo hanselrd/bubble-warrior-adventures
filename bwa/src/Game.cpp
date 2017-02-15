@@ -49,7 +49,7 @@ Game::Game() {
 	ResourceCache<tgui::Theme>::create("default", (*luaConfig)["config"]["theme"].get<std::string>());
 
 	// Sets initial state
-	_stateHandler.pushState<TitleScreen>(std::ref(_window));
+	_stateHandler.change<TitleScreen>(std::ref(_window));
 }
 
 void Game::run() {

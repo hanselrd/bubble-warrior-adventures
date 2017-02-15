@@ -15,12 +15,17 @@ void StateHandler::draw(sf::RenderWindow& window) {
 		_states.top()->draw(window);
 }
 
-void StateHandler::popState() {
+void StateHandler::pop() {
 	_event = Event::Pop;
 }
 
 void StateHandler::handleTransition() {
 	switch (_event) {
+	case Event::Change:
+		if (!_states.empty())
+			_states.pop();
+		_states.push(std::move(_temp));
+		break;
 	case Event::Push:
 		if (!_states.empty())
 			_states.top()->pause();
