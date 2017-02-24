@@ -18,8 +18,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="config.py" />
     <None Include="packages.config" />
-    <None Include="config.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">

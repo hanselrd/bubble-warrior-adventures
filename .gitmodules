@@ -13,3 +13,6 @@
 [submodule "bwa/deps/TGUI"]
 	path = bwa/deps/TGUI
 	url = https://github.com/texus/TGUI.git
+[submodule "bwa/deps/pybind11"]
+	path = bwa/deps/pybind11
+	url = https://github.com/pybind/pybind11.git
