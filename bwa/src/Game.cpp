@@ -44,11 +44,6 @@ Game::Game() {
 	_stateHandler.change<TitleScreen>(std::ref(_window));
 }
 
-Game::~Game() {
-	// Clean up Python interpreter and close it
-	// Py_Finalize();
-}
-
 void Game::run() {
 	// Gets the global python scope from ResourceCache
 	auto pyGlobal = ResourceCache<py::dict>::get("global");
