@@ -8,9 +8,6 @@
 class Game final {
 public:
 	Game();
-	Game(const Game&) = delete;
-	Game& operator=(const Game&) = delete;
-
 	void run();
 
 private:

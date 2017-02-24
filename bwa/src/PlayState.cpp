@@ -1,5 +1,6 @@
 #include "PlayState.hpp"
-#include <sol.hpp>
+#include <pybind11/eval.h>
+namespace py = pybind11;
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
 #include "Tmx.hpp"
@@ -8,11 +9,11 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
 	_gui.setWindow(window);
 
-	// Gets the lua state from ResourceCache
-	auto luaConfig = ResourceCache<sol::state>::get("config");
+	// Gets the global python scope from ResourceCache
+	auto pyGlobal = ResourceCache<py::dict>::get("global");
 
 	auto lblCoords = std::make_shared<tgui::Label>();
-	lblCoords->setTextColor(sf::Color::Blue);
+	lblCoords->setTextColor(sf::Color::Cyan);
 	lblCoords->setTextSize(30);
 	lblCoords->setPosition(0, 30);
 	_gui.add(lblCoords, "lblCoords");
@@ -23,11 +24,15 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	btnGoBack->connect("pressed", [&] { _stateHandler.pop(); });
 	_gui.add(btnGoBack);
 
-	_rect.setSize({ 16, 16 });
-	_rect.setPosition(100, 100);
-	_rect.setFillColor(sf::Color::Blue);
+	_box.setSize({ 200, 60 });
+	_box.setFillColor(sf::Color::Red);
+	_box.setPosition(50, 50);
 
-	_view.setCenter(_rect.getPosition());
+	_player.setRadius(8);
+	_player.setFillColor(sf::Color::Cyan);
+	_player.setPosition(300, 100);
+
+	_view.setCenter(_player.getPosition());
 	_view.setSize(window.getSize().x, window.getSize().y);
 	_view.zoom(0.5);
 
@@ -45,23 +50,24 @@ void PlayState::handleEvent(sf::Event& e) {
 
 void PlayState::update(float delta) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		_rect.move(0, -70 * delta);
+		_player.move(0, -70 * delta);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		_rect.move(-70 * delta, 0);
+		_player.move(-70 * delta, 0);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		_rect.move(0, 70 * delta);
+		_player.move(0, 70 * delta);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		_rect.move(70 * delta, 0);
+		_player.move(70 * delta, 0);
 
-	auto rectPos = _rect.getPosition();
+	auto playerPos = _player.getPosition();
 	auto lblCoords = _gui.get<tgui::Label>("lblCoords");
-	lblCoords->setText('(' + std::to_string(rectPos.x) + ',' + std::to_string(rectPos.y) + ')');
+	lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
 
-	_view.setCenter(_rect.getPosition());
+	_view.setCenter(_player.getPosition());
 }
 
 void PlayState::draw(sf::RenderWindow& window) {
 	window.setView(_view);
-	window.draw(_rect);
+	window.draw(_box);
+	window.draw(_player);
 	_gui.draw();
 }

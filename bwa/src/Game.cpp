@@ -1,5 +1,6 @@
 #include "Game.hpp"
-#include <sol.hpp>
+#include <pybind11/eval.h>
+namespace py = pybind11;
 #include <string>
 #include <utility>
 #include "ResourceCache.hpp"
@@ -8,33 +9,24 @@
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
 Game::Game() {
-	// Creates the lua state and sets it up
-	auto luaConfig = ResourceCache<sol::state>::create("config");
-	luaConfig->open_libraries(sol::lib::base, 
-		sol::lib::package, 
-		sol::lib::table,
-		sol::lib::string);
+	// Initialize Python interpreter
+	Py_Initialize();
 
-	// Loads the 'utility' module into lua with 'prepend' function
-	auto utility = luaConfig->create_named_table("utility");
-	utility.set_function("prepend", [](sol::table& t, const std::string& str, sol::this_state thislua) {
-		for (auto& item : t)
-			t[item.first] = sol::make_object(thislua, str + item.second.as<std::string>());
-	});
+	// Create global scope and load config script
+	auto pyGlobal = ResourceCache<py::dict>::create("global");
+	*pyGlobal = py::dict(py::module::import("__main__").attr("__dict__"));
+	py::eval_file("config.py", *pyGlobal);
 
-	// Loads the config into the sol::state
-	luaConfig->require_file("config", "config.lua");
-
-	// Converts the config's x and y resolution into a table
-	sol::table resolution = (*luaConfig)["config"]["resolution"];
+	// Load the resolution dict from config
+	auto resolution = (*pyGlobal)["config"]["resolution"].cast<py::dict>();
 
 	// Pull the x and y window resolution coordinates from the config
 	auto xy = std::make_pair(
-		resolution["x"].get<unsigned>(), 
-		resolution["y"].get<unsigned>());
+		resolution["x"].cast<unsigned>(), 
+		resolution["y"].cast<unsigned>());
 
 	// Create a fullscreen window if set to true in config, windowed if false.
-	if ((*luaConfig)["config"]["fullscreen"].get<bool>())
+	if ((*pyGlobal)["config"]["fullscreen"].cast<bool>())
 		_window.create({ xy.first, xy.second }, 
 			WINDOW_TITLE,
 			sf::Style::Fullscreen);
@@ -46,20 +38,20 @@ Game::Game() {
 	_gui.setWindow(_window);
 
 	// Loads the default GUI theme
-	ResourceCache<tgui::Theme>::create("default", (*luaConfig)["config"]["theme"].get<std::string>());
+	ResourceCache<tgui::Theme>::create("default", (*pyGlobal)["config"]["theme"].cast<std::string>());
 
 	// Sets initial state
 	_stateHandler.change<TitleScreen>(std::ref(_window));
 }
 
 void Game::run() {
-	// Gets the lua state from ResourceCache
-	auto luaConfig = ResourceCache<sol::state>::get("config");
+	// Gets the global python scope from ResourceCache
+	auto pyGlobal = ResourceCache<py::dict>::get("global");
 
 	// Create the clock and set up the FPS counter
 	sf::Clock clock, updateFps;
 	float lastTime = 0.f, currentTime, delta;
-	bool showFpsCounter = (*luaConfig)["config"]["showFpsCounter"];
+	bool showFpsCounter = (*pyGlobal)["config"]["showFpsCounter"].cast<bool>();
 
 	// Create FPS string iff showFpsCounter is true in the config
 	if (showFpsCounter) {
