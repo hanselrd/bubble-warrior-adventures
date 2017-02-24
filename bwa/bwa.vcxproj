@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)deps\cppcodec;$(ProjectDir)deps\pugixml\src;$(ProjectDir)deps\sol2;$(ProjectDir)deps\TGUI\include;$(ProjectDir)deps\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)deps\cppcodec;$(ProjectDir)deps\pugixml\src;$(ProjectDir)deps\pybind11\include;$(ProjectDir)deps\TGUI\include;$(ProjectDir)deps\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,7 +120,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)deps\cppcodec;$(ProjectDir)deps\pugixml\src;$(ProjectDir)deps\sol2;$(ProjectDir)deps\TGUI\include;$(ProjectDir)deps\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)deps\cppcodec;$(ProjectDir)deps\pugixml\src;$(ProjectDir)deps\pybind11\include;$(ProjectDir)deps\TGUI\include;$(ProjectDir)deps\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

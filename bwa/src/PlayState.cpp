@@ -1,5 +1,6 @@
 #include "PlayState.hpp"
-#include <sol.hpp>
+#include <pybind11/eval.h>
+namespace py = pybind11;
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
 #include "Tmx.hpp"
@@ -8,8 +9,8 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
 	_gui.setWindow(window);
 
-	// Gets the lua state from ResourceCache
-	auto luaConfig = ResourceCache<sol::state>::get("config");
+	// Gets the global python scope from ResourceCache
+	auto pyGlobal = ResourceCache<py::dict>::get("global");
 
 	auto lblCoords = std::make_shared<tgui::Label>();
 	lblCoords->setTextColor(sf::Color::Cyan);

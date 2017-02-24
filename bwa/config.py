@@ -1,34 +1,37 @@
+import sys
+sys.path.append('.')
+
 import assets
 
 config = {
 	# Sets the game to fullscreen if true, windowed if false
 	# using the values defined under resolution
-	fullscreen = False,
+	'fullscreen': False,
 
 	# The width and height of the window
-	resolution = {
+	'resolution': {
 		# Window width
-		x = 800,
+		'x': 800,
 
 		# Window height
-		y = 600
+		'y': 600
 	},
 
 	# Display FPS counter
-	showFpsCounter = True,
+	'showFpsCounter': True,
 
 	# Loads all the assets
-	assets = assets,
+	'assets': assets,
 
 	# Default GUI theme
-	theme = assets.themes[0],
+	'theme': assets.themes[0],
 
 	# TitleScreen settings
-	TitleScreen = {
+	'TitleScreen': {
 		# Background image
-		background = assets.backgrounds[0],
+		'background': assets.backgrounds[0],
 
 		# Title font
-		font = assets.fonts[3]
+		'font': assets.fonts[3]
 	}
 }

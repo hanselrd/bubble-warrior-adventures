@@ -1,5 +1,6 @@
 #include "TitleScreen.hpp"
-#include <sol.hpp>
+#include <pybind11/eval.h>
+namespace py = pybind11;
 #include "PlayState.hpp"
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
@@ -8,8 +9,8 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 	: GameState(stateHandler) {
 	_gui.setWindow(window);
 	
-	// Gets the lua state from ResourceCache
-	auto luaConfig = ResourceCache<sol::state>::get("config");
+	// Gets the global python scope from ResourceCache
+	auto pyGlobal = ResourceCache<py::dict>::get("global");
 
 	// Pulls the window dimensions from the window
 	auto windowWidth = tgui::bindWidth(_gui);
@@ -20,12 +21,12 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 
 	// Background image
 	auto background = std::make_shared<tgui::Picture>();
-	background->setTexture((*luaConfig)["config"]["TitleScreen"]["background"].get<std::string>());
+	background->setTexture((*pyGlobal)["config"]["TitleScreen"]["background"].cast<std::string>());
 	_gui.add(background);
 
 	// Loads the font for the title
 	auto titleFont = ResourceCache<sf::Font>::create("titleFont");
-	titleFont->loadFromFile((*luaConfig)["config"]["TitleScreen"]["font"]);
+	titleFont->loadFromFile((*pyGlobal)["config"]["TitleScreen"]["font"].cast<std::string>());
 
 	// "Bubble Warrior" text component
 	tgui::Label::Ptr lblTitle1 = theme->load("Label");

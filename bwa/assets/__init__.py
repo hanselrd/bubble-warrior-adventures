@@ -3,7 +3,6 @@ from assets.fonts import *
 from assets.sprites import *
 from assets.themes import *
 
-assets = {}
 dir = 'assets/'
 
 backgrounds = [dir + s for s in backgrounds]
