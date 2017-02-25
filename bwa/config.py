@@ -1,7 +1,9 @@
 import sys
 sys.path.append('.')
-
 import assets
+sys.path.pop()
+
+import game
 
 config = {
 	# Sets the game to fullscreen if true, windowed if false
@@ -20,8 +22,14 @@ config = {
 	# Display FPS counter
 	'showFpsCounter': True,
 
-	# Loads all the assets
+	# Stores the assets
 	'assets': assets,
+
+	# Scripts folder
+	'scripts': 'assets/scripts/',
+
+	# Maps folder
+	'maps': 'assets/maps/',
 
 	# Default GUI theme
 	'theme': assets.themes[0],
@@ -35,3 +43,7 @@ config = {
 		'font': assets.fonts[3]
 	}
 }
+
+# Adds the newly created config dict to game module
+import game
+game.config = config

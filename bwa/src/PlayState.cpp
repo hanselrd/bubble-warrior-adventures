@@ -12,6 +12,19 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	// Gets the global python scope from ResourceCache
 	auto pyGlobal = ResourceCache<py::dict>::get("global");
 
+	// Call test scripts @@@@@@@@@@@@
+	auto scripts = (*pyGlobal)["config"]["scripts"].cast<std::string>();
+
+	auto local1 = py::dict();
+	py::eval_file(scripts + "test_config.py", *pyGlobal, local1);
+	local1["main"].cast<py::function>().call();
+
+	py::print();
+
+	auto local2 = py::dict();
+	py::eval_file(scripts + "test_tmx.py", *pyGlobal, local2);
+	local2["main"].cast<py::function>().call();
+
 	auto lblCoords = std::make_shared<tgui::Label>();
 	lblCoords->setTextColor(sf::Color::Cyan);
 	lblCoords->setTextSize(30);
@@ -35,13 +48,6 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	_view.setCenter(_player.getPosition());
 	_view.setSize(window.getSize().x, window.getSize().y);
 	_view.zoom(0.5);
-
-	// change to use luaConfig eventually
-	auto tmxWorld = ResourceCache<tmx::Map>::create("world", "assets/maps/world.tmx");
-	std::cout << tmxWorld->getWidth() << std::endl;
-	std::cout << tmxWorld->getHeight() << std::endl;
-	std::cout << tmxWorld->getTileWidth() << std::endl;
-	std::cout << tmxWorld->getTileHeight() << std::endl;
 }
 
 void PlayState::handleEvent(sf::Event& e) {
