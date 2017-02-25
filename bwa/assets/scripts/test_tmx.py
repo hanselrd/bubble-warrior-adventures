@@ -2,7 +2,7 @@ def main():
     from game import config
     from game.tmx import Map
 
-    fn = config['maps'] + 'world.tmx'
+    fn = config['mapsDir'] + 'world.tmx'
     map = Map(fn)
     print('Map [%s]:' % fn)
     print('  Width:', map.width)

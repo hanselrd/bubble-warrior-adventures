@@ -26,10 +26,10 @@ config = {
 	'assets': assets,
 
 	# Scripts folder
-	'scripts': 'assets/scripts/',
+	'scriptsDir': 'assets/scripts/',
 
 	# Maps folder
-	'maps': 'assets/maps/',
+	'mapsDir': 'assets/maps/',
 
 	# Default GUI theme
 	'theme': assets.themes[0],

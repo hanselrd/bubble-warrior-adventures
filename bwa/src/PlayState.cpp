@@ -14,7 +14,7 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 
 	// Call test scripts @@@@@@@@@@@@
 	// These tests will be removed when the map loader in finished
-	auto scripts = (*pyGlobal)["config"]["scripts"].cast<std::string>();
+	auto scripts = (*pyGlobal)["config"]["scriptsDir"].cast<std::string>();
 
 	auto local1 = py::dict();
 	py::eval_file(scripts + "test_config.py", *pyGlobal, local1);
