@@ -13,6 +13,7 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 	auto pyGlobal = ResourceCache<py::dict>::get("global");
 
 	// Call test scripts @@@@@@@@@@@@
+	// These tests will be removed when the map loader in finished
 	auto scripts = (*pyGlobal)["config"]["scripts"].cast<std::string>();
 
 	auto local1 = py::dict();
