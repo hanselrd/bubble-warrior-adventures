@@ -5,7 +5,7 @@ def main():
     fn = config['mapsDir'] + 'world.tmx'
     map = Map(fn)
     print('Map [%s]:' % fn)
-    print('  Width:', map.width)
-    print('  Height:', map.height)
-    print('  Tilewidth:', map.tilewidth)
-    print('  Tileheight:', map.tileheight)
+    print('  width:', map.width)
+    print('  height:', map.height)
+    print('  tilewidth:', map.tilewidth)
+    print('  tileheight:', map.tileheight)
