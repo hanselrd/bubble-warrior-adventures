@@ -1,5 +1,7 @@
 #pragma once
 #include <pugixml.hpp>
+#include <pybind11/pybind11.h>
+namespace py = pybind11;
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <string>
@@ -95,3 +97,5 @@ namespace tmx {
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	};
 }
+
+void init_tmx(py::module& m);

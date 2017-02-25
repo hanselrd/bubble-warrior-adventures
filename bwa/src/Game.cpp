@@ -5,11 +5,21 @@ namespace py = pybind11;
 #include <utility>
 #include "ResourceCache.hpp"
 #include "TitleScreen.hpp"
+#include "Tmx.hpp"
+
+namespace game {
+	PYBIND11_PLUGIN(game) {
+		py::module m("game");
+		init_tmx(m);
+		return m.ptr();
+	}
+}
 
 constexpr const char* WINDOW_TITLE = "Bubble Warrior Adventures!";
 
 Game::Game() {
 	// Initialize Python interpreter
+	PyImport_AppendInittab("game", &game::pybind11_init);
 	Py_Initialize();
 
 	// Create global scope and load config script

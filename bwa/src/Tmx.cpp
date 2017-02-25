@@ -1,6 +1,5 @@
 #include "Tmx.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
-#include <iostream>
 #include <stdexcept>
 
 tmx::Map::Map(const std::string& filename) {
@@ -16,7 +15,7 @@ tmx::Map::Map(const std::string& filename) {
 		_tileWidth = mapNode.attribute("tilewidth").as_uint();
 		_tileHeight = mapNode.attribute("tileheight").as_uint();
 
-		Tileset tileset(mapNode.child("tileset"));
+		/*Tileset tileset(mapNode.child("tileset"));
 		std::cout << "firstgid:" << tileset.getFirstGid() << std::endl;
 		std::cout << "name:" << tileset.getName() << std::endl;
 		std::cout << "tilewidth:" << tileset.getTileWidth() << std::endl;
@@ -27,7 +26,7 @@ tmx::Map::Map(const std::string& filename) {
 		std::cout << "columns:" << tileset.getColumns() << std::endl;
 		std::cout << "Image info: " << std::endl;
 		auto texture = tileset.getTexture();
-		std::cout << "\t" << texture.getSize().x << " " << texture.getSize().y << std::endl;
+		std::cout << "\t" << texture.getSize().x << " " << texture.getSize().y << std::endl;*/
 	}
 
 	/*pugi::xml_document doc;
@@ -126,4 +125,18 @@ unsigned tmx::Tileset::getColumns() const {
 
 const sf::Texture& tmx::Tileset::getTexture() const {
 	return _texture;
+}
+
+void init_tmx(py::module& m) {
+	auto m_tmx = m.def_submodule("tmx");
+	
+	using namespace tmx;
+
+	py::class_<Map>(m_tmx, "Map")
+		.def(py::init<const std::string&>())
+		.def_property_readonly("width", &Map::getWidth)
+		.def_property_readonly("height", &Map::getHeight)
+		.def_property_readonly("tilewidth", &Map::getTileWidth)
+		.def_property_readonly("tileheight", &Map::getTileHeight)
+		;
 }
