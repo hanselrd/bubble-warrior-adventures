@@ -1,7 +1,8 @@
 def main():
+    from game import config
     from game.tmx import Map
 
-    fn = 'assets/maps/world.tmx'
+    fn = config['maps'] + 'world.tmx'
     map = Map(fn)
     print('Map [%s]:' % fn)
     print('  Width:', map.width)
