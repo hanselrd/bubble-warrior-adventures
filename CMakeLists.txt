@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 2.8)
 
 # define a macro that helps defining an option
 macro(game_set_option var default type docstring)
@@ -12,9 +12,13 @@ endmacro()
 game_set_option(CMAKE_BUILD_TYPE Release STRING "Choose the type of build (Debug or Release)")
 game_set_option(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules" STRING "The path to the cmake modules. This path must contain the FindSFML.cmake and FindTGUI.cmake files")
 
+# Declare SFML_ROOT and TGUI_ROOT
+game_set_option(SFML_ROOT "" PATH "SFML root directory")
+game_set_option(TGUI_ROOT "" PATH "TGUI root directory")
+
 # Choose between linking to SFML statically or dynamically
 # Note that you must link to TGUI the same way
-game_set_option(SFML_TGUI_STATIC TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
+game_set_option(SFML_TGUI_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
 
 # Project name
 project(game)
@@ -26,43 +30,69 @@ set(MAJOR_VERSION 1)
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
-# Find sfml and tgui
+# Look for static libraries if option has been set
+if (SFML_TGUI_STATIC_LIBRARIES)
+    set(SFML_STATIC_LIBRARIES TRUE)
+endif()
+
+# Find sfml, tgui and python3
 if (SFML_OS_WINDOWS)
     find_package(SFML 2 COMPONENTS main system window graphics audio network REQUIRED)
-    find_package(TGUI 0.7 REQUIRED)
-#elseif (SFML_OS_ANDROID)
-#    find_host_package(SFML 2 COMPONENTS system window graphics audio network REQUIRED)
-#    find_host_package(TGUI 0.7 REQUIRED)
 else()
     find_package(SFML 2 COMPONENTS system window graphics audio network REQUIRED)
-    find_package(TGUI 0.7 REQUIRED)
 endif()
+find_package(TGUI REQUIRED)
+find_package(PythonLibs 3 REQUIRED)
 
 # FindSFML couldn't find SFML
 if (NOT SFML_FOUND)
-    set(SFML_ROOT "" CACHE PATH "SFML root directory")
+    #game_set_option(SFML_ROOT "" PATH "SFML root directory")
     message(FATAL_ERROR "CMake couldn't find SFML. Set the SFML_ROOT entry to SFML's root directory (containing \"include\" and \"lib\" directories).")
 endif()
 
 # FindTGUI couldn't find TGUI
 if (NOT TGUI_FOUND)
-    set(TGUI_ROOT "" CACHE PATH "TGUI root directory")
+    #set(TGUI_ROOT "" CACHE PATH "TGUI root directory" FORCE)
     message(FATAL_ERROR "CMake couldn't find TGUI. Set the TGUI_ROOT entry to TGUI's root directory (containing \"include\" and \"lib\" directories).")
 endif()
 
 # Add the sfml and tgui include directories
-include_directories(${SFML_INCLUDE_DIR} ${TGUI_INCLUDE_DIR})
+include_directories(${SFML_INCLUDE_DIR} ${TGUI_INCLUDE_DIR} ${PYTHON_INCLUDE_DIR})
+include_directories("${PROJECT_SOURCE_DIR}/extlibs/cppcodec")
+include_directories("${PROJECT_SOURCE_DIR}/extlibs/pugixml/src")
+include_directories("${PROJECT_SOURCE_DIR}/extlibs/pybind11/include")
 
-# The source code
-add_subdirectory(src)
+set(GAME_SRC
+    src/Game.cpp
+    src/GameState.cpp
+    src/Main.cpp
+    src/PlayState.cpp
+    src/StateHandler.cpp
+    src/TitleScreen.cpp
+    src/Tmx.cpp
+)
+
+# Add pugixml.cpp
+set(GAME_SRC ${GAME_SRC} extlibs/pugixml/src/pugixml.cpp)
 
 # Game executable
-add_executable(game)
+add_executable(game ${GAME_SRC})
 
 # Link against sfml and tgui libraries
-set(GAME_EXT_LIBS ${SFML_LIBARIES} ${TGUI_LIBRARY})
-if (SFML_TGUI_STATIC)
-    add_definitions(-DSFML_STATIC)
+set(GAME_EXT_LIBS ${SFML_LIBRARIES} ${TGUI_LIBRARY} ${PYTHON_LIBRARIES})
+if (SFML_TGUI_STATIC_LIBRARIES)
     set(GAME_EXT_LIBS ${GAME_EXT_LIBS} ${SFML_DEPENDENCIES})
 endif()
-target_link_libraries(game ${GAME_SRC} ${GAME_EXT_LIBS})
+target_link_libraries(game ${GAME_EXT_LIBS})
+set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
+
+# Copy config.py
+add_custom_command(TARGET game POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/config.py"
+    $<TARGET_FILE_DIR:game>)
+
+# Copy assets directory
+add_custom_command(TARGET game POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:game>/assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/assets"
+    $<TARGET_FILE_DIR:game>/assets) 

@@ -1,9 +1,0 @@
-set(GAME_SRC
-    Game.cpp
-    GameState.cpp
-    Main.cpp
-    PlayState.cpp
-    StateHandler.cpp
-    TitleScreen.cpp
-    Tmx.cpp
-)
