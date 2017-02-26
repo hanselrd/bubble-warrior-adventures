@@ -1,15 +1,9 @@
-[submodule "bwa/deps/cppcodec"]
-	path = bwa/deps/cppcodec
+[submodule "extlibs/cppcodec"]
+	path = extlibs/cppcodec
 	url = https://github.com/tplgy/cppcodec.git
-[submodule "bwa/deps/pugixml"]
-	path = bwa/deps/pugixml
+[submodule "extlibs/pugixml"]
+	path = extlibs/pugixml
 	url = https://github.com/zeux/pugixml.git
-[submodule "bwa/deps/pybind11"]
-	path = bwa/deps/pybind11
+[submodule "extlibs/pybind11"]
+	path = extlibs/pybind11
 	url = https://github.com/pybind/pybind11.git
-[submodule "bwa/deps/SFML"]
-	path = bwa/deps/SFML
-	url = https://github.com/SFML/SFML.git
-[submodule "bwa/deps/TGUI"]
-	path = bwa/deps/TGUI
-	url = https://github.com/texus/TGUI.git
