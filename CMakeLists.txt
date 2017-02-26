@@ -18,7 +18,7 @@ game_set_option(TGUI_ROOT "" PATH "TGUI root directory")
 
 # Choose between linking to SFML statically or dynamically
 # Note that you must link to TGUI the same way
-game_set_option(SFML_TGUI_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
+game_set_option(GAME_SFML_TGUI_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
 
 # Project name
 project(game)
@@ -31,16 +31,12 @@ set(MAJOR_VERSION 1)
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
 # Look for static libraries if option has been set
-if (SFML_TGUI_STATIC_LIBRARIES)
+if (GAME_SFML_TGUI_STATIC_LIBRARIES)
     set(SFML_STATIC_LIBRARIES TRUE)
 endif()
 
 # Find sfml, tgui and python3
-if (SFML_OS_WINDOWS)
-    find_package(SFML 2 COMPONENTS main system window graphics audio network REQUIRED)
-else()
-    find_package(SFML 2 COMPONENTS system window graphics audio network REQUIRED)
-endif()
+find_package(SFML 2 COMPONENTS system window graphics audio network REQUIRED)
 find_package(TGUI REQUIRED)
 find_package(PythonLibs 3 REQUIRED)
 
@@ -76,23 +72,36 @@ set(GAME_SRC
 set(GAME_SRC ${GAME_SRC} extlibs/pugixml/src/pugixml.cpp)
 
 # Game executable
-add_executable(game ${GAME_SRC})
+add_executable(${PROJECT_NAME} ${GAME_SRC})
 
 # Link against sfml and tgui libraries
 set(GAME_EXT_LIBS ${SFML_LIBRARIES} ${TGUI_LIBRARY} ${PYTHON_LIBRARIES})
-if (SFML_TGUI_STATIC_LIBRARIES)
+if (GAME_SFML_TGUI_STATIC_LIBRARIES)
     set(GAME_EXT_LIBS ${GAME_EXT_LIBS} ${SFML_DEPENDENCIES})
 endif()
-target_link_libraries(game ${GAME_EXT_LIBS})
-set_target_properties(game PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(${PROJECT_NAME} ${GAME_EXT_LIBS})
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-# Copy config.py
-add_custom_command(TARGET game POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/config.py"
-    $<TARGET_FILE_DIR:game>)
+# Copy sfml and tgui .dlls
+if (NOT GAME_SFML_TGUI_STATIC_LIBRARIES)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    file(GLOB TGUI_DLLS "${TGUI_ROOT}/lib/*.dll")
+    foreach (dll_i ${TGUI_DLLS})
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${dll_i}
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    endforeach(dll_i)
+endif()
+
+# Copy settings.py
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/settings.py"
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 # Copy assets directory
-add_custom_command(TARGET game POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:game>/assets
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${PROJECT_SOURCE_DIR}/assets"
-    $<TARGET_FILE_DIR:game>/assets) 
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets)

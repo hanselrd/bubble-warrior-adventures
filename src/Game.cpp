@@ -25,7 +25,7 @@ Game::Game() {
 	// Create global scope and load config script
 	auto pyGlobal = ResourceCache<py::dict>::create("global");
 	*pyGlobal = py::dict(py::module::import("__main__").attr("__dict__"));
-	py::eval_file("config.py", *pyGlobal);
+	py::eval_file("settings.py", *pyGlobal);
 
 	// Load the resolution dict from config
 	auto resolution = (*pyGlobal)["config"]["resolution"].cast<py::dict>();
