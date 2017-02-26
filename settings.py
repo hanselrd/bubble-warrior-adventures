@@ -2,10 +2,9 @@ import sys
 sys.path.append('.')
 import assets
 sys.path.pop()
-
 import game
 
-config = {
+settings = {
 	# Sets the game to fullscreen if true, windowed if false
 	# using the values defined under resolution
 	'fullscreen': False,
@@ -44,6 +43,5 @@ config = {
 	}
 }
 
-# Adds the newly created config dict to game module
-import game
-game.config = config
+# Adds the newly created settings dict to game module
+game.settings = settings

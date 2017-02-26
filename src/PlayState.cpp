@@ -14,17 +14,20 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 
 	// Call test scripts @@@@@@@@@@@@
 	// These tests will be removed when the map loader in finished
-	auto scripts = (*pyGlobal)["config"]["scriptsDir"].cast<std::string>();
+	auto scripts = (*pyGlobal)["settings"]["scriptsDir"].cast<std::string>();
 
 	auto local1 = py::dict();
 	py::eval_file(scripts + "test_config.py", *pyGlobal, local1);
 	local1["main"].cast<py::function>().call();
 
-	py::print();
+	// write a script handler
+	/*py::print();
 
 	auto local2 = py::dict();
 	py::eval_file(scripts + "test_tmx.py", *pyGlobal, local2);
-	local2["main"].cast<py::function>().call();
+	local2["main"].cast<py::function>().call();*/
+
+	auto tmxMap = ResourceCache<tmx::Map>::create("world", "assets/maps/world.tmx");
 
 	auto lblCoords = std::make_shared<tgui::Label>();
 	lblCoords->setTextColor(sf::Color::Cyan);
@@ -40,11 +43,12 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 
 	_box.setSize({ 200, 60 });
 	_box.setFillColor(sf::Color::Red);
-	_box.setPosition(50, 50);
+	_box.setPosition(300, 50);
 
 	_player.setRadius(8);
 	_player.setFillColor(sf::Color::Cyan);
-	_player.setPosition(300, 100);
+	auto playerSpawn = tmxMap->getLayers()[2].getObjects()[0].getRect();
+	_player.setPosition(playerSpawn.left, playerSpawn.top);
 
 	_view.setCenter(_player.getPosition());
 	_view.setSize(window.getSize().x, window.getSize().y);
@@ -74,7 +78,11 @@ void PlayState::update(float delta) {
 
 void PlayState::draw(sf::RenderWindow& window) {
 	window.setView(_view);
-	window.draw(_box);
+	window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(0));
+	window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(1));
+	window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(2));
 	window.draw(_player);
+	window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(3));
+	// window.draw(_box);
 	_gui.draw();
 }

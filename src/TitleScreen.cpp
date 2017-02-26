@@ -21,12 +21,12 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 
 	// Background image
 	auto background = std::make_shared<tgui::Picture>();
-	background->setTexture((*pyGlobal)["config"]["TitleScreen"]["background"].cast<std::string>());
+	background->setTexture((*pyGlobal)["settings"]["TitleScreen"]["background"].cast<std::string>());
 	_gui.add(background);
 
 	// Loads the font for the title
 	auto titleFont = ResourceCache<sf::Font>::create("titleFont");
-	titleFont->loadFromFile((*pyGlobal)["config"]["TitleScreen"]["font"].cast<std::string>());
+	titleFont->loadFromFile((*pyGlobal)["settings"]["TitleScreen"]["font"].cast<std::string>());
 
 	// "Bubble Warrior" text component
 	tgui::Label::Ptr lblTitle1 = theme->load("Label");

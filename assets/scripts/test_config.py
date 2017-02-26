@@ -1,17 +1,17 @@
 def main():
-    from game import config
-    assets = config['assets']
+    from game import settings
+    assets = settings['assets']
 
-    print('Game Configuration')
-    print('  fullscreen:', config['fullscreen'])
-    print('  resolution:', config['resolution'])
-    print('  showFpsCounter:', config['showFpsCounter'])
+    print('Game settings:')
+    print('  fullscreen:', settings['fullscreen'])
+    print('  resolution:', settings['resolution'])
+    print('  showFpsCounter:', settings['showFpsCounter'])
     print('  assets:')
     print('    backgrounds:', assets.backgrounds)
     print('    fonts:', assets.fonts)
     print('    sprites:', assets.sprites)
     print('    themes:', assets.themes)
-    print('  scriptsDir:', config['scriptsDir'])
-    print('  mapsDir:', config['mapsDir'])
-    print('  theme:', config['theme'])
-    print('  TitleScreen:', config['TitleScreen'])
+    print('  scriptsDir:', settings['scriptsDir'])
+    print('  mapsDir:', settings['mapsDir'])
+    print('  theme:', settings['theme'])
+    print('  TitleScreen:', settings['TitleScreen'])

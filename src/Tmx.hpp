@@ -1,14 +1,14 @@
 #pragma once
 #include <pugixml.hpp>
-#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 namespace py = pybind11;
 #include <SFML/Graphics.hpp>
-#include <memory>
 #include <string>
 #include <vector>
 
 namespace tmx {
 	class Layer;
+	class Tileset;
 
 	class Map final {
 	public:
@@ -17,18 +17,20 @@ namespace tmx {
 		unsigned getHeight() const;
 		unsigned getTileWidth() const;
 		unsigned getTileHeight() const;
-		const std::vector<std::shared_ptr<Layer>>& getLayers() const;
+		const std::vector<Tileset>& getTilesets() const;
+		const std::vector<Layer>& getLayers() const;
 
 	private:
 		pugi::xml_document _doc;
 		unsigned _width, _height,
 			_tileWidth, _tileHeight;
-		std::vector<std::shared_ptr<Layer>> _layers;
+		std::vector<Tileset> _tilesets;
+		std::vector<Layer> _layers;
 	};
 
 	class Tileset final {
 	public:
-		explicit Tileset(const pugi::xml_node& tilesetNode);
+		explicit Tileset(const Map& map, const pugi::xml_node& tilesetNode);
 		unsigned getFirstGid() const;
 		const std::string& getName() const;
 		unsigned getTileWidth() const;
@@ -47,11 +49,10 @@ namespace tmx {
 		sf::Texture _texture;
 	};
 
-	/*
-		Base class for all layers:
-		Tile, Object and Image
-	*/
-	class Layer {
+	class Tile;
+	class Object;
+
+	class Layer final : public sf::Drawable {
 	public:
 		enum class Type {
 			Tile,
@@ -59,42 +60,42 @@ namespace tmx {
 			Image
 		};
 
-		explicit Layer(const pugi::xml_node& layerNode);
+		explicit Layer(const Map& map, const pugi::xml_node& layerNode);
 		const std::string& getName() const;
 		Type getType() const;
+		const std::vector<Tile>& getTiles() const;
+		const std::vector<Object>& getObjects() const;
 
 	private:
 		std::string _name;
 		Type _type;
-	};
-
-	class Tile;
-
-	class TileLayer final : public Layer, public sf::Drawable {
-	public:
-		explicit TileLayer(const pugi::xml_node& tileLayerNode);
-		unsigned getWidth() const;
-		unsigned getHeight() const;
-		const std::vector<Tile>& getTiles() const;
-
-	private:
-		unsigned _width, _height;
 		std::vector<Tile> _tiles;
-
-		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	};
-
-	class Object;
-
-	class ObjectLayer final : public Layer, public sf::Drawable {
-	public:
-		explicit ObjectLayer(const pugi::xml_node& objectLayerNode);
-		const std::vector<Object>& getObjects() const;
-		
-	private:
 		std::vector<Object> _objects;
 
-		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	};
+
+	class Tile final : public sf::Sprite {
+	public:
+		explicit Tile(const Map& map, unsigned gid);
+		unsigned getGid() const;
+
+	private:
+		unsigned _gid;
+	};
+
+	class Object final {
+	public:
+		explicit Object(const Map& map, const pugi::xml_node& objectNode);
+		const std::string& getName() const;
+		const std::string& getType() const;
+		const Tile* getTile() const;
+		const sf::IntRect& getRect() const;
+
+	private:
+		std::string _name, _type;
+		std::shared_ptr<Tile> _tile;
+		sf::IntRect _rect;
 	};
 }
 
