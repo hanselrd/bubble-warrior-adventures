@@ -18,7 +18,9 @@ game_set_option(TGUI_ROOT "" PATH "TGUI root directory")
 
 # Choose between linking to SFML statically or dynamically
 # Note that you must link to TGUI the same way
-game_set_option(GAME_SFML_TGUI_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
+if (SFML_OS_WINDOWS)
+    game_set_option(GAME_SFML_TGUI_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
+endif()
 
 # Project name
 project(game)
