@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 namespace py = pybind11;
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include <string>
 #include <vector>
 
