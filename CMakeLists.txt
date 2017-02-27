@@ -22,7 +22,7 @@ game_set_option(USE_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI static
 
 if (USE_STATIC_LIBRARIES)
     set(SFML_STATIC_LIBRARIES TRUE)
-endif();
+endif()
 
 # Project name
 project(Game)
