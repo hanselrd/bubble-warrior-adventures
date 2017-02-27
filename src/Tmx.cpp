@@ -1,6 +1,7 @@
 #include "Tmx.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <algorithm>
+#include <cstring>
 #include <functional>
 #include <stdexcept>
 

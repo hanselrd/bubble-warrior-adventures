@@ -44,7 +44,7 @@ if (GAME_SFML_TGUI_STATIC_LIBRARIES)
 endif()
 
 # Find sfml, tgui and python3
-find_package(SFML 2 COMPONENTS system window graphics audio network REQUIRED)
+find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
 find_package(TGUI REQUIRED)
 set(Python_ADDITIONAL_VERSIONS 3.4)
 find_package(PythonLibs 3 REQUIRED)
