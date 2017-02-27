@@ -30,6 +30,9 @@ set(MAJOR_VERSION 1)
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
+# C++14 is required
+add_compile_options(-std=c++14)
+
 # Include the configuration file
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
 
