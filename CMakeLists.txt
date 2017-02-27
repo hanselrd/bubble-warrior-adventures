@@ -58,15 +58,8 @@ include_directories("${PROJECT_SOURCE_DIR}/extlibs/cppcodec")
 include_directories("${PROJECT_SOURCE_DIR}/extlibs/pugixml/src")
 include_directories("${PROJECT_SOURCE_DIR}/extlibs/pybind11/include")
 
-set(GAME_SRC
-    src/Game.cpp
-    src/GameState.cpp
-    src/Main.cpp
-    src/PlayState.cpp
-    src/StateHandler.cpp
-    src/TitleScreen.cpp
-    src/Tmx.cpp
-)
+# Add all the source files
+file(GLOB GAME_SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 # Add pugixml.cpp
 set(GAME_SRC ${GAME_SRC} extlibs/pugixml/src/pugixml.cpp)
@@ -97,7 +90,7 @@ endif()
 
 # Copy settings.py
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/settings.py"
+    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/settings.py"
     $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 # Copy assets directory
