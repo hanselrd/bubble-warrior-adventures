@@ -1,12 +1,12 @@
 #include "GameState.hpp"
 
 GameState::GameState(StateHandler& stateHandler)
-	: _stateHandler(stateHandler) {}
+    : _stateHandler(stateHandler) {}
 
 void GameState::pause() {
-	// default pause behavior
+    // default pause behavior
 }
 
 void GameState::resume() {
-	// default resume behavior
+    // default resume behavior
 }

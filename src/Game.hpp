@@ -7,11 +7,11 @@
 
 class Game final {
 public:
-	Game();
-	void run();
+    Game();
+    void run();
 
 private:
-	sf::RenderWindow _window;
-	tgui::Gui _gui;
-	StateHandler _stateHandler;
+    sf::RenderWindow _window;
+    tgui::Gui _gui;
+    StateHandler _stateHandler;
 };

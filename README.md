@@ -18,7 +18,7 @@ This project was created for our Software Engineering course. We were tasked wit
 creating a **PowerPoint** presentation detailing what our project was about,
 how the work would be split up and a guideline to follow. With the freedom given
 to us to choose our programming language and project we settled on using C++ with a
-bit of [Python](https://www.python.org) for simple scripting and a 
+bit of [Python](https://www.python.org) for simple scripting and a
 role-playing game. We are using [SFML](http://www.sfml-dev.org/index.php)
 to handle window events, graphics and audio, and [TGUI](https://tgui.eu) to
 create and render in-game GUI components. We are currently working on the story
@@ -33,7 +33,7 @@ and who doesn't love a good storyline?
 ## Development Environment
 
 We are using [Visual Studio Community](https://www.visualstudio.com/downloads),
-but since our libraries are cross-platform, you can easily use any editor 
+but since our libraries are cross-platform, you can easily use any editor
 and/or operating system. **Makefile not included!**
 
 ## Contributors
@@ -54,7 +54,7 @@ than Windows for development.
 
 ## Contributing
 
-Want to help us out? Refer to the 
+Want to help us out? Refer to the
 [contribution](CONTRIBUTING.md)
 guide.
 
