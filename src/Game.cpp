@@ -56,9 +56,7 @@ Game::Game() {
 
 	// Create a fullscreen window if set to true in settings, windowed if false.
 	if ((*pyGlobal)["settings"]["fullscreen"].cast<bool>())
-		_window.create({ xy.first, xy.second }, 
-			WINDOW_TITLE,
-			sf::Style::Fullscreen);
+		_window.create({ xy.first, xy.second }, WINDOW_TITLE, sf::Style::Fullscreen);
 	else
 		_window.create({ xy.first, xy.second }, WINDOW_TITLE);
 

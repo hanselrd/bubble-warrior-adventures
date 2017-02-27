@@ -39,8 +39,10 @@ add_compile_options(-std=c++14)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
 
 # Look for static libraries if option has been set
-if (GAME_SFML_TGUI_STATIC_LIBRARIES)
-    set(SFML_STATIC_LIBRARIES TRUE)
+if (SFML_OS_WINDOWS)
+    if (GAME_SFML_TGUI_STATIC_LIBRARIES)
+        set(SFML_STATIC_LIBRARIES TRUE)
+    endif()
 endif()
 
 # Find sfml, tgui and python3
@@ -51,13 +53,13 @@ find_package(PythonLibs 3 REQUIRED)
 
 # FindSFML couldn't find SFML
 if (NOT SFML_FOUND)
-    #game_set_option(SFML_ROOT "" PATH "SFML root directory")
+    set(SFML_ROOT "" CACHE PATH "SFML root directory" FORCE)
     message(FATAL_ERROR "CMake couldn't find SFML. Set the SFML_ROOT entry to SFML's root directory (containing \"include\" and \"lib\" directories).")
 endif()
 
 # FindTGUI couldn't find TGUI
 if (NOT TGUI_FOUND)
-    #set(TGUI_ROOT "" CACHE PATH "TGUI root directory" FORCE)
+    set(TGUI_ROOT "" CACHE PATH "TGUI root directory" FORCE)
     message(FATAL_ERROR "CMake couldn't find TGUI. Set the TGUI_ROOT entry to TGUI's root directory (containing \"include\" and \"lib\" directories).")
 endif()
 
@@ -85,8 +87,8 @@ target_link_libraries(${PROJECT_NAME} ${GAME_EXT_LIBS})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 # Copy sfml and tgui .dlls
-if (NOT GAME_SFML_TGUI_STATIC_LIBRARIES)
-    if (SFML_OS_WINDOWS)
+if (SFML_OS_WINDOWS)
+    if (NOT GAME_SFML_TGUI_STATIC_LIBRARIES)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin" $<TARGET_FILE_DIR:${PROJECT_NAME}>)
         file(GLOB TGUI_DLLS "${TGUI_ROOT}/lib/*.dll")
