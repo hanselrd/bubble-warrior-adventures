@@ -30,6 +30,9 @@ set(MAJOR_VERSION 1)
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
+# Include the configuration file
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
+
 # Look for static libraries if option has been set
 if (GAME_SFML_TGUI_STATIC_LIBRARIES)
     set(SFML_STATIC_LIBRARIES TRUE)
@@ -77,13 +80,15 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 # Copy sfml and tgui .dlls
 if (NOT GAME_SFML_TGUI_STATIC_LIBRARIES)
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin" $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-    file(GLOB TGUI_DLLS "${TGUI_ROOT}/lib/*.dll")
-    foreach (dll_i ${TGUI_DLLS})
+    if (SFML_OS_WINDOWS)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy ${dll_i} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-    endforeach(dll_i)
+            COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin" $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+        file(GLOB TGUI_DLLS "${TGUI_ROOT}/lib/*.dll")
+        foreach (dll_i ${TGUI_DLLS})
+            add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy ${dll_i} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+        endforeach(dll_i)
+    endif()
 endif()
 
 # Copy settings.py
