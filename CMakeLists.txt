@@ -18,12 +18,14 @@ game_set_option(TGUI_ROOT "" PATH "TGUI root directory")
 
 # Choose between linking to SFML statically or dynamically
 # Note that you must link to TGUI the same way
-if (SFML_OS_WINDOWS)
-    game_set_option(GAME_SFML_TGUI_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
-endif()
+game_set_option(USE_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
+
+if (USE_STATIC_LIBRARIES)
+    set(SFML_STATIC_LIBRARIES TRUE)
+endif();
 
 # Project name
-project(game)
+project(Game)
 
 # Project version
 set(MAJOR_VERSION 0)
@@ -37,13 +39,6 @@ add_compile_options(-std=c++14)
 
 # Include the configuration file
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
-
-# Look for static libraries if option has been set
-if (SFML_OS_WINDOWS)
-    if (GAME_SFML_TGUI_STATIC_LIBRARIES)
-        set(SFML_STATIC_LIBRARIES TRUE)
-    endif()
-endif()
 
 # Find sfml, tgui and python3
 find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
@@ -80,7 +75,7 @@ add_executable(${PROJECT_NAME} ${GAME_SRC})
 
 # Link against sfml and tgui libraries
 set(GAME_EXT_LIBS ${SFML_LIBRARIES} ${TGUI_LIBRARY} ${PYTHON_LIBRARIES})
-if (GAME_SFML_TGUI_STATIC_LIBRARIES)
+if (USE_STATIC_LIBRARIES)
     set(GAME_EXT_LIBS ${GAME_EXT_LIBS} ${SFML_DEPENDENCIES})
 endif()
 target_link_libraries(${PROJECT_NAME} ${GAME_EXT_LIBS})
@@ -88,7 +83,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 # Copy sfml and tgui .dlls
 if (SFML_OS_WINDOWS)
-    if (NOT GAME_SFML_TGUI_STATIC_LIBRARIES)
+    if (NOT USE_STATIC_LIBRARIES)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory "${SFML_ROOT}/bin" $<TARGET_FILE_DIR:${PROJECT_NAME}>)
         file(GLOB TGUI_DLLS "${TGUI_ROOT}/lib/*.dll")
