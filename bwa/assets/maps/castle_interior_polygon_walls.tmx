@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="305">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="357">
  <tileset firstgid="1" name="1" tilewidth="32" tileheight="32" tilecount="900" columns="30">
   <image source="hyptosis_tile-art-batch-1.png" trans="000000" width="960" height="960"/>
  </tileset>
@@ -43,7 +43,7 @@
  <tileset firstgid="1449" name="objects2" tilewidth="32" tileheight="32" tilecount="384" columns="24">
   <image source="../../../../../../Pictures/Game Art/city_inside.png" width="768" height="512"/>
  </tileset>
- <layer name="Background" width="100" height="100" opacity="0.38">
+ <layer name="Background" width="100" height="100" opacity="0.53">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -381,13 +381,7 @@
   <object id="252" name="GreenFlame1" x="416" y="2016" width="32" height="32"/>
   <object id="253" name="GreenFlame2" x="416" y="2208" width="32" height="32"/>
   <object id="254" name="GreenFlame3" x="608" y="2208" width="32" height="32"/>
-  <object id="262" name="OutsideWall" x="352" y="288">
-   <polygon points="0,0 0,352 192,352 192,1664 0,1664 0,2016 352,2016 352,1856 992,1856 992,2016 1024,2016 1024,1824 320,1824 320,1984 32,1984 32,1696 224,1696 224,320 32,320 32,32 320,32 320,192 1056,192 1056,96 896,96 896,-96 1312,-96 1312,96 1152,96 1152,192 1888,192 1888,32 2176,32 2176,320 1984,320 1984,1696 2176,1696 2176,1984 1888,1984 1888,1824 1184,1824 1184,2016 1216,2016 1216,1856 1856,1856 1856,2016 2208,2016 2208,1664 2016,1664 2016,352 2208,352 2208,0 1856,0 1856,160 1184,160 1184,128 1344,128 1344,-128 864,-128 864,128 1024,128 1024,160 352,160 352,0 0,0"/>
-  </object>
   <object id="263" name="FrontDoor" x="1344" y="2304" width="224" height="32"/>
-  <object id="265" name="InsideWalls" x="672" y="576">
-   <polygon points="0,0 0,1440 736,1440 736,1248 448,1248 448,192 1120,192 1120,1248 832,1248 832,1440 1568,1440 1568,0 0,0"/>
-  </object>
   <object id="266" name="OrangeFlame1" x="416" y="352" width="32" height="32"/>
   <object id="267" name="OrangeFlame2" x="608" y="352" width="32" height="32"/>
   <object id="268" name="OrangeFlame3" x="416" y="544" width="32" height="32"/>
@@ -421,5 +415,48 @@
   <object id="301" name="BlueStairs" x="2368" y="448" width="32" height="32"/>
   <object id="302" name="RedStairs" x="2368" y="2112" width="32" height="32"/>
   <object id="303" name="GreenStairs" x="512" y="2112" width="32" height="32"/>
+  <object id="306" name="Wall" x="352" y="288" width="352" height="32"/>
+  <object id="308" name="Wall" x="352" y="320" width="32" height="320"/>
+  <object id="310" name="Wall" x="384" y="608" width="192" height="32"/>
+  <object id="311" name="Wall" x="672" y="320" width="32" height="128"/>
+  <object id="312" name="Wall" x="544" y="640" width="32" height="1344"/>
+  <object id="313" name="Wall" x="672" y="448" width="736" height="32"/>
+  <object id="315" name="Wall" x="1376" y="416" width="32" height="32"/>
+  <object id="316" name="Wall" x="1504" y="416" width="32" height="32"/>
+  <object id="317" name="Wall" x="1216" y="384" width="192" height="32"/>
+  <object id="318" name="Wall" x="1216" y="160" width="32" height="224"/>
+  <object id="319" name="Wall" x="1248" y="160" width="416" height="32"/>
+  <object id="320" name="Wall" x="1664" y="160" width="32" height="256"/>
+  <object id="321" name="Wall" x="1504" y="384" width="160" height="32"/>
+  <object id="322" name="Wall" x="1504" y="448" width="736" height="32"/>
+  <object id="325" name="Wall" x="2208" y="288" width="32" height="160"/>
+  <object id="326" name="Wall" x="2240" y="288" width="320" height="32"/>
+  <object id="329" name="Wall" x="2528" y="320" width="32" height="320"/>
+  <object id="330" name="Wall" x="2336" y="608" width="192" height="32"/>
+  <object id="331" name="Wall" x="672" y="576" width="1568" height="32"/>
+  <object id="332" name="Wall" x="2336" y="640" width="32" height="1312"/>
+  <object id="333" name="Wall" x="2336" y="1952" width="224" height="32"/>
+  <object id="334" name="Wall" x="2528" y="1984" width="32" height="320"/>
+  <object id="335" name="Wall" x="2208" y="2272" width="320" height="32"/>
+  <object id="336" name="Wall" x="2208" y="2112" width="32" height="160"/>
+  <object id="337" name="Wall" x="1568" y="2112" width="640" height="32"/>
+  <object id="338" name="Wall" x="1536" y="2112" width="32" height="192"/>
+  <object id="339" name="Wall" x="1344" y="2112" width="32" height="192"/>
+  <object id="340" name="Wall" x="672" y="2112" width="672" height="32"/>
+  <object id="341" name="Wall" x="2208" y="608" width="32" height="1408"/>
+  <object id="342" name="Wall" x="672" y="608" width="32" height="1408"/>
+  <object id="343" name="Wall" x="704" y="1984" width="704" height="32"/>
+  <object id="344" name="Wall" x="1504" y="1984" width="704" height="32"/>
+  <object id="345" name="Wall" x="1504" y="1824" width="32" height="160"/>
+  <object id="346" name="Wall" x="1376" y="1824" width="32" height="160"/>
+  <object id="347" name="Wall" x="1088" y="1824" width="288" height="32"/>
+  <object id="348" name="Wall" x="1536" y="1824" width="288" height="32"/>
+  <object id="349" name="Wall" x="1792" y="736" width="32" height="1088"/>
+  <object id="350" name="Wall" x="1088" y="736" width="32" height="1088"/>
+  <object id="351" name="Wall" x="1120" y="736" width="672" height="32"/>
+  <object id="352" name="Wall" x="352" y="1952" width="192" height="32"/>
+  <object id="353" name="Wall" x="352" y="1984" width="32" height="320"/>
+  <object id="354" name="Wall" x="384" y="2272" width="320" height="32"/>
+  <object id="356" name="Wall" x="672" y="2144" width="32" height="128"/>
  </objectgroup>
 </map>
