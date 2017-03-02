@@ -3,10 +3,10 @@
 namespace py = pybind11;
 #include "ResourceCache.hpp"
 #include "StateHandler.hpp"
-#include "Tmx.hpp"
 
 PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
-    : GameState(stateHandler) {
+    : GameState(stateHandler)
+    , _map("assets/maps/world.tmx") {
     _gui.setWindow(window);
 
     // Gets the global python scope from ResourceCache
@@ -26,8 +26,6 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     auto local2 = py::dict();
     py::eval_file(scripts + "test_tmx.py", *pyGlobal, local2);
     local2["main"].cast<py::function>().call();*/
-
-    //auto tmxMap = ResourceCache<tmx::Map>::create("world", "assets/maps/world.tmx");
 
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
@@ -54,8 +52,8 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 
     _player.setRadius(8);
     _player.setFillColor(sf::Color::Cyan);
-    //auto playerSpawn = tmxMap->getLayers()[2].getObjects()[0].getRect();
-    //_player.setPosition(playerSpawn.left, playerSpawn.top);
+    auto playerSpawn = _map.getLayers()[2].getObjects()[0].getRect();
+    _player.setPosition(playerSpawn.left, playerSpawn.top);
 
     _view.setCenter(_player.getPosition());
     _view.setSize(window.getSize().x, window.getSize().y);
@@ -85,11 +83,11 @@ void PlayState::update(float delta) {
 
 void PlayState::draw(sf::RenderWindow& window) {
     window.setView(_view);
-    //window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(0));
-    //window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(1));
-    //window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(2));
+    window.draw(_map.getLayers().at(0));
+    window.draw(_map.getLayers().at(1));
+    window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    //window.draw(ResourceCache<tmx::Map>::get("world")->getLayers().at(3));
+    window.draw(_map.getLayers().at(3));
     // window.draw(_box);
     _gui.draw();
 }

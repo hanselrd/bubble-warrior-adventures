@@ -20,6 +20,17 @@ struct ResourceCache final {
     }
 
     /*
+        Explicitly destroys a resource under the string 'key'.
+        The reason for this function is because resources stored here
+        are deleted last and can reference data long after they've gone
+        out of scope.
+    */
+    static inline void destroy(const std::string& key) {
+        if (exists(key))
+            _cache.erase(key);
+    }
+
+    /*
         Checks if a resource exists under the string 'key'.
     */
     static inline bool exists(const std::string& key) {

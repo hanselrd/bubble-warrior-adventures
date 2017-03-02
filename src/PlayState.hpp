@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.hpp"
+#include "Tmx.hpp"
 
 class PlayState final : public GameState {
 public:
@@ -12,4 +13,5 @@ private:
     sf::RectangleShape _box;
     sf::CircleShape _player;
     sf::View _view;
+    tmx::Map _map; // for testing
 };
