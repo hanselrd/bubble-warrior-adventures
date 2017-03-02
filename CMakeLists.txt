@@ -20,12 +20,6 @@ game_set_option(TGUI_ROOT "" PATH "TGUI root directory")
 # Note that you must link to TGUI the same way
 game_set_option(USE_STATIC_LIBRARIES TRUE BOOL "TRUE to link to SFML/TGUI statically, FALSE to link dynamically")
 
-if (SFML_OS_WINDOWS)
-	if (USE_STATIC_LIBRARIES)
-	    set(SFML_STATIC_LIBRARIES TRUE)
-	endif()
-endif()
-
 # Project name
 project(game)
 
@@ -41,6 +35,12 @@ add_compile_options(-std=c++14)
 
 # Include the configuration file
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
+
+if (SFML_OS_WINDOWS)
+	if (USE_STATIC_LIBRARIES)
+	    set(SFML_STATIC_LIBRARIES TRUE)
+	endif()
+endif()
 
 # Find sfml, tgui and python3
 find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
