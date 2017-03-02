@@ -1,6 +1,6 @@
+#include "PlayState.hpp"
 #include <pybind11/eval.h>
 namespace py = pybind11;
-#include "PlayState.hpp"
 #include "ResourceCache.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
