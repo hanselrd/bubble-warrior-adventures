@@ -18,7 +18,7 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 
     auto local1 = py::dict();
     py::eval_file(scripts + "test_config.py", *pyGlobal, local1);
-    local1["main"].cast<py::function>().call();
+    local1["main"].cast<py::function>()();
 
     // write a script handler
     /*py::print();
