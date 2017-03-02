@@ -62,6 +62,7 @@ endif()
 
 # Add the sfml and tgui include directories
 include_directories(${SFML_INCLUDE_DIR} ${TGUI_INCLUDE_DIR} ${PYTHON_INCLUDE_DIR})
+include_directories("${PROJECT_SOURCE_DIR}/extlibs/cereal/include")
 include_directories("${PROJECT_SOURCE_DIR}/extlibs/cppcodec")
 include_directories("${PROJECT_SOURCE_DIR}/extlibs/pugixml/src")
 include_directories("${PROJECT_SOURCE_DIR}/extlibs/pybind11/include")

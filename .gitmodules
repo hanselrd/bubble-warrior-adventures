@@ -1,3 +1,6 @@
+[submodule "extlibs/cereal"]
+	path = extlibs/cereal
+	url = https://github.com/USCiLab/cereal
 [submodule "extlibs/cppcodec"]
 	path = extlibs/cppcodec
 	url = https://github.com/tplgy/cppcodec.git

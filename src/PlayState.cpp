@@ -1,7 +1,8 @@
-#include "PlayState.hpp"
 #include <pybind11/eval.h>
 namespace py = pybind11;
+#include "PlayState.hpp"
 #include "ResourceCache.hpp"
+#include "Settings.hpp"
 #include "StateHandler.hpp"
 
 PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
@@ -9,16 +10,17 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     , _map("assets/maps/world.tmx") {
     _gui.setWindow(window);
 
-    // Gets the global python scope from ResourceCache
-    auto pyGlobal = ResourceCache<py::dict>::get("global");
+    // Gets the settings from the ResourceCache
+    auto settings = ResourceCache<Settings>::get("settings");
 
     // Call test scripts @@@@@@@@@@@@
     // These tests will be removed when the map loader in finished
-    auto scripts = (*pyGlobal)["settings"]["scriptsDir"].cast<std::string>();
+    std::string scripts = "assets/scripts/";
 
-    auto local1 = py::dict();
-    py::eval_file(scripts + "test_config.py", *pyGlobal, local1);
-    local1["main"].cast<py::function>()();
+    auto global = py::dict(py::module::import("__main__").attr("__dict__"));
+    auto local = py::dict();
+    py::eval_file(scripts + "test_config.py", global, local);
+    local["main"].cast<py::function>()();
 
     // write a script handler
     /*py::print();

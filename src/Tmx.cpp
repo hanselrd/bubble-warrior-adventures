@@ -252,7 +252,7 @@ const sf::IntRect& tmx::Object::getRect() const {
     return _rect;
 }
 
-void init_tmx(py::module& m) {
+void initTmx(py::module& m) {
     using namespace tmx;
     auto m_tmx = m.def_submodule("tmx", "Tmx map parser");
 

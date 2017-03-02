@@ -8,6 +8,7 @@
 class Game final {
 public:
     Game();
+    ~Game();
     void run();
 
 private:

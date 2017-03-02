@@ -100,4 +100,4 @@ namespace tmx {
     };
 }
 
-void init_tmx(py::module& m);
+void initTmx(py::module& m);

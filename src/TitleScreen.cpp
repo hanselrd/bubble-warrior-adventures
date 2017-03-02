@@ -1,16 +1,15 @@
 #include "TitleScreen.hpp"
-#include <pybind11/eval.h>
-namespace py = pybind11;
 #include "PlayState.hpp"
 #include "ResourceCache.hpp"
+#include "Settings.hpp"
 #include "StateHandler.hpp"
 
 TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     : GameState(stateHandler) {
     _gui.setWindow(window);
 
-    // Gets the global python scope from ResourceCache
-    auto pyGlobal = ResourceCache<py::dict>::get("global");
+    // Gets the settings from the ResourceCache
+    auto settings = ResourceCache<Settings>::get("settings");
 
     // Pulls the window dimensions from the window
     auto windowWidth = tgui::bindWidth(_gui);
@@ -21,12 +20,12 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 
     // Background image
     auto background = std::make_shared<tgui::Picture>();
-    background->setTexture((*pyGlobal)["settings"]["TitleScreen"]["background"].cast<std::string>());
+    background->setTexture("assets/backgrounds/" + settings->background);
     _gui.add(background);
 
     // Loads the font for the title
     auto titleFont = ResourceCache<sf::Font>::create("titleFont");
-    titleFont->loadFromFile((*pyGlobal)["settings"]["TitleScreen"]["font"].cast<std::string>());
+    titleFont->loadFromFile("assets/fonts/" + settings->font);
 
     // "Bubble Warrior" text component
     tgui::Label::Ptr lblTitle1 = theme->load("Label");
