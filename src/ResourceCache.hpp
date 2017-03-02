@@ -5,14 +5,14 @@
 #include <string>
 #include <utility>
 
-template <typename T>
+template <class T>
 struct ResourceCache final {
     /*
         Creates a resource with the arguments passed in and
         stores it in the cache under the string 'key'. If 'key'
         is already taken then it will overwrite it.
     */
-    template <typename... Args>
+    template <class... Args>
     static inline std::shared_ptr<T> create(const std::string& key, Args&&... args) {
         auto res = std::make_shared<T>(std::forward<Args>(args)...);
         _cache.insert(std::make_pair(key, res));
