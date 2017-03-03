@@ -97,11 +97,6 @@ if (SFML_OS_WINDOWS)
     endif()
 endif()
 
-# Copy settings.py
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/settings.py" ${PROJECT_BINARY_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/settings.py" $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-
 # Copy assets directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/assets
