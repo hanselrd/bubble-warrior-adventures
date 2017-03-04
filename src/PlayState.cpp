@@ -1,7 +1,7 @@
 #include "PlayState.hpp"
 #include <pybind11/eval.h>
 namespace py = pybind11;
-#include "ResourceCache.hpp"
+#include "Locator.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
@@ -10,8 +10,8 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     , _map("assets/maps/world.tmx") {
     _gui.setWindow(window);
 
-    // Gets the settings from the ResourceCache
-    auto settings = ResourceCache<Settings>::get("settings");
+    // Locates and gets the Settings object
+    auto settings = Locator<Settings>::get();
 
     // Call test scripts @@@@@@@@@@@@
     // These tests will be removed when the map loader in finished

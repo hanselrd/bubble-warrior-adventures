@@ -11,12 +11,12 @@ public:
     void update(float delta);
     void draw(sf::RenderWindow& window);
 
-    template <typename State, typename... Args>
+    template <class State, class... Args>
     inline void change(Args&&... args) {
         helper<State>(Event::Change, std::forward<Args>(args)...);
     }
 
-    template <typename State, typename... Args>
+    template <class State, class... Args>
     inline void push(Args&&... args) {
         helper<State>(Event::Push, std::forward<Args>(args)...);
     }

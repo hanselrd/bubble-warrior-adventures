@@ -2,23 +2,20 @@
 #include <cereal/archives/json.hpp>
 #include <pybind11/eval.h>
 namespace py = pybind11;
-#include <fstream>
 #include <string>
-#include <utility>
 #include "Config.hpp"
+#include "Locator.hpp"
 #include "ResourceCache.hpp"
 #include "Settings.hpp"
 #include "TitleScreen.hpp"
 #include "Tmx.hpp"
-
-static Settings settings;
 
 namespace game {
     PYBIND11_PLUGIN(game) {
         py::module m("game", "Game module");
 
         initSettings(m);
-        m.attr("settings") = settings;
+        m.attr("settings") = Locator<Settings>::get();
 
         auto m_sf = m.def_submodule("sf", "SFML module");
         py::class_<sf::IntRect>(m_sf, "IntRect")
@@ -49,22 +46,14 @@ Game::Game() {
     Py_Initialize();
 
     // Check if settings.json exists and overwrite default settings
-    {
-        std::ifstream is("settings.json");
-        if (is.is_open()) {
-            cereal::JSONInputArchive ar(is);
-            ar(settings);
-        }
-    }
-
-    // Put the settings object in the ResourceCache
-    ResourceCache<Settings>::create("settings", settings);
+    Locator<Settings>::provide(new Settings("settings.json"));
+    auto settings = Locator<Settings>::get();
 
     // Get the resolution from settings
-    auto resolution = settings.resolution;
+    auto resolution = settings->getResolution();
 
     // Create a fullscreen window if set to true in settings, windowed if false.
-    if (settings.fullscreen)
+    if (settings->getFullscreen())
         _window.create({ std::get<0>(resolution), std::get<1>(resolution) }, WINDOW_TITLE, sf::Style::Fullscreen);
     else
         _window.create({ std::get<0>(resolution), std::get<1>(resolution) }, WINDOW_TITLE);
@@ -74,7 +63,7 @@ Game::Game() {
     _gui.setWindow(_window);
 
     // Loads the default GUI theme
-    ResourceCache<tgui::Theme>::create("default", "assets/themes/" + settings.theme);
+    ResourceCache<tgui::Theme>::create("default", "assets/themes/" + settings->getTheme());
 
     // Sets initial state
     _stateHandler.change<TitleScreen>(std::ref(_window));
@@ -83,21 +72,18 @@ Game::Game() {
 Game::~Game() {
     // Destroy the Python interpreter
     Py_Finalize();
-
-    // Before we destroy the game, save the settings
-    std::ofstream os("settings.json");
-    cereal::JSONOutputArchive ar(os);
-    ar(CEREAL_NVP(settings));
 }
 
 void Game::run() {
-    // Create the clock and set up the FPS counter
+    // Locates and gets the Settings object
+    auto settings = Locator<Settings>::get();
+
+    // Create the clock
     sf::Clock clock, updateFps;
     float lastTime = 0.f, currentTime, delta;
-    bool showFpsCounter = settings.showFpsCounter;
 
     // Create FPS string iff showFpsCounter is true in the settings
-    if (showFpsCounter) {
+    if (settings->getShowFpsCounter()) {
         auto theme = ResourceCache<tgui::Theme>::get("default");
         tgui::Label::Ptr lblFps = theme->load("Label");
         lblFps->setTextColor(sf::Color::Yellow);
@@ -125,7 +111,7 @@ void Game::run() {
         _stateHandler.update(delta);
 
         // Update FPS string iff showFpsCounter is true
-        if (showFpsCounter) {
+        if (settings->getShowFpsCounter()) {
             if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
                 auto lblFps = _gui.get<tgui::Label>("lblFps");
                 lblFps->setText(std::to_string(unsigned(1.f / delta)));
