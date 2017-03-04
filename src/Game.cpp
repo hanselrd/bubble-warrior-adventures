@@ -1,5 +1,4 @@
 #include "Game.hpp"
-#include <cereal/archives/json.hpp>
 #include <pybind11/eval.h>
 namespace py = pybind11;
 #include <string>
