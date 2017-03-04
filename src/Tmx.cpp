@@ -123,6 +123,7 @@ const sf::Texture& tmx::Tileset::getTexture() const {
 
 tmx::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
     _name = layerNode.attribute("name").as_string();
+    _visible = layerNode.attribute("visible").as_bool();
 
     std::string type = layerNode.name();
     if (type == "layer") {
@@ -176,6 +177,10 @@ tmx::Layer::Type tmx::Layer::getType() const {
     return _type;
 }
 
+bool tmx::Layer::isVisible() const {
+    return _visible;
+}
+
 const std::vector<tmx::Tile>& tmx::Layer::getTiles() const {
     return _tiles;
 }
@@ -185,9 +190,13 @@ const std::vector<tmx::Object>& tmx::Layer::getObjects() const {
 }
 
 void tmx::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    if (_type == Type::Tile)
+    if (_type == Type::Tile) {
+        auto view = target.getView();
+        sf::FloatRect viewRect{view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y};
         for (const auto& tile : _tiles)
-            target.draw(tile, states);
+            if (viewRect.intersects(tile.getGlobalBounds()))
+                target.draw(tile, states);
+    }
     else if (_type == Type::Object)
         for (const auto& object : _objects) {
             auto t = object.getTile();
@@ -203,10 +212,12 @@ tmx::Tile::Tile(const Map& map, unsigned gid)
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
             setTexture(tileset.getTexture());
             auto num = gid - tileset.getFirstGid();
-            auto x = tileset.getMargin() + ((num % tileset.getColumns()) * tileset.getTileWidth())
-                + (tileset.getSpacing() * (num % tileset.getColumns()));
-            auto y = tileset.getMargin() + ((num / tileset.getColumns()) * tileset.getTileHeight())
-                + (tileset.getSpacing() * (num / tileset.getColumns()));
+            auto texture = tileset.getTexture();
+            auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() : texture.getSize().x / tileset.getTileWidth();
+            auto x = tileset.getMargin() + ((num % columns) * tileset.getTileWidth())
+                + (tileset.getSpacing() * (num % columns));
+            auto y = tileset.getMargin() + ((num / columns) * tileset.getTileHeight())
+                + (tileset.getSpacing() * (num / columns));
             setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
             break;
         }

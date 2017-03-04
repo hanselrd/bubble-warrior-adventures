@@ -64,12 +64,14 @@ namespace tmx {
         explicit Layer(const Map& map, const pugi::xml_node& layerNode);
         const std::string& getName() const;
         Type getType() const;
+        bool isVisible() const;
         const std::vector<Tile>& getTiles() const;
         const std::vector<Object>& getObjects() const;
 
     private:
         std::string _name;
         Type _type;
+        bool _visible;
         std::vector<Tile> _tiles;
         std::vector<Object> _objects;
 
