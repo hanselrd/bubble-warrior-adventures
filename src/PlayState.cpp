@@ -68,19 +68,20 @@ void PlayState::handleEvent(sf::Event& e) {
 
 void PlayState::update(float delta) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        _player.move(0, -70 * delta);
+        _player.move(0, std::ceil(-70 * delta));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        _player.move(-70 * delta, 0);
+        _player.move(std::ceil(-70 * delta), 0);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        _player.move(0, 70 * delta);
+        _player.move(0, std::floor(70 * delta));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        _player.move(70 * delta, 0);
+        _player.move(std::floor(70 * delta), 0);
 
     auto playerPos = _player.getPosition();
+
     auto lblCoords = _gui.get<tgui::Label>("lblCoords");
     lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
 
-    _view.setCenter(_player.getPosition());
+    _view.setCenter(playerPos);
 }
 
 void PlayState::draw(sf::RenderWindow& window) {
