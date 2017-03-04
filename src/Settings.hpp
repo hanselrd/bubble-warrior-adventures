@@ -6,7 +6,7 @@ namespace py = pybind11;
 #include <string>
 #include <tuple>
 
-class Settings {
+class Settings final {
 public:
     explicit Settings(const std::string& filename);
     ~Settings();
