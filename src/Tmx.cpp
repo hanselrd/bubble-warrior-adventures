@@ -80,11 +80,9 @@ tmx::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
 
     auto imageNode = tilesetNode.child("image");
     if (!imageNode.empty()) {
-        // fix to not use hardcoded assets
         std::string source = imageNode.attribute("source").as_string();
         _texture.loadFromFile("assets/" + source.substr(3));
     }
-
 }
 
 unsigned tmx::Tileset::getFirstGid() const {
