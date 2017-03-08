@@ -62,7 +62,7 @@ Game::Game() {
     _gui.setWindow(_window);
 
     // Loads the default GUI theme
-    ResourceCache<tgui::Theme>::create("default", "assets/themes/" + settings->getTheme());
+    ResourceCache<tgui::Theme>::create("default", THEMES_DIR + settings->getTheme());
 
     // Sets initial state
     _stateHandler.change<TitleScreen>(std::ref(_window));

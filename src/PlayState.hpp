@@ -10,7 +10,6 @@ public:
     void draw(sf::RenderWindow& window) override;
 
 private:
-    sf::RectangleShape _box;
     sf::CircleShape _player;
     sf::View _view;
     tmx::Map _map; // for testing

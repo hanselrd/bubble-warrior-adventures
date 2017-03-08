@@ -1,13 +1,14 @@
 #include "PlayState.hpp"
 #include <pybind11/eval.h>
 namespace py = pybind11;
+#include "Config.hpp"
 #include "Locator.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
 PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     : GameState(stateHandler)
-    , _map("assets/maps/ne_tower.tmx") {
+    , _map(MAPS_DIR "world.tmx") {
     _gui.setWindow(window);
 
     // Locates and gets the Settings object
@@ -15,11 +16,10 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
 
     // Call test scripts @@@@@@@@@@@@
     // These tests will be removed when the map loader in finished
-    std::string scripts = "assets/scripts/";
 
     auto global = py::dict(py::module::import("__main__").attr("__dict__"));
     auto local = py::dict();
-    py::eval_file(scripts + "test_config.py", global, local);
+    py::eval_file(SCRIPTS_DIR "test_config.py", global, local);
     local["main"].cast<py::function>()();
 
     // write a script handler
@@ -40,10 +40,6 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     btnGoBack->setText("Main Menu");
     btnGoBack->connect("pressed", [&] { _stateHandler.pop(); });
     _gui.add(btnGoBack);
-
-    _box.setSize({ 200, 60 });
-    _box.setFillColor(sf::Color::Red);
-    _box.setPosition(300, 50);
 
     /*
         Don't put the map in the resource cache because
@@ -91,7 +87,6 @@ void PlayState::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    //window.draw(_map.getLayers().at(3));
-    // window.draw(_box);
+    window.draw(_map.getLayers().at(3));
     _gui.draw();
 }

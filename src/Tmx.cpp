@@ -4,6 +4,7 @@
 #include <cstring>
 #include <functional>
 #include <stdexcept>
+#include "Config.hpp"
 
 tmx::Map::Map(const std::string& filename) {
     auto success = _doc.load_file(filename.c_str());
@@ -28,19 +29,6 @@ tmx::Map::Map(const std::string& filename) {
                 name == "imagelayer")
                 _layers.push_back(Layer(*this, node));
         }
-
-        /*Tileset tileset(mapNode.child("tileset"));
-        std::cout << "firstgid:" << tileset.getFirstGid() << std::endl;
-        std::cout << "name:" << tileset.getName() << std::endl;
-        std::cout << "tilewidth:" << tileset.getTileWidth() << std::endl;
-        std::cout << "tileheight:" << tileset.getTileHeight() << std::endl;
-        std::cout << "spacing:" << tileset.getSpacing() << std::endl;
-        std::cout << "margin:" << tileset.getMargin() << std::endl;
-        std::cout << "tilecount:" << tileset.getTileCount() << std::endl;
-        std::cout << "columns:" << tileset.getColumns() << std::endl;
-        std::cout << "Image info: " << std::endl;
-        auto texture = tileset.getTexture();
-        std::cout << "\t" << texture.getSize().x << " " << texture.getSize().y << std::endl;*/
     }
 }
 
@@ -81,7 +69,7 @@ tmx::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     auto imageNode = tilesetNode.child("image");
     if (!imageNode.empty()) {
         std::string source = imageNode.attribute("source").as_string();
-        _texture.loadFromFile("assets/" + source.substr(3));
+        _texture.loadFromFile(ASSETS_DIR + source.substr(3));
     }
 }
 
@@ -207,7 +195,8 @@ void tmx::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 tmx::Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
-    for (const auto& tileset : map.getTilesets()) {
+    // Buggy code, needs to be tweaked
+    /*for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
             setTexture(tileset.getTexture());
@@ -221,7 +210,7 @@ tmx::Tile::Tile(const Map& map, unsigned gid)
             setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
             break;
         }
-    }
+    }*/
 }
 
 unsigned tmx::Tile::getGid() const {

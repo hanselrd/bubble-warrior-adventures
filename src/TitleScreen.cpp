@@ -1,4 +1,5 @@
 #include "TitleScreen.hpp"
+#include "Config.hpp"
 #include "Locator.hpp"
 #include "PlayState.hpp"
 #include "ResourceCache.hpp"
@@ -21,12 +22,12 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 
     // Background image
     auto background = std::make_shared<tgui::Picture>();
-    background->setTexture("assets/backgrounds/" + settings->getBackground());
+    background->setTexture(BACKGROUNDS_DIR + settings->getBackground());
     _gui.add(background);
 
     // Loads the font for the title
     auto titleFont = ResourceCache<sf::Font>::create("titleFont");
-    titleFont->loadFromFile("assets/fonts/" + settings->getFont());
+    titleFont->loadFromFile(FONTS_DIR + settings->getFont());
 
     // "Bubble Warrior" text component
     tgui::Label::Ptr lblTitle1 = theme->load("Label");
