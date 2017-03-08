@@ -32,9 +32,11 @@ and who doesn't love a good storyline?
 
 ## Development Environment
 
-We are using [Visual Studio Community](https://www.visualstudio.com/downloads),
-but since our libraries are cross-platform, you can easily use any editor
-and/or operating system. **Makefile not included!**
+We are using [CMake](https://cmake.org/) as our build system, which means, you can use
+any environment of your choosing as long as you resolve the dependencies.
+The only dependencies you need to find yourself are [SFML](http://www.sfml-dev.org/index.php)
+and [TGUI](https://tgui.eu). We also require a local installation of [Python](https://www.python.org) 3.0+
+to run our game scripts.
 
 ## Contributors
 
@@ -44,13 +46,7 @@ and/or operating system. **Makefile not included!**
 
 ## Installation
 
-Clone the repo by pasting the following command in your terminal.
-```sh
-$ git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
-```
-Then navigate to the newly created `bubble-warrior-adventures` folder and double-click
-the `bwa.sln` file. Currently we do not support any other operating systems other
-than Windows for development.
+Coming soon...
 
 ## Contributing
 
