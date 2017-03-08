@@ -60,7 +60,6 @@ Please note we have a code of conduct, please follow it in all your interactions
 * C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
     be used when programming in C.
 * C++ source files must end in `.cpp`.
-* Lua files must end in `.lua`, even if the Lua interpreter does not enforce this.
 
 ### Includes
 
