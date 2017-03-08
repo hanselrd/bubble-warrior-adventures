@@ -2,7 +2,7 @@
 
 When contributing to this repository, please first discuss the change you wish to make via
 [issue](https://github.com/hanselrd/bubble-warrior-adventures/issues) or
-[Gitter](https://gitter.im/bubble-warrior-adventures/Lobby). 
+[Gitter](https://gitter.im/bubble-warrior-adventures/Lobby).
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
@@ -60,20 +60,19 @@ Please note we have a code of conduct, please follow it in all your interactions
 * C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
     be used when programming in C.
 * C++ source files must end in `.cpp`.
-* Lua files must end in `.lua`, even if the Lua interpreter does not enforce this.
 
 ### Includes
 
 Header files should be included using the following format in **alphabetical order**.
-Please note a line space was used between each section for readability, however, 
+Please note a line space was used between each section for readability, however,
 in your code, the includes should be listed without any line spaces or comments.
 
 ```cpp
 /*
-	Relative header of the file should be included first.
-	The include below is allowed only if we are inside 'Game.cpp'
-	which is Game's implementation. Hence the use of the word
-	'relative'.
+    Relative header of the file should be included first.
+    The include below is allowed only if we are inside 'Game.cpp'
+    which is Game's implementation. Hence the use of the word
+    'relative'.
 */
 #include "Game.hpp"
 
@@ -124,8 +123,8 @@ in your code, the includes should be listed without any line spaces or comments.
 
 Comments are highly encouraged when developing.
 They allow other developers to pick up from where you left off.
-Documentation can be achieved in a number of different ways. 
-You do not necessarily have to write comments, instead you should strive for 
+Documentation can be achieved in a number of different ways.
+You do not necessarily have to write comments, instead you should strive for
 descriptive names when creating functions or variables.
 
 ```cpp
@@ -176,7 +175,7 @@ know where things come from. The following snippet shows what you **should** do.
 #include <string>
 
 /*
-    You might find writing the 'sf::' and 'std::' prefixes tedious, 
+    You might find writing the 'sf::' and 'std::' prefixes tedious,
     but they document for you where that specific code comes from.
     By taking a quick glance you already know 'RenderWindow' is a SFML class,
     'map' is a STL container and 'string' is the STL container for chars.
