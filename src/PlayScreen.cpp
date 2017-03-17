@@ -1,8 +1,7 @@
 #include "PlayScreen.hpp"
-#include <pybind11/eval.h>
-namespace py = pybind11;
 #include "Config.hpp"
 #include "Locator.hpp"
+#include "Script.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
@@ -11,23 +10,10 @@ PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     , _map(MAPS_DIR "world.tmx") {
     _gui.setWindow(window);
 
-    // Locates and gets the Settings object
     auto settings = Locator<Settings>::get();
 
-    // Call test scripts @@@@@@@@@@@@
-    // These tests will be removed when the map loader in finished
-
-    auto global = py::dict(py::module::import("__main__").attr("__dict__"));
-    auto local = py::dict();
-    py::eval_file(SCRIPTS_DIR "test_config.py", global, local);
-    local["main"].cast<py::function>()();
-
-    // write a script handler
-    /*py::print();
-
-    auto local2 = py::dict();
-    py::eval_file(scripts + "test_tmx.py", *pyGlobal, local2);
-    local2["main"].cast<py::function>().call();*/
+    Script testConfig("test_config.py");
+    testConfig("main");
 
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
