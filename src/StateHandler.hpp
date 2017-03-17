@@ -9,10 +9,10 @@ public:
     void handleEvent(sf::Event& e);
     void update(float delta);
     void draw(sf::RenderWindow& window);
-    template <class State, class... Args>
-        void change(Args&&... args);
-    template <class State, class... Args>
-        void push(Args&&... args);
+    template <class S, class... Args>
+    void change(Args&&... args);
+    template <class S, class... Args>
+    void push(Args&&... args);
     void pop();
     void handleTransition();
 
@@ -24,7 +24,7 @@ private:
         Pop
     };
 
-    template <typename State, typename... Args>
+    template <class S, class... Args>
     void helper(const Event e, Args&&... args);
 
     Event _event;
