@@ -1,4 +1,4 @@
-#include "PlayState.hpp"
+#include "PlayScreen.hpp"
 #include <pybind11/eval.h>
 namespace py = pybind11;
 #include "Config.hpp"
@@ -6,8 +6,8 @@ namespace py = pybind11;
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
-PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
-    : GameState(stateHandler)
+PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
+    : State(stateHandler)
     , _map(MAPS_DIR "world.tmx") {
     _gui.setWindow(window);
 
@@ -59,11 +59,11 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     _view.zoom(0.5);
 }
 
-void PlayState::handleEvent(sf::Event& e) {
+void PlayScreen::handleEvent(sf::Event& e) {
     _gui.handleEvent(e);
 }
 
-void PlayState::update(float delta) {
+void PlayScreen::update(float delta) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         _player.move(0, std::ceil(-70 * delta));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -81,7 +81,7 @@ void PlayState::update(float delta) {
     _view.setCenter(playerPos);
 }
 
-void PlayState::draw(sf::RenderWindow& window) {
+void PlayScreen::draw(sf::RenderWindow& window) {
     window.setView(_view);
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
