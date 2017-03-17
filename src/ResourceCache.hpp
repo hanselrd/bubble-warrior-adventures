@@ -1,4 +1,5 @@
 #pragma once
+#include <boost/any.hpp>
 #include <map>
 #include <memory>
 #include <stdexcept>
