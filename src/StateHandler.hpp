@@ -3,7 +3,7 @@
 #include <functional>
 #include <memory>
 #include <stack>
-#include "GameState.hpp"
+#include "State.hpp"
 
 class StateHandler {
 public:
@@ -31,8 +31,8 @@ private:
         Push,
         Pop
     } _event;
-    std::unique_ptr<GameState> _temp;
-    std::stack<std::unique_ptr<GameState>> _states;
+    std::unique_ptr<State> _temp;
+    std::stack<std::unique_ptr<State>> _states;
 
     template <typename State, typename... Args>
     inline void helper(const Event e, Args&&... args) {

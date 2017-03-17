@@ -4,9 +4,9 @@
 
 class StateHandler;
 
-class GameState {
+class State {
 public:
-    explicit GameState(StateHandler& stateHandler);
+    explicit State(StateHandler& stateHandler);
     virtual void handleEvent(sf::Event& e) = 0;
     virtual void update(float delta) = 0;
     virtual void draw(sf::RenderWindow& window) = 0;

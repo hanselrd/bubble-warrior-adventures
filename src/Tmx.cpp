@@ -195,8 +195,8 @@ void tmx::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 tmx::Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
-    // Buggy code, needs to be tweaked
-    /*for (const auto& tileset : map.getTilesets()) {
+    // Slow code, needs to be tweaked
+    for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
             setTexture(tileset.getTexture());
@@ -210,7 +210,7 @@ tmx::Tile::Tile(const Map& map, unsigned gid)
             setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
             break;
         }
-    }*/
+    }
 }
 
 unsigned tmx::Tile::getGid() const {

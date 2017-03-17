@@ -1,7 +1,6 @@
 #pragma once
 
 #define WINDOW_TITLE "Bubble Warrior Adventures!"
-
 #define ASSETS_DIR "assets/"
 #define BACKGROUNDS_DIR ASSETS_DIR "backgrounds/"
 #define FONTS_DIR ASSETS_DIR "fonts/"

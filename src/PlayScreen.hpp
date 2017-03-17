@@ -1,10 +1,10 @@
 #pragma once
-#include "GameState.hpp"
+#include "State.hpp"
 #include "Tmx.hpp"
 
-class PlayState final : public GameState {
+class PlayScreen final : public State {
 public:
-    explicit PlayState(StateHandler& stateHandler, sf::RenderWindow& window);
+    explicit PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window);
     void handleEvent(sf::Event& e) override;
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;

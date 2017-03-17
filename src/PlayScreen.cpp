@@ -1,33 +1,19 @@
-#include "PlayState.hpp"
-#include <pybind11/eval.h>
-namespace py = pybind11;
+#include "PlayScreen.hpp"
 #include "Config.hpp"
 #include "Locator.hpp"
+#include "Script.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
-PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
-    : GameState(stateHandler)
+PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
+    : State(stateHandler)
     , _map(MAPS_DIR "world.tmx") {
     _gui.setWindow(window);
 
-    // Locates and gets the Settings object
     auto settings = Locator<Settings>::get();
 
-    // Call test scripts @@@@@@@@@@@@
-    // These tests will be removed when the map loader in finished
-
-    auto global = py::dict(py::module::import("__main__").attr("__dict__"));
-    auto local = py::dict();
-    py::eval_file(SCRIPTS_DIR "test_config.py", global, local);
-    local["main"].cast<py::function>()();
-
-    // write a script handler
-    /*py::print();
-
-    auto local2 = py::dict();
-    py::eval_file(scripts + "test_tmx.py", *pyGlobal, local2);
-    local2["main"].cast<py::function>().call();*/
+    Script testConfig("test_config.py");
+    testConfig("main");
 
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
@@ -59,11 +45,11 @@ PlayState::PlayState(StateHandler& stateHandler, sf::RenderWindow& window)
     _view.zoom(0.5);
 }
 
-void PlayState::handleEvent(sf::Event& e) {
+void PlayScreen::handleEvent(sf::Event& e) {
     _gui.handleEvent(e);
 }
 
-void PlayState::update(float delta) {
+void PlayScreen::update(float delta) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         _player.move(0, std::ceil(-70 * delta));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -81,7 +67,7 @@ void PlayState::update(float delta) {
     _view.setCenter(playerPos);
 }
 
-void PlayState::draw(sf::RenderWindow& window) {
+void PlayScreen::draw(sf::RenderWindow& window) {
     window.setView(_view);
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));

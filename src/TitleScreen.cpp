@@ -1,13 +1,13 @@
 #include "TitleScreen.hpp"
 #include "Config.hpp"
 #include "Locator.hpp"
-#include "PlayState.hpp"
+#include "PlayScreen.hpp"
 #include "ResourceCache.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
 TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
-    : GameState(stateHandler) {
+    : State(stateHandler) {
     _gui.setWindow(window);
 
     // Locates and gets the Settings object
@@ -60,7 +60,7 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     btnPlay->setSize(windowWidth / 2 - BUTTON_PADDING, BUTTON_HEIGHT);
     btnPlay->setPosition(BUTTON_PADDING, windowHeight * 3 / 5);
     btnPlay->setText("Play");
-    btnPlay->connect("pressed", [&] { _stateHandler.push<PlayState>(std::ref(window)); });
+    btnPlay->connect("pressed", [&] { _stateHandler.push<PlayScreen>(std::ref(window)); });
     _gui.add(btnPlay);
 
     // Settings button
