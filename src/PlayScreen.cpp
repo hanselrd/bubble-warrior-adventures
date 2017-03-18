@@ -6,9 +6,8 @@
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
-PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
-    : State(stateHandler)
-    , _map(MAPS_DIR "world.tmx") {
+PlayScreen::PlayScreen(sf::RenderWindow& window)
+    : _map(MAPS_DIR "world.tmx") {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -26,7 +25,7 @@ PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     auto btnGoBack = std::make_shared<tgui::Button>();
     btnGoBack->setPosition(0, 60);
     btnGoBack->setText("Main Menu");
-    btnGoBack->connect("pressed", [&] { _stateHandler.pop(); });
+    btnGoBack->connect("pressed", [] { Locator<StateHandler>::get()->pop(); });
     _gui.add(btnGoBack);
 
     /*

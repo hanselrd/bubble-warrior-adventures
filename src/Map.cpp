@@ -196,7 +196,7 @@ void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
     // Slow code, needs to be tweaked
-    for (const auto& tileset : map.getTilesets()) {
+    /*for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
             setTexture(tileset.getTexture());
@@ -210,7 +210,7 @@ Tile::Tile(const Map& map, unsigned gid)
             setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
             break;
         }
-    }
+    }*/
 }
 
 unsigned Tile::getGid() const {

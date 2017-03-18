@@ -6,8 +6,7 @@
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
-TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
-    : State(stateHandler) {
+TitleScreen::TitleScreen(sf::RenderWindow& window) {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -60,7 +59,7 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     btnPlay->setSize(windowWidth / 2 - BUTTON_PADDING, BUTTON_HEIGHT);
     btnPlay->setPosition(BUTTON_PADDING, windowHeight * 3 / 5);
     btnPlay->setText("Play");
-    btnPlay->connect("pressed", [&] { _stateHandler.push<PlayScreen>(std::ref(window)); });
+    btnPlay->connect("pressed", [&] { Locator<StateHandler>::get()->push<PlayScreen>(std::ref(window)); });
     _gui.add(btnPlay);
 
     // Settings button
