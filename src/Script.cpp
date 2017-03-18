@@ -1,4 +1,5 @@
 #include "Script.hpp"
+#include <pybind11/eval.h>
 #include "Config.hpp"
 
 Script::Script(const std::string& filename) {

@@ -4,7 +4,7 @@
 #include <stack>
 #include "State.hpp"
 
-class StateHandler {
+class StateHandler final : public std::enable_shared_from_this<StateHandler> {
 public:
     void handleEvent(sf::Event& e);
     void update(float delta);

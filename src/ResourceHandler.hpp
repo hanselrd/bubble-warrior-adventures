@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-class ResourceHandler final {
+class ResourceHandler final : public std::enable_shared_from_this<ResourceHandler> {
 public:
     template <class T, class... Args>
     std::shared_ptr<T> emplace(const std::string& key, Args&&... args);
