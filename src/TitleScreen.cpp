@@ -2,7 +2,7 @@
 #include "Config.hpp"
 #include "Locator.hpp"
 #include "PlayScreen.hpp"
-#include "ResourceCache.hpp"
+#include "ResourceHandler.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
@@ -10,7 +10,7 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     : State(stateHandler) {
     _gui.setWindow(window);
 
-    // Locates and gets the Settings object
+    auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
 
     // Pulls the window dimensions from the window
@@ -18,7 +18,7 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     auto windowHeight = tgui::bindHeight(_gui);
 
     // Gets the default theme from the ResourceCache
-    auto theme = ResourceCache<tgui::Theme>::get("default");
+    auto theme = resourceHandler->get<tgui::Theme>("default");
 
     // Background image
     auto background = std::make_shared<tgui::Picture>();
@@ -26,7 +26,7 @@ TitleScreen::TitleScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     _gui.add(background);
 
     // Loads the font for the title
-    auto titleFont = ResourceCache<sf::Font>::create("titleFont");
+    auto titleFont = resourceHandler->emplace<sf::Font>("titleFont");
     titleFont->loadFromFile(FONTS_DIR + settings->getFont());
 
     // "Bubble Warrior" text component

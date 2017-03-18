@@ -4,16 +4,17 @@
 #include <string>
 #include <unordered_map>
 
-struct ResourceHandler final {
+class ResourceHandler final {
+public:
     template <class T, class... Args>
-    static void emplace(const std::string& key, Args&&... args);
-    static void remove(const std::string& key);
-    static bool exists(const std::string& key);
+    std::shared_ptr<T> emplace(const std::string& key, Args&&... args);
+    void remove(const std::string& key);
+    bool exists(const std::string& key);
     template <class T>
-    static std::shared_ptr<T> get(const std::string& key);
+    std::shared_ptr<T> get(const std::string& key);
 
 private:
-    static std::unordered_map<std::string, boost::any> _cache;
+    std::unordered_map<std::string, boost::any> _cache;
 };
 
 #include "ResourceHandler.tpp"

@@ -1,9 +1,10 @@
 #include <functional>
 
 template <class T, class... Args>
-void ResourceHandler::emplace(const std::string& key, Args&&... args) {
+std::shared_ptr<T> ResourceHandler::emplace(const std::string& key, Args&&... args) {
     auto res = std::make_shared<T>(std::forward<Args>(args)...);
     _cache.insert(std::make_pair(key, res));
+    return get<T>(key);
 }
 
 template <class T>

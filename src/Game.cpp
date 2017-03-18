@@ -4,10 +4,10 @@ namespace py = pybind11;
 #include <string>
 #include "Config.hpp"
 #include "Locator.hpp"
-#include "ResourceCache.hpp"
+#include "Map.hpp"
+#include "ResourceHandler.hpp"
 #include "Settings.hpp"
 #include "TitleScreen.hpp"
-#include "Tmx.hpp"
 
 namespace game {
     PYBIND11_PLUGIN(game) {
@@ -33,68 +33,59 @@ namespace game {
             .def_readwrite("x", &sf::Vector2f::x)
             .def_readwrite("y", &sf::Vector2f::y);
 
-        initTmx(m);
+        initMap(m);
 
         return m.ptr();
     }
 }
 
 Game::Game() {
-    // Initialize Python interpreter
     PyImport_AppendInittab("game", &game::pybind11_init);
     Py_Initialize();
 
-    // Check if settings.json exists and overwrite default settings
+    Locator<ResourceHandler>::provide(new ResourceHandler);
+    auto resourceHandler = Locator<ResourceHandler>::get();
+
     Locator<Settings>::provide(new Settings("settings.json"));
     auto settings = Locator<Settings>::get();
 
-    // Get the resolution from settings
     auto resolution = settings->getResolution();
 
-    // Create a fullscreen window if set to true in settings, windowed if false.
     if (settings->getFullscreen())
         _window.create({ std::get<0>(resolution), std::get<1>(resolution) }, WINDOW_TITLE, sf::Style::Fullscreen);
     else
         _window.create({ std::get<0>(resolution), std::get<1>(resolution) }, WINDOW_TITLE);
 
-    // Lock FPS to monitor's refresh rate and binds _window to _gui
     _window.setVerticalSyncEnabled(true);
     _gui.setWindow(_window);
 
-    // Loads the default GUI theme
-    ResourceCache<tgui::Theme>::create("default", THEMES_DIR + settings->getTheme());
+    resourceHandler->emplace<tgui::Theme>("default", THEMES_DIR + settings->getTheme());
 
-    // Sets initial state
     _stateHandler.change<TitleScreen>(std::ref(_window));
 }
 
 Game::~Game() {
-    // Destroy the Python interpreter
     Py_Finalize();
 }
 
 void Game::run() {
-    // Locates and gets the Settings object
+    auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
 
-    // Create the clock
     sf::Clock clock, updateFps;
     float lastTime = 0.f, currentTime, delta;
 
-    // Create FPS string iff showFpsCounter is true in the settings
     if (settings->getShowFpsCounter()) {
-        auto theme = ResourceCache<tgui::Theme>::get("default");
+        auto theme = resourceHandler->get<tgui::Theme>("default");
         tgui::Label::Ptr lblFps = theme->load("Label");
         lblFps->setTextColor(sf::Color::Yellow);
         lblFps->setTextSize(30);
         _gui.add(lblFps, "lblFps");
     }
 
-    // Normal window event loop
     while (_window.isOpen()) {
         _stateHandler.handleTransition();
 
-        // Handle window events and delegate them to individual states
         sf::Event e;
         while (_window.pollEvent(e)) {
             if (e.type == sf::Event::Closed ||
@@ -104,12 +95,10 @@ void Game::run() {
             _gui.handleEvent(e);
         }
 
-        // Calculate delta and pass to current state's update
         currentTime = clock.restart().asSeconds();
         delta = currentTime - lastTime;
         _stateHandler.update(delta);
 
-        // Update FPS string iff showFpsCounter is true
         if (settings->getShowFpsCounter()) {
             if (updateFps.getElapsedTime() > sf::seconds(1.f)) {
                 auto lblFps = _gui.get<tgui::Label>("lblFps");
@@ -118,7 +107,6 @@ void Game::run() {
             }
         }
 
-        // Clear and render to the window
         _window.clear();
         _stateHandler.draw(_window);
         _gui.draw();
