@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <functional>
 #include <memory>
 #include <stack>
 #include "State.hpp"
@@ -10,17 +9,10 @@ public:
     void handleEvent(sf::Event& e);
     void update(float delta);
     void draw(sf::RenderWindow& window);
-
-    template <class State, class... Args>
-    inline void change(Args&&... args) {
-        helper<State>(Event::Change, std::forward<Args>(args)...);
-    }
-
-    template <class State, class... Args>
-    inline void push(Args&&... args) {
-        helper<State>(Event::Push, std::forward<Args>(args)...);
-    }
-
+    template <class S, class... Args>
+    void change(Args&&... args);
+    template <class S, class... Args>
+    void push(Args&&... args);
     void pop();
     void handleTransition();
 
@@ -30,13 +22,14 @@ private:
         Change,
         Push,
         Pop
-    } _event;
+    };
+
+    template <class S, class... Args>
+    void helper(const Event e, Args&&... args);
+
+    Event _event;
     std::unique_ptr<State> _temp;
     std::stack<std::unique_ptr<State>> _states;
-
-    template <typename State, typename... Args>
-    inline void helper(const Event e, Args&&... args) {
-        _temp = std::make_unique<State>(std::ref(*this), std::forward<Args>(args)...);
-        _event = e;
-    }
 };
+
+#include "StateHandler.tpp"

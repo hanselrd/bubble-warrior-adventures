@@ -1,6 +1,7 @@
 #include "PlayScreen.hpp"
 #include "Config.hpp"
 #include "Locator.hpp"
+#include "ResourceHandler.hpp"
 #include "Script.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
@@ -10,6 +11,7 @@ PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     , _map(MAPS_DIR "world.tmx") {
     _gui.setWindow(window);
 
+    auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
 
     Script testConfig("test_config.py");

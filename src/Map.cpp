@@ -1,4 +1,4 @@
-#include "Tmx.hpp"
+#include "Map.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <algorithm>
 #include <cstring>
@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include "Config.hpp"
 
-tmx::Map::Map(const std::string& filename) {
+Map::Map(const std::string& filename) {
     auto success = _doc.load_file(filename.c_str());
 
     if (success) {
@@ -32,31 +32,31 @@ tmx::Map::Map(const std::string& filename) {
     }
 }
 
-unsigned tmx::Map::getWidth() const {
+unsigned Map::getWidth() const {
     return _width;
 }
 
-unsigned tmx::Map::getHeight() const {
+unsigned Map::getHeight() const {
     return _height;
 }
 
-unsigned tmx::Map::getTileWidth() const {
+unsigned Map::getTileWidth() const {
     return _tileWidth;
 }
 
-unsigned tmx::Map::getTileHeight() const {
+unsigned Map::getTileHeight() const {
     return _tileHeight;
 }
 
-const std::vector<tmx::Tileset>& tmx::Map::getTilesets() const {
+const std::vector<Tileset>& Map::getTilesets() const {
     return _tilesets;
 }
 
-const std::vector<tmx::Layer>& tmx::Map::getLayers() const {
+const std::vector<Layer>& Map::getLayers() const {
     return _layers;
 }
 
-tmx::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
+Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     _firstGid = tilesetNode.attribute("firstgid").as_uint();
     _name = tilesetNode.attribute("name").as_string();
     _tileWidth = tilesetNode.attribute("tilewidth").as_uint();
@@ -73,43 +73,43 @@ tmx::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     }
 }
 
-unsigned tmx::Tileset::getFirstGid() const {
+unsigned Tileset::getFirstGid() const {
     return _firstGid;
 }
 
-const std::string& tmx::Tileset::getName() const {
+const std::string& Tileset::getName() const {
     return _name;
 }
 
-unsigned tmx::Tileset::getTileWidth() const {
+unsigned Tileset::getTileWidth() const {
     return _tileWidth;
 }
 
-unsigned tmx::Tileset::getTileHeight() const {
+unsigned Tileset::getTileHeight() const {
     return _tileHeight;
 }
 
-unsigned tmx::Tileset::getSpacing() const {
+unsigned Tileset::getSpacing() const {
     return _spacing;
 }
 
-unsigned tmx::Tileset::getMargin() const {
+unsigned Tileset::getMargin() const {
     return _margin;
 }
 
-unsigned tmx::Tileset::getTileCount() const {
+unsigned Tileset::getTileCount() const {
     return _tileCount;
 }
 
-unsigned tmx::Tileset::getColumns() const {
+unsigned Tileset::getColumns() const {
     return _columns;
 }
 
-const sf::Texture& tmx::Tileset::getTexture() const {
+const sf::Texture& Tileset::getTexture() const {
     return _texture;
 }
 
-tmx::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
+Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
     _name = layerNode.attribute("name").as_string();
     _visible = layerNode.attribute("visible").as_bool();
 
@@ -157,27 +157,27 @@ tmx::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
         _type = Type::Image;
 }
 
-const std::string& tmx::Layer::getName() const {
+const std::string& Layer::getName() const {
     return _name;
 }
 
-tmx::Layer::Type tmx::Layer::getType() const {
+Layer::Type Layer::getType() const {
     return _type;
 }
 
-bool tmx::Layer::isVisible() const {
+bool Layer::isVisible() const {
     return _visible;
 }
 
-const std::vector<tmx::Tile>& tmx::Layer::getTiles() const {
+const std::vector<Tile>& Layer::getTiles() const {
     return _tiles;
 }
 
-const std::vector<tmx::Object>& tmx::Layer::getObjects() const {
+const std::vector<Object>& Layer::getObjects() const {
     return _objects;
 }
 
-void tmx::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (_type == Type::Tile) {
         auto view = target.getView();
         sf::FloatRect viewRect{view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y};
@@ -193,7 +193,7 @@ void tmx::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
 }
 
-tmx::Tile::Tile(const Map& map, unsigned gid)
+Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
     // Slow code, needs to be tweaked
     for (const auto& tileset : map.getTilesets()) {
@@ -213,11 +213,11 @@ tmx::Tile::Tile(const Map& map, unsigned gid)
     }
 }
 
-unsigned tmx::Tile::getGid() const {
+unsigned Tile::getGid() const {
     return _gid;
 }
 
-tmx::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
+Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     _name = objectNode.attribute("name").as_string();
     _type = objectNode.attribute("type").as_string();
     _rect.left = objectNode.attribute("x").as_uint();
@@ -234,24 +234,23 @@ tmx::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     }
 }
 
-const std::string& tmx::Object::getName() const {
+const std::string& Object::getName() const {
     return _name;
 }
 
-const std::string& tmx::Object::getType() const {
+const std::string& Object::getType() const {
     return _type;
 }
 
-const tmx::Tile* tmx::Object::getTile() const {
+const Tile* Object::getTile() const {
     return _tile.get();
 }
 
-const sf::IntRect& tmx::Object::getRect() const {
+const sf::IntRect& Object::getRect() const {
     return _rect;
 }
 
-void initTmx(py::module& m) {
-    using namespace tmx;
+void initMap(py::module& m) {
     auto m_tmx = m.def_submodule("tmx", "Tmx map parser");
 
     py::class_<Map>(m_tmx, "Map")

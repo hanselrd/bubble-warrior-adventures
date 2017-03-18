@@ -30,9 +30,6 @@ set(MAJOR_VERSION 1)
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
-# C++14 is required
-add_compile_options(-std=c++14)
-
 # Include the configuration file
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
 
@@ -47,6 +44,7 @@ find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
 find_package(TGUI REQUIRED)
 set(Python_ADDITIONAL_VERSIONS 3.4)
 find_package(PythonLibs 3 REQUIRED)
+find_package(Boost 1.61.0 REQUIRED)
 
 # FindSFML couldn't find SFML
 if (NOT SFML_FOUND)
@@ -61,14 +59,14 @@ if (NOT TGUI_FOUND)
 endif()
 
 # Add the sfml and tgui include directories
-include_directories(${SFML_INCLUDE_DIR} ${TGUI_INCLUDE_DIR} ${PYTHON_INCLUDE_DIR})
-include_directories("${PROJECT_SOURCE_DIR}/extlibs/cereal/include")
-include_directories("${PROJECT_SOURCE_DIR}/extlibs/cppcodec")
-include_directories("${PROJECT_SOURCE_DIR}/extlibs/pugixml/src")
-include_directories("${PROJECT_SOURCE_DIR}/extlibs/pybind11/include")
+include_directories(${SFML_INCLUDE_DIR} ${TGUI_INCLUDE_DIR} ${PYTHON_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/extlibs/cereal/include)
+include_directories(${PROJECT_SOURCE_DIR}/extlibs/cppcodec)
+include_directories(${PROJECT_SOURCE_DIR}/extlibs/pugixml/src)
+include_directories(${PROJECT_SOURCE_DIR}/extlibs/pybind11/include)
 
 # Add all the source files
-file(GLOB GAME_SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
+file(GLOB GAME_SRC ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 # Add pugixml.cpp
 set(GAME_SRC ${GAME_SRC} extlibs/pugixml/src/pugixml.cpp)
@@ -76,7 +74,7 @@ set(GAME_SRC ${GAME_SRC} extlibs/pugixml/src/pugixml.cpp)
 # Game executable
 add_executable(${PROJECT_NAME} ${GAME_SRC})
 
-# Link against sfml and tgui libraries
+# Link against libraries
 set(GAME_EXT_LIBS ${SFML_LIBRARIES} ${TGUI_LIBRARY} ${PYTHON_LIBRARIES})
 if (USE_STATIC_LIBRARIES)
     set(GAME_EXT_LIBS ${GAME_EXT_LIBS} ${SFML_DEPENDENCIES})

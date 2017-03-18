@@ -1,6 +1,6 @@
 #pragma once
+#include "Map.hpp"
 #include "State.hpp"
-#include "Tmx.hpp"
 
 class PlayScreen final : public State {
 public:
@@ -12,5 +12,5 @@ public:
 private:
     sf::CircleShape _player;
     sf::View _view;
-    tmx::Map _map; // for testing
+    Map _map; // for testing
 };
