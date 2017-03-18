@@ -3,10 +3,11 @@
 #include <cereal/types/string.hpp>
 #include <pybind11/stl.h>
 namespace py = pybind11;
+#include <memory>
 #include <string>
 #include <tuple>
 
-class Settings final {
+class Settings final : public std::enable_shared_from_this<Settings> {
 public:
     explicit Settings(const std::string& filename);
     ~Settings();

@@ -1,7 +1,8 @@
 #pragma once
 #include <TGUI/TGUI.hpp>
 #include <memory>
-#include <string>
+#include "ResourceHandler.hpp"
+#include "Settings.hpp"
 #include "StateHandler.hpp"
 
 class Game final {
@@ -13,5 +14,7 @@ public:
 private:
     sf::RenderWindow _window;
     tgui::Gui _gui;
-    StateHandler _stateHandler;
+    std::shared_ptr<ResourceHandler> _resourceHandler;
+    std::shared_ptr<Settings> _settings;
+    std::shared_ptr<StateHandler> _stateHandler;
 };

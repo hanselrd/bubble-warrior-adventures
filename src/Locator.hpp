@@ -3,11 +3,11 @@
 
 template <class T>
 struct Locator final {
-    static void provide(T* t);
-    static T* get();
+    static void provide(const std::shared_ptr<T>& ptr);
+    static std::shared_ptr<T> get();
 
 private:
-    static std::unique_ptr<T> _service;
+    static std::weak_ptr<T> _service;
 };
 
 #include "Locator.tpp"

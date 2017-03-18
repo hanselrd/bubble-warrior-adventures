@@ -68,7 +68,7 @@ void Settings::setFont(const std::string& val) {
 }
 
 void initSettings(py::module& m) {
-    py::class_<Settings>(m, "Settings")
+    py::class_<Settings, std::shared_ptr<Settings>>(m, "Settings")
         .def(py::init<const std::string&>())
         .def_property_readonly("fullscreen", &Settings::getFullscreen)
         .def_property_readonly("resolution", &Settings::getResolution)
