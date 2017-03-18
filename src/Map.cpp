@@ -1,5 +1,6 @@
 #include "Map.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
+#include <pybind11/stl.h>
 #include <algorithm>
 #include <cstring>
 #include <functional>

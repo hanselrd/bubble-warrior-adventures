@@ -60,6 +60,8 @@ Please note we have a code of conduct, please follow it in all your interactions
 * C++ header files must end in `.hpp`, **not** `.h`, the file extension `.h` should only
     be used when programming in C.
 * C++ source files must end in `.cpp`.
+* C++ template implementation files must end in `.tpp` and included in their respective
+    `.hpp` file.
 
 ### Includes
 

@@ -16,6 +16,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     Script testConfig("test_config.py");
     testConfig("main");
 
+    Script testTmx("test_tmx.py");
+    testTmx("main");
+
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
     lblCoords->setTextSize(30);

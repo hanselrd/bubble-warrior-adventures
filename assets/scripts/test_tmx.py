@@ -2,7 +2,7 @@ def main():
     from game import settings
     from game.tmx import Map, Layer
 
-    fn = settings['mapsDir'] + 'world.tmx'
+    fn = 'assets/maps/world.tmx'
     map = Map(fn)
     print('Map [%s]:' % fn)
     print('  width:', map.width)
