@@ -193,7 +193,7 @@ void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 target.draw(*t, states);
         }
 }
-#include <iostream> // ERASE
+
 Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
     // Slow code, needs to be tweaked
