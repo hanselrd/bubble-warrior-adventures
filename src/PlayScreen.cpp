@@ -7,7 +7,7 @@
 #include "StateHandler.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map(MAPS_DIR "world.tmx") {
+    : _map("ne_tower.tmx") {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -77,6 +77,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    window.draw(_map.getLayers().at(3));
+    //window.draw(_map.getLayers().at(3));
     _gui.draw();
 }

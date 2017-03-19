@@ -8,7 +8,7 @@
 #include "Config.hpp"
 
 Map::Map(const std::string& filename) {
-    auto success = _doc.load_file(filename.c_str());
+    auto success = _doc.load_file((MAPS_DIR + filename).c_str());
 
     if (success) {
         auto mapNode = _doc.child("map");
