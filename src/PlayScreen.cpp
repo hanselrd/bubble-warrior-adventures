@@ -7,8 +7,8 @@
 #include "StateHandler.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("ne_tower.tmx")
-    , _player(8, sf::Color::Cyan) {
+    : _map("world.tmx")
+    , _player(8, sf::Color(0xFF9900FF)) {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -41,9 +41,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
     //_player.setRadius(8);
     //_player.setFillColor(sf::Color::Cyan);
-    //auto playerSpawn = _map.getLayers()[2].getObjects()[0].getRect();
-    //_player.setPosition(playerSpawn.left, playerSpawn.top);
-    _player.setPosition(100, 100);
+    auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
+    _player.setPosition(playerSpawn.left, playerSpawn.top);
+    //_player.setPosition(100, 100);
 
     _view.setCenter(_player.getPosition());
     _view.setSize(window.getSize().x, window.getSize().y);
@@ -78,6 +78,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    //window.draw(_map.getLayers().at(3));
+    window.draw(_map.getLayers().at(3));
     _gui.draw();
 }

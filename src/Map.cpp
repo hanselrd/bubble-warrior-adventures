@@ -149,10 +149,10 @@ Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
         }
     }
     else if (type == "objectgroup") {
-        _type = Type::Object;
+        _type = Type::Obj;
 
         for (const auto& node : layerNode)
-            _objects.push_back(Object(map, node));
+            _objects.push_back(Obj(map, node));
     }
     else if (type == "imagelayer")
         _type = Type::Image;
@@ -174,7 +174,7 @@ const std::vector<Tile>& Layer::getTiles() const {
     return _tiles;
 }
 
-const std::vector<Object>& Layer::getObjects() const {
+const std::vector<Obj>& Layer::getObjs() const {
     return _objects;
 }
 
@@ -186,7 +186,7 @@ void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             if (viewRect.intersects(tile.getGlobalBounds()))
                 target.draw(tile, states);
     }
-    else if (_type == Type::Object)
+    else if (_type == Type::Obj)
         for (const auto& object : _objects) {
             auto t = object.getTile();
             if (t != nullptr)
@@ -218,7 +218,7 @@ unsigned Tile::getGid() const {
     return _gid;
 }
 
-Object::Object(const Map& map, const pugi::xml_node& objectNode) {
+Obj::Obj(const Map& map, const pugi::xml_node& objectNode) {
     _name = objectNode.attribute("name").as_string();
     _type = objectNode.attribute("type").as_string();
     _rect.left = objectNode.attribute("x").as_uint();
@@ -235,19 +235,19 @@ Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     }
 }
 
-const std::string& Object::getName() const {
+const std::string& Obj::getName() const {
     return _name;
 }
 
-const std::string& Object::getType() const {
+const std::string& Obj::getType() const {
     return _type;
 }
 
-const Tile* Object::getTile() const {
+const Tile* Obj::getTile() const {
     return _tile.get();
 }
 
-const sf::IntRect& Object::getRect() const {
+const sf::IntRect& Obj::getRect() const {
     return _rect;
 }
 
@@ -267,11 +267,11 @@ void initMap(py::module& m) {
         .def_property_readonly("name", &Layer::getName)
         .def_property_readonly("type", &Layer::getType)
         .def_property_readonly("tiles", &Layer::getTiles)
-        .def_property_readonly("objects", &Layer::getObjects);
+        .def_property_readonly("objects", &Layer::getObjs);
 
     py::enum_<Layer::Type>(layer, "Type")
         .value("Tile", Layer::Type::Tile)
-        .value("Object", Layer::Type::Object)
+        .value("Obj", Layer::Type::Obj)
         .value("Image", Layer::Type::Image)
         .export_values();
 
@@ -279,10 +279,10 @@ void initMap(py::module& m) {
         .def(py::init<const Map&, unsigned>())
         .def_property_readonly("gid", &Tile::getGid);
 
-    py::class_<Object>(m_tmx, "Object")
+    py::class_<Obj>(m_tmx, "Obj")
         .def(py::init<const Map&, const pugi::xml_node&>())
-        .def_property_readonly("name", &Object::getName)
-        .def_property_readonly("type", &Object::getType)
-        .def_property_readonly("tile", &Object::getTile)
-        .def_property_readonly("rect", &Object::getRect);
+        .def_property_readonly("name", &Obj::getName)
+        .def_property_readonly("type", &Obj::getType)
+        .def_property_readonly("tile", &Obj::getTile)
+        .def_property_readonly("rect", &Obj::getRect);
 }

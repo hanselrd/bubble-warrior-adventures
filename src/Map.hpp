@@ -50,13 +50,13 @@ private:
 };
 
 class Tile;
-class Object;
+class Obj;
 
 class Layer final : public sf::Drawable {
 public:
     enum class Type {
         Tile,
-        Object,
+        Obj,
         Image
     };
 
@@ -65,7 +65,7 @@ public:
     Type getType() const;
     bool isVisible() const;
     const std::vector<Tile>& getTiles() const;
-    const std::vector<Object>& getObjects() const;
+    const std::vector<Obj>& getObjs() const;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -74,7 +74,7 @@ private:
     Type _type;
     bool _visible;
     std::vector<Tile> _tiles;
-    std::vector<Object> _objects;
+    std::vector<Obj> _objects;
 };
 
 class Tile final : public sf::Sprite {
@@ -86,9 +86,9 @@ private:
     unsigned _gid;
 };
 
-class Object final {
+class Obj final {
 public:
-    explicit Object(const Map& map, const pugi::xml_node& objectNode);
+    explicit Obj(const Map& map, const pugi::xml_node& objectNode);
     const std::string& getName() const;
     const std::string& getType() const;
     const Tile* getTile() const;
