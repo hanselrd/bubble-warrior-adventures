@@ -77,6 +77,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    //window.draw(_map.getLayers().at(3));
+    window.draw(_map.getLayers().at(3));
     _gui.draw();
 }

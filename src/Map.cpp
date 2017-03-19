@@ -200,9 +200,9 @@ Tile::Tile(const Map& map, unsigned gid)
     for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
-            setTexture(tileset.getTexture());
+            const auto& texture = tileset.getTexture();
+            setTexture(texture);
             auto tid = gid - tileset.getFirstGid();
-            auto texture = tileset.getTexture();
             auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() :
                 texture.getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
             auto x = tileset.getMargin() + ((tid % columns) * tileset.getTileWidth())
