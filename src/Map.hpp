@@ -68,13 +68,13 @@ public:
     const std::vector<Object>& getObjects() const;
 
 private:
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     std::string _name;
     Type _type;
     bool _visible;
     std::vector<Tile> _tiles;
     std::vector<Object> _objects;
-
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
 class Tile final : public sf::Sprite {

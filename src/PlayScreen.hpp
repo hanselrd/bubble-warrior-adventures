@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.hpp"
 #include "Map.hpp"
 #include "State.hpp"
 
@@ -10,7 +11,7 @@ public:
     void draw(sf::RenderWindow& window) override;
 
 private:
-    sf::CircleShape _player;
     sf::View _view;
     Map _map; // for testing
+    Entity _player;
 };

@@ -7,7 +7,8 @@
 #include "StateHandler.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("ne_tower.tmx") {
+    : _map("ne_tower.tmx")
+    , _player(8, sf::Color::Cyan) {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -38,8 +39,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
         and results in the game crashing
     */
 
-    _player.setRadius(8);
-    _player.setFillColor(sf::Color::Cyan);
+    //_player.setRadius(8);
+    //_player.setFillColor(sf::Color::Cyan);
     //auto playerSpawn = _map.getLayers()[2].getObjects()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     _player.setPosition(100, 100);
