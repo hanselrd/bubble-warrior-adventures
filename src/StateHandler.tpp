@@ -12,6 +12,6 @@ void StateHandler::push(Args&&... args) {
 
 template <class S, class... Args>
 void StateHandler::helper(const Event e, Args&&... args) {
-    _temp = std::make_unique<S>(std::ref(*this), std::forward<Args>(args)...);
+    _temp = std::make_unique<S>(std::forward<Args>(args)...);
     _event = e;
 }

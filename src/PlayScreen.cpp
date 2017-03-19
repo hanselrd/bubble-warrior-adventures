@@ -6,9 +6,8 @@
 #include "Settings.hpp"
 #include "StateHandler.hpp"
 
-PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
-    : State(stateHandler)
-    , _map(MAPS_DIR "world.tmx") {
+PlayScreen::PlayScreen(sf::RenderWindow& window)
+    : _map("ne_tower.tmx") {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -16,6 +15,9 @@ PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
 
     Script testConfig("test_config.py");
     testConfig("main");
+
+    Script testTmx("test_tmx.py");
+    testTmx("main", std::ref(_map));
 
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
@@ -26,7 +28,7 @@ PlayScreen::PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window)
     auto btnGoBack = std::make_shared<tgui::Button>();
     btnGoBack->setPosition(0, 60);
     btnGoBack->setText("Main Menu");
-    btnGoBack->connect("pressed", [&] { _stateHandler.pop(); });
+    btnGoBack->connect("pressed", [] { Locator<StateHandler>::get()->pop(); });
     _gui.add(btnGoBack);
 
     /*
@@ -75,6 +77,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    window.draw(_map.getLayers().at(3));
+    //window.draw(_map.getLayers().at(3));
     _gui.draw();
 }

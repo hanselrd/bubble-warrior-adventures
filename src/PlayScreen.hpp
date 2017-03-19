@@ -4,7 +4,7 @@
 
 class PlayScreen final : public State {
 public:
-    explicit PlayScreen(StateHandler& stateHandler, sf::RenderWindow& window);
+    explicit PlayScreen(sf::RenderWindow& window);
     void handleEvent(sf::Event& e) override;
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;

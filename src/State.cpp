@@ -1,12 +1,7 @@
 #include "State.hpp"
 
-State::State(StateHandler& stateHandler)
-    : _stateHandler(stateHandler) {}
+State::~State() {}
 
-void State::pause() {
-    // default pause behavior
-}
+void State::pause() {}
 
-void State::resume() {
-    // default resume behavior
-}
+void State::resume() {}

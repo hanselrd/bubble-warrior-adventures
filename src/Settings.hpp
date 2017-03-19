@@ -1,12 +1,13 @@
 #pragma once
 #include <cereal/types/tuple.hpp>
 #include <cereal/types/string.hpp>
-#include <pybind11/stl.h>
+#include <pybind11/pybind11.h>
 namespace py = pybind11;
+#include <memory>
 #include <string>
 #include <tuple>
 
-class Settings final {
+class Settings final : public std::enable_shared_from_this<Settings> {
 public:
     explicit Settings(const std::string& filename);
     ~Settings();
