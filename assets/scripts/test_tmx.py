@@ -1,10 +1,8 @@
-def main():
+def main(map):
     from game import settings
     from game.tmx import Map, Layer
 
-    fn = 'assets/maps/world.tmx'
-    map = Map(fn)
-    print('Map [%s]:' % fn)
+    print('Map [%s]:' % 'some map')
     print('  width:', map.width)
     print('  height:', map.height)
     print('  tilewidth:', map.tilewidth)

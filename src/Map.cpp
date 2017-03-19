@@ -112,7 +112,7 @@ const sf::Texture& Tileset::getTexture() const {
 
 Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
     _name = layerNode.attribute("name").as_string();
-    _visible = layerNode.attribute("visible").as_bool();
+    _visible = layerNode.attribute("visible").as_bool(true);
 
     std::string type = layerNode.name();
     if (type == "layer") {
@@ -193,25 +193,26 @@ void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 target.draw(*t, states);
         }
 }
-
+#include <iostream> // ERASE
 Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
     // Slow code, needs to be tweaked
-    /*for (const auto& tileset : map.getTilesets()) {
+    for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
             setTexture(tileset.getTexture());
-            auto num = gid - tileset.getFirstGid();
+            auto tid = gid - tileset.getFirstGid();
             auto texture = tileset.getTexture();
-            auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() : texture.getSize().x / tileset.getTileWidth();
-            auto x = tileset.getMargin() + ((num % columns) * tileset.getTileWidth())
-                + (tileset.getSpacing() * (num % columns));
-            auto y = tileset.getMargin() + ((num / columns) * tileset.getTileHeight())
-                + (tileset.getSpacing() * (num / columns));
+            auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() :
+                texture.getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
+            auto x = tileset.getMargin() + ((tid % columns) * tileset.getTileWidth())
+                + (tileset.getSpacing() * (tid % columns));
+            auto y = tileset.getMargin() + ((tid / columns) * tileset.getTileHeight())
+                + (tileset.getSpacing() * (tid / columns));
             setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
             break;
         }
-    }*/
+    }
 }
 
 unsigned Tile::getGid() const {

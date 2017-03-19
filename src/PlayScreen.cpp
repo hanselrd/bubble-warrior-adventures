@@ -17,7 +17,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     testConfig("main");
 
     Script testTmx("test_tmx.py");
-    testTmx("main");
+    testTmx("main", std::ref(_map));
 
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
@@ -77,6 +77,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    window.draw(_map.getLayers().at(3));
+    //window.draw(_map.getLayers().at(3));
     _gui.draw();
 }
