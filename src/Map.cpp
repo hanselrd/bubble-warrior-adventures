@@ -196,7 +196,6 @@ void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
-    // Slow code, needs to be tweaked
     for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
             gid < tileset.getFirstGid() + tileset.getTileCount()) {
