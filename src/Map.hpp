@@ -66,7 +66,7 @@ public:
         Type getType() const;
         bool isVisible() const;
         const std::vector<Tile>& getTiles() const;
-        const std::vector<Object>& getObjs() const;
+        const std::vector<Object>& getObjects() const;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -174,7 +174,7 @@ const std::vector<Map::Tile>& Map::Layer::getTiles() const {
     return _tiles;
 }
 
-const std::vector<Map::Object>& Map::Layer::getObjs() const {
+const std::vector<Map::Object>& Map::Layer::getObjects() const {
     return _objects;
 }
 
@@ -276,7 +276,7 @@ void initMap(py::module& m) {
         .def_property_readonly("name", &Map::Layer::getName)
         .def_property_readonly("type", &Map::Layer::getType)
         .def_property_readonly("tiles", &Map::Layer::getTiles)
-        .def_property_readonly("objects", &Map::Layer::getObjs);
+        .def_property_readonly("objects", &Map::Layer::getObjects);
 
     py::enum_<Map::Layer::Type>(layer, "Type")
         .value("Tile", Map::Layer::Type::Tile)
