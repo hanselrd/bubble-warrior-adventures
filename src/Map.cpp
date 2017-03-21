@@ -233,8 +233,9 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         // Workaround for Tiled object tile bug
         _rect.top -= _rect.width;
         _tile = std::make_shared<Tile>(std::ref(map), gid);
-        setPosition(_rect.left, _rect.top);
     }
+
+    setPosition(_rect.left, _rect.top);
 }
 
 const std::string& Map::Object::getName() const {

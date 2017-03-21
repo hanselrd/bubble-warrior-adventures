@@ -69,6 +69,15 @@ void PlayScreen::update(float delta) {
     auto lblCoords = _gui.get<tgui::Label>("lblCoords");
     lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
 
+    for (const auto& layer : _map.getLayers()) {
+        if (layer.getType() == Map::Layer::Type::Object) {
+            for (const auto& object : layer.getObjects()) {
+                if (Object::checkCollision(_player, object))
+                    lblCoords->setText(lblCoords->getText() + " Collision!");
+            }
+        }
+    }
+
     _view.setCenter(playerPos);
 }
 
