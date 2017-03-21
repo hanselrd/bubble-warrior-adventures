@@ -7,5 +7,8 @@ sf::FloatRect Object::getGlobalBounds() const {
 }
 
 bool Object::checkCollision(const Object& first, const Object& second) {
-    return false;
+    if (first.getGlobalBounds().intersects(second.getGlobalBounds()))
+        return true;
+    else
+        return false;
 }
