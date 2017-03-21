@@ -180,18 +180,20 @@ const std::vector<Map::Object>& Map::Layer::getObjects() const {
 
 void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     auto view = target.getView();
-    sf::FloatRect viewRect{view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y};
+    sf::FloatRect viewRect(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y);
 
-    if (_type == Type::Tile) {
-        for (const auto& tile : _tiles)
-            if (viewRect.intersects(tile.getGlobalBounds()))
-                target.draw(tile, states);
-    }
-    else if (_type == Type::Object)
-        for (const auto& object : _objects) {
-            if (viewRect.intersects(object.getGlobalBounds()))
-                target.draw(object, states);
+    if (_visible) {
+        if (_type == Type::Tile) {
+            for (const auto& tile : _tiles)
+                if (viewRect.intersects(tile.getGlobalBounds()))
+                    target.draw(tile, states);
         }
+        else if (_type == Type::Object) {
+            for (const auto& object : _objects)
+                if (viewRect.intersects(object.getGlobalBounds()))
+                    target.draw(object, states);
+        }
+    }
 }
 
 Map::Tile::Tile(const Map& map, unsigned gid)
