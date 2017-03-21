@@ -15,7 +15,7 @@ def main(map):
                 print(tile.pos.x, end=' ')
             print()
 
-        elif layer.type == Layer.Obj:
+        elif layer.type == Layer.Object:
             print('      objects:',
-            [(o.name, o.type, o.tile.gid if o.tile != None else 'nullptr',
+            [(o.name, o.type,
                 (o.rect.x, o.rect.y, o.rect.w, o.rect.h)) for o in layer.objects])

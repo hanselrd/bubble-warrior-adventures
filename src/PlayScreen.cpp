@@ -7,7 +7,7 @@
 #include "StateHandler.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("ne_tower.tmx")
+    : _map("world.tmx")
     , _player(8, sf::Color(0xFF9900FF)) {
     _gui.setWindow(window);
 
@@ -78,6 +78,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    //window.draw(_map.getLayers().at(3));
+    window.draw(_map.getLayers().at(3));
     _gui.draw();
 }

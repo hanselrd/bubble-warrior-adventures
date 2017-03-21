@@ -6,12 +6,13 @@ namespace py = pybind11;
 #include <memory>
 #include <string>
 #include <vector>
-
-class Layer;
-class Tileset;
+#include "Object.hpp"
 
 class Map final {
 public:
+    class Layer;
+    class Tileset;
+
     explicit Map(const std::string& filename);
     unsigned getWidth() const;
     unsigned getHeight() const;
@@ -26,78 +27,81 @@ private:
         _tileWidth, _tileHeight;
     std::vector<Tileset> _tilesets;
     std::vector<Layer> _layers;
-};
 
-class Tileset final {
 public:
-    explicit Tileset(const Map& map, const pugi::xml_node& tilesetNode);
-    unsigned getFirstGid() const;
-    const std::string& getName() const;
-    unsigned getTileWidth() const;
-    unsigned getTileHeight() const;
-    unsigned getSpacing() const;
-    unsigned getMargin() const;
-    unsigned getTileCount() const;
-    unsigned getColumns() const;
-    const sf::Texture& getTexture() const;
+    class Tileset final {
+    public:
+        explicit Tileset(const Map& map, const pugi::xml_node& tilesetNode);
+        unsigned getFirstGid() const;
+        const std::string& getName() const;
+        unsigned getTileWidth() const;
+        unsigned getTileHeight() const;
+        unsigned getSpacing() const;
+        unsigned getMargin() const;
+        unsigned getTileCount() const;
+        unsigned getColumns() const;
+        const sf::Texture& getTexture() const;
 
-private:
-    unsigned _firstGid;
-    std::string _name;
-    unsigned _tileWidth, _tileHeight, _spacing,
-        _margin, _tileCount, _columns;
-    sf::Texture _texture;
-};
-
-class Tile;
-class Obj;
-
-class Layer final : public sf::Drawable {
-public:
-    enum class Type {
-        Tile,
-        Obj,
-        Image
+    private:
+        unsigned _firstGid;
+        std::string _name;
+        unsigned _tileWidth, _tileHeight, _spacing,
+            _margin, _tileCount, _columns;
+        sf::Texture _texture;
     };
 
-    explicit Layer(const Map& map, const pugi::xml_node& layerNode);
-    const std::string& getName() const;
-    Type getType() const;
-    bool isVisible() const;
-    const std::vector<Tile>& getTiles() const;
-    const std::vector<Obj>& getObjs() const;
+    class Tile;
+    class Object;
 
-private:
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    class Layer final : public sf::Drawable {
+    public:
+        enum class Type {
+            Tile,
+            Object,
+            Image
+        };
 
-    std::string _name;
-    Type _type;
-    bool _visible;
-    std::vector<Tile> _tiles;
-    std::vector<Obj> _objects;
-};
+        explicit Layer(const Map& map, const pugi::xml_node& layerNode);
+        const std::string& getName() const;
+        Type getType() const;
+        bool isVisible() const;
+        const std::vector<Tile>& getTiles() const;
+        const std::vector<Object>& getObjs() const;
 
-class Tile final : public sf::Sprite {
-public:
-    explicit Tile(const Map& map, unsigned gid);
-    unsigned getGid() const;
+    private:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-private:
-    unsigned _gid;
-};
+        std::string _name;
+        Type _type;
+        bool _visible;
+        std::vector<Tile> _tiles;
+        std::vector<Object> _objects;
+    };
 
-class Obj final {
-public:
-    explicit Obj(const Map& map, const pugi::xml_node& objectNode);
-    const std::string& getName() const;
-    const std::string& getType() const;
-    const Tile* getTile() const;
-    const sf::IntRect& getRect() const;
+    class Tile final : public sf::Sprite {
+    public:
+        explicit Tile(const Map& map, unsigned gid);
+        unsigned getGid() const;
 
-private:
-    std::string _name, _type;
-    std::shared_ptr<Tile> _tile;
-    sf::IntRect _rect;
+    private:
+        unsigned _gid;
+    };
+
+    class Object final : public ::Object {
+    public:
+        explicit Object(const Map& map, const pugi::xml_node& objectNode);
+        const std::string& getName() const;
+        const std::string& getType() const;
+        const sf::IntRect& getRect() const;
+        sf::FloatRect getLocalBounds() const override;
+
+    private:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+        std::string _name, _type;
+        std::shared_ptr<Tile> _tile;
+        sf::IntRect _rect;
+    };
 };
 
 void initMap(py::module& m);
