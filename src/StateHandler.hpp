@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <stack>
+#include "EventQueue.hpp"
 #include "State.hpp"
 
 class StateHandler final : public std::enable_shared_from_this<StateHandler> {
@@ -15,6 +16,8 @@ public:
     void push(Args&&... args);
     void pop();
     void handleTransition();
+    bool empty() const;
+    std::size_t size() const;
 
 private:
     enum class Event {
@@ -24,12 +27,8 @@ private:
         Pop
     };
 
-    template <class S, class... Args>
-    void helper(const Event e, Args&&... args);
-
-    Event _event;
-    std::unique_ptr<State> _temp;
-    std::stack<std::unique_ptr<State>> _states;
+    EventQueue<Event, std::shared_ptr<State>> _eventQueue;
+    std::stack<std::shared_ptr<State>> _states;
 };
 
 #include "StateHandler.tpp"

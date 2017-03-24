@@ -49,15 +49,15 @@ unsigned Map::getTileHeight() const {
     return _tileHeight;
 }
 
-const std::vector<Tileset>& Map::getTilesets() const {
+const std::vector<Map::Tileset>& Map::getTilesets() const {
     return _tilesets;
 }
 
-const std::vector<Layer>& Map::getLayers() const {
+const std::vector<Map::Layer>& Map::getLayers() const {
     return _layers;
 }
 
-Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
+Map::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     _firstGid = tilesetNode.attribute("firstgid").as_uint();
     _name = tilesetNode.attribute("name").as_string();
     _tileWidth = tilesetNode.attribute("tilewidth").as_uint();
@@ -74,43 +74,43 @@ Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     }
 }
 
-unsigned Tileset::getFirstGid() const {
+unsigned Map::Tileset::getFirstGid() const {
     return _firstGid;
 }
 
-const std::string& Tileset::getName() const {
+const std::string& Map::Tileset::getName() const {
     return _name;
 }
 
-unsigned Tileset::getTileWidth() const {
+unsigned Map::Tileset::getTileWidth() const {
     return _tileWidth;
 }
 
-unsigned Tileset::getTileHeight() const {
+unsigned Map::Tileset::getTileHeight() const {
     return _tileHeight;
 }
 
-unsigned Tileset::getSpacing() const {
+unsigned Map::Tileset::getSpacing() const {
     return _spacing;
 }
 
-unsigned Tileset::getMargin() const {
+unsigned Map::Tileset::getMargin() const {
     return _margin;
 }
 
-unsigned Tileset::getTileCount() const {
+unsigned Map::Tileset::getTileCount() const {
     return _tileCount;
 }
 
-unsigned Tileset::getColumns() const {
+unsigned Map::Tileset::getColumns() const {
     return _columns;
 }
 
-const sf::Texture& Tileset::getTexture() const {
+const sf::Texture& Map::Tileset::getTexture() const {
     return _texture;
 }
 
-Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
+Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
     _name = layerNode.attribute("name").as_string();
     _visible = layerNode.attribute("visible").as_bool(true);
 
@@ -158,43 +158,45 @@ Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
         _type = Type::Image;
 }
 
-const std::string& Layer::getName() const {
+const std::string& Map::Layer::getName() const {
     return _name;
 }
 
-Layer::Type Layer::getType() const {
+Map::Layer::Type Map::Layer::getType() const {
     return _type;
 }
 
-bool Layer::isVisible() const {
+bool Map::Layer::isVisible() const {
     return _visible;
 }
 
-const std::vector<Tile>& Layer::getTiles() const {
+const std::vector<Map::Tile>& Map::Layer::getTiles() const {
     return _tiles;
 }
 
-const std::vector<Object>& Layer::getObjects() const {
+const std::vector<Map::Object>& Map::Layer::getObjects() const {
     return _objects;
 }
 
-void Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    if (_type == Type::Tile) {
-        auto view = target.getView();
-        sf::FloatRect viewRect{view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y};
-        for (const auto& tile : _tiles)
-            if (viewRect.intersects(tile.getGlobalBounds()))
-                target.draw(tile, states);
-    }
-    else if (_type == Type::Object)
-        for (const auto& object : _objects) {
-            auto t = object.getTile();
-            if (t != nullptr)
-                target.draw(*t, states);
+void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    auto view = target.getView();
+    sf::FloatRect viewRect(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y);
+
+    if (_visible) {
+        if (_type == Type::Tile) {
+            for (const auto& tile : _tiles)
+                if (viewRect.intersects(tile.getGlobalBounds()))
+                    target.draw(tile, states);
         }
+        else if (_type == Type::Object) {
+            for (const auto& object : _objects)
+                if (viewRect.intersects(object.getGlobalBounds()))
+                    target.draw(object, states);
+        }
+    }
 }
 
-Tile::Tile(const Map& map, unsigned gid)
+Map::Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
     for (const auto& tileset : map.getTilesets()) {
         if (gid > tileset.getFirstGid() &&
@@ -214,11 +216,11 @@ Tile::Tile(const Map& map, unsigned gid)
     }
 }
 
-unsigned Tile::getGid() const {
+unsigned Map::Tile::getGid() const {
     return _gid;
 }
 
-Object::Object(const Map& map, const pugi::xml_node& objectNode) {
+Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     _name = objectNode.attribute("name").as_string();
     _type = objectNode.attribute("type").as_string();
     _rect.left = objectNode.attribute("x").as_uint();
@@ -231,28 +233,38 @@ Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         // Workaround for Tiled object tile bug
         _rect.top -= _rect.width;
         _tile = std::make_shared<Tile>(std::ref(map), gid);
-        _tile->setPosition(_rect.left, _rect.top);
     }
+
+    setPosition(_rect.left, _rect.top);
 }
 
-const std::string& Object::getName() const {
+const std::string& Map::Object::getName() const {
     return _name;
 }
 
-const std::string& Object::getType() const {
+const std::string& Map::Object::getType() const {
     return _type;
 }
 
-const Tile* Object::getTile() const {
-    return _tile.get();
+const sf::IntRect& Map::Object::getRect() const {
+    return _rect;
 }
 
-const sf::IntRect& Object::getRect() const {
-    return _rect;
+sf::FloatRect Map::Object::getLocalBounds() const {
+    return sf::FloatRect(0.f, 0.f, _rect.width, _rect.height);
+}
+
+void Map::Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    if (_tile) {
+        states.transform *= getTransform();
+        target.draw(*_tile, states);
+    }
 }
 
 void initMap(py::module& m) {
     auto m_tmx = m.def_submodule("tmx", "Tmx map parser");
+
+    py::class_<Object>(m_tmx, "GameObject");
 
     py::class_<Map>(m_tmx, "Map")
         .def(py::init<const std::string&>())
@@ -262,27 +274,26 @@ void initMap(py::module& m) {
         .def_property_readonly("tileheight", &Map::getTileHeight)
         .def_property_readonly("layers", &Map::getLayers);
 
-    py::class_<Layer> layer(m_tmx, "Layer");
+    py::class_<Map::Layer> layer(m_tmx, "Layer");
     layer.def(py::init<const Map&, const pugi::xml_node&>())
-        .def_property_readonly("name", &Layer::getName)
-        .def_property_readonly("type", &Layer::getType)
-        .def_property_readonly("tiles", &Layer::getTiles)
-        .def_property_readonly("objects", &Layer::getObjects);
+        .def_property_readonly("name", &Map::Layer::getName)
+        .def_property_readonly("type", &Map::Layer::getType)
+        .def_property_readonly("tiles", &Map::Layer::getTiles)
+        .def_property_readonly("objects", &Map::Layer::getObjects);
 
-    py::enum_<Layer::Type>(layer, "Type")
-        .value("Tile", Layer::Type::Tile)
-        .value("Object", Layer::Type::Object)
-        .value("Image", Layer::Type::Image)
+    py::enum_<Map::Layer::Type>(layer, "Type")
+        .value("Tile", Map::Layer::Type::Tile)
+        .value("Object", Map::Layer::Type::Object)
+        .value("Image", Map::Layer::Type::Image)
         .export_values();
 
-    py::class_<Tile, sf::Transformable>(m_tmx, "Tile")
+    py::class_<Map::Tile, sf::Transformable>(m_tmx, "Tile")
         .def(py::init<const Map&, unsigned>())
-        .def_property_readonly("gid", &Tile::getGid);
+        .def_property_readonly("gid", &Map::Tile::getGid);
 
-    py::class_<Object>(m_tmx, "Object")
+    py::class_<Map::Object, Object>(m_tmx, "Object")
         .def(py::init<const Map&, const pugi::xml_node&>())
-        .def_property_readonly("name", &Object::getName)
-        .def_property_readonly("type", &Object::getType)
-        .def_property_readonly("tile", &Object::getTile)
-        .def_property_readonly("rect", &Object::getRect);
+        .def_property_readonly("name", &Map::Object::getName)
+        .def_property_readonly("type", &Map::Object::getType)
+        .def_property_readonly("rect", &Map::Object::getRect);
 }

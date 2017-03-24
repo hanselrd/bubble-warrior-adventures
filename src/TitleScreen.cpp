@@ -59,7 +59,13 @@ TitleScreen::TitleScreen(sf::RenderWindow& window) {
     btnPlay->setSize(windowWidth / 2 - BUTTON_PADDING, BUTTON_HEIGHT);
     btnPlay->setPosition(BUTTON_PADDING, windowHeight * 3 / 5);
     btnPlay->setText("Play");
-    btnPlay->connect("pressed", [&] { Locator<StateHandler>::get()->push<PlayScreen>(std::ref(window)); });
+    btnPlay->connect("pressed", [&] {
+        auto stateHandler = Locator<StateHandler>::get();
+        if (stateHandler->size() == 1)
+            stateHandler->change<PlayScreen>(std::ref(window));
+        else
+            stateHandler->pop();
+    });
     _gui.add(btnPlay);
 
     // Settings button

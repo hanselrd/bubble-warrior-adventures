@@ -30,6 +30,9 @@ set(MAJOR_VERSION 1)
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
+# Enable header only mode for pugixml
+add_definitions(-DPUGIXML_HEADER_ONLY)
+
 # Include the configuration file
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake)
 
@@ -67,9 +70,6 @@ include_directories(${PROJECT_SOURCE_DIR}/extlibs/pybind11/include)
 
 # Add all the source files
 file(GLOB GAME_SRC ${PROJECT_SOURCE_DIR}/src/*.cpp)
-
-# Add pugixml.cpp
-set(GAME_SRC ${GAME_SRC} extlibs/pugixml/src/pugixml.cpp)
 
 # Game executable
 add_executable(${PROJECT_NAME} ${GAME_SRC})

@@ -16,28 +16,40 @@ void StateHandler::draw(sf::RenderWindow& window) {
 }
 
 void StateHandler::pop() {
-    _event = Event::Pop;
+    _eventQueue.notify(Event::Pop, nullptr);
 }
 
 void StateHandler::handleTransition() {
-    switch (_event) {
-    case Event::Change:
-        if (!_states.empty())
-            _states.pop();
-        _states.push(std::move(_temp));
-        break;
-    case Event::Push:
-        if (!_states.empty())
-            _states.top()->pause();
-        _states.push(std::move(_temp));
-        break;
-    case Event::Pop:
-        if (!_states.empty()) {
-            _states.pop();
+    Event e;
+    std::shared_ptr<State> state;
+
+    while (_eventQueue.poll(e, state)) {
+        switch (e) {
+        case Event::Change:
             if (!_states.empty())
-                _states.top()->resume();
+                _states.pop();
+            _states.push(state);
+            break;
+        case Event::Push:
+            if (!_states.empty())
+                _states.top()->pause();
+            _states.push(state);
+            break;
+        case Event::Pop:
+            if (!_states.empty()) {
+                _states.pop();
+                if (!_states.empty())
+                    _states.top()->resume();
+            }
+            break;
         }
-        break;
     }
-    _event = Event::Null;
+}
+
+bool StateHandler::empty() const {
+    return _states.empty();
+}
+
+std::size_t StateHandler::size() const {
+    return _states.size();
 }

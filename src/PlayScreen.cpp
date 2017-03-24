@@ -5,9 +5,11 @@
 #include "Script.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
+#include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("ne_tower.tmx") {
+    : _map("world.tmx")
+    , _player(8, sf::Color(0xFF9900FF)) {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -25,11 +27,13 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     lblCoords->setPosition(0, 30);
     _gui.add(lblCoords, "lblCoords");
 
-    auto btnGoBack = std::make_shared<tgui::Button>();
-    btnGoBack->setPosition(0, 60);
-    btnGoBack->setText("Main Menu");
-    btnGoBack->connect("pressed", [] { Locator<StateHandler>::get()->pop(); });
-    _gui.add(btnGoBack);
+    auto btnMainMenu = std::make_shared<tgui::Button>();
+    btnMainMenu->setPosition(0, 60);
+    btnMainMenu->setText("Main Menu");
+    btnMainMenu->connect("pressed", [&] {
+        Locator<StateHandler>::get()->push<TitleScreen>(std::ref(window));
+    });
+    _gui.add(btnMainMenu);
 
     /*
         Don't put the map in the resource cache because
@@ -38,9 +42,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
         and results in the game crashing
     */
 
-    _player.setRadius(8);
-    _player.setFillColor(sf::Color::Cyan);
-    //auto playerSpawn = _map.getLayers()[2].getObjects()[0].getRect();
+    //_player.setRadius(8);
+    //_player.setFillColor(sf::Color::Cyan);
+    //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     _player.setPosition(100, 100);
 
@@ -68,6 +72,15 @@ void PlayScreen::update(float delta) {
     auto lblCoords = _gui.get<tgui::Label>("lblCoords");
     lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
 
+    for (const auto& layer : _map.getLayers()) {
+        if (layer.getType() == Map::Layer::Type::Object) {
+            for (const auto& object : layer.getObjects()) {
+                if (Object::checkCollision(_player, object))
+                    lblCoords->setText(lblCoords->getText() + " Collision!");
+            }
+        }
+    }
+
     _view.setCenter(playerPos);
 }
 
@@ -77,6 +90,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    //window.draw(_map.getLayers().at(3));
+    window.draw(_map.getLayers().at(3));
     _gui.draw();
 }
