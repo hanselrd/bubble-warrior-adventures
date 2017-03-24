@@ -5,6 +5,7 @@
 #include "Script.hpp"
 #include "Settings.hpp"
 #include "StateHandler.hpp"
+#include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _map("world.tmx")
@@ -26,11 +27,13 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     lblCoords->setPosition(0, 30);
     _gui.add(lblCoords, "lblCoords");
 
-    auto btnGoBack = std::make_shared<tgui::Button>();
-    btnGoBack->setPosition(0, 60);
-    btnGoBack->setText("Main Menu");
-    btnGoBack->connect("pressed", [] { Locator<StateHandler>::get()->pop(); });
-    _gui.add(btnGoBack);
+    auto btnMainMenu = std::make_shared<tgui::Button>();
+    btnMainMenu->setPosition(0, 60);
+    btnMainMenu->setText("Main Menu");
+    btnMainMenu->connect("pressed", [&] {
+        Locator<StateHandler>::get()->push<TitleScreen>(std::ref(window));
+    });
+    _gui.add(btnMainMenu);
 
     /*
         Don't put the map in the resource cache because

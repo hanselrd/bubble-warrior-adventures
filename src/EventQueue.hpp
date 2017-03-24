@@ -1,14 +1,15 @@
 #pragma once
-#include <boost/any.hpp>
 #include <queue>
 #include <tuple>
-#include <type_traits>
 
-template <class T, class E>
-class EventQueue {
+template <class E, class D>
+class EventQueue final {
 public:
-    void pollEvent(const E& e, const boost::any& data);
+    void notify(const E& event, const D& data);
+    bool poll(E& event, D& data);
 
 private:
-    std::queue<std::tuple<E, boost::any>> _events;
+    std::queue<std::tuple<E, D>> _events;
 };
+
+#include "EventQueue.tpp"
