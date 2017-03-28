@@ -59,7 +59,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setFillColor(sf::Color::Cyan);
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
-    _player.setPosition(1376, 216);
+    _player.setPosition(1446, 316);
 
     _view.setCenter(_player.getPosition());
     _view.setSize(window.getSize().x, window.getSize().y);
