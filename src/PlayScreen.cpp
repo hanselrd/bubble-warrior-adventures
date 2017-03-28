@@ -35,6 +35,19 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     });
     _gui.add(btnMainMenu);
 
+    auto windowWidth = tgui::bindWidth(_gui);
+    auto windowHeight = tgui::bindHeight(_gui);
+    auto barHealth = std::make_shared<tgui::ProgressBar>();
+	barHealth->getRenderer()->setBackgroundColor(sf::Color(0x000000FF));
+	barHealth->getRenderer()->setForegroundColor(sf::Color::Red);
+	barHealth->getRenderer()->setTextColorBack(sf::Color::Black);
+	barHealth->setMaximum(10);
+	barHealth->setMinimum(0);
+	barHealth->setPosition(30, windowHeight - 30);
+	barHealth->setValue(9);
+	barHealth->setText(std::to_string(barHealth->getValue()) + "/" + std::to_string(barHealth->getMaximum()));
+	_gui.add(barHealth, "barHealth");
+
     /*
         Don't put the map in the resource cache because
         it contains a sf::Texture for each tileset
