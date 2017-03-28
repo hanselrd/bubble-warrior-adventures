@@ -8,7 +8,7 @@
 #include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("world.tmx")
+    : _map("castle_interior_polygon_walls.tmx")
     , _player(8, sf::Color(0xFF9900FF)) {
     _gui.setWindow(window);
 
@@ -59,7 +59,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setFillColor(sf::Color::Cyan);
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
-    _player.setPosition(100, 100);
+    _player.setPosition(1376, 216);
 
     _view.setCenter(_player.getPosition());
     _view.setSize(window.getSize().x, window.getSize().y);
