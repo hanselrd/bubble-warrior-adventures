@@ -21,6 +21,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     Script testTmx("test_tmx.py");
     testTmx("main", std::ref(_map));
 
+    auto windowWidth = tgui::bindWidth(_gui);
+    auto windowHeight = tgui::bindHeight(_gui);
+
     auto lblCoords = std::make_shared<tgui::Label>();
     lblCoords->setTextColor(sf::Color::Cyan);
     lblCoords->setTextSize(30);
@@ -35,18 +38,38 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     });
     _gui.add(btnMainMenu);
 
-    auto windowWidth = tgui::bindWidth(_gui);
-    auto windowHeight = tgui::bindHeight(_gui);
-    auto barHealth = std::make_shared<tgui::ProgressBar>();
-	barHealth->getRenderer()->setBackgroundColor(sf::Color(0x000000FF));
-	barHealth->getRenderer()->setForegroundColor(sf::Color::Red);
-	barHealth->getRenderer()->setTextColorBack(sf::Color::Black);
-	barHealth->setMaximum(10);
-	barHealth->setMinimum(0);
-	barHealth->setPosition(30, windowHeight - 30);
-	barHealth->setValue(9);
-	barHealth->setText(std::to_string(barHealth->getValue()) + "/" + std::to_string(barHealth->getMaximum()));
-	_gui.add(barHealth, "barHealth");
+    auto prgbarHealth = std::make_shared<tgui::ProgressBar>();
+	prgbarHealth->getRenderer()->setBackgroundColor(sf::Color(0x000000FF));
+	prgbarHealth->getRenderer()->setForegroundColor(sf::Color::Red);
+	prgbarHealth->getRenderer()->setTextColorBack(sf::Color::Black);
+	prgbarHealth->setMaximum(10);
+	prgbarHealth->setMinimum(0);
+	prgbarHealth->setPosition(30, windowHeight - 90);
+	prgbarHealth->setValue(9);
+	prgbarHealth->setText(std::to_string(prgbarHealth->getValue()) + "/" + std::to_string(prgbarHealth->getMaximum()));
+	_gui.add(prgbarHealth);
+
+    auto prgbarMana = std::make_shared<tgui::ProgressBar>();
+	prgbarMana->getRenderer()->setBackgroundColor(sf::Color(0x000000FF));
+	prgbarMana->getRenderer()->setForegroundColor(sf::Color::Blue);
+	prgbarMana->getRenderer()->setTextColorBack(sf::Color::Black);
+	prgbarMana->setMaximum(10);
+	prgbarMana->setMinimum(0);
+	prgbarMana->setPosition(30, windowHeight - 60);
+	prgbarMana->setValue(9);
+	prgbarMana->setText(std::to_string(prgbarMana->getValue()) + "/" + std::to_string(prgbarMana->getMaximum()));
+	_gui.add(prgbarMana);
+
+    auto prgbarExp = std::make_shared<tgui::ProgressBar>();
+	prgbarExp->getRenderer()->setBackgroundColor(sf::Color(0x000000FF));
+	prgbarExp->getRenderer()->setForegroundColor(sf::Color::Green);
+	prgbarExp->getRenderer()->setTextColorBack(sf::Color::Black);
+	prgbarExp->setMaximum(10);
+	prgbarExp->setMinimum(0);
+	prgbarExp->setPosition(30, windowHeight - 30);
+	prgbarExp->setValue(9);
+	prgbarExp->setText(std::to_string(prgbarExp->getValue()) + "/" + std::to_string(prgbarExp->getMaximum()));
+	_gui.add(prgbarExp);
 
     /*
         Don't put the map in the resource cache because
