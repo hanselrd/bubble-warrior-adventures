@@ -20,7 +20,7 @@ TitleScreen::TitleScreen(sf::RenderWindow& window) {
     auto theme = resourceHandler->get<tgui::Theme>("default");
 
     // Background image
-    auto background = std::make_shared<tgui::Picture>();
+    auto background = tgui::Picture::create();
     background->setTexture(BACKGROUNDS_DIR + settings->getBackground());
     _gui.add(background);
 
