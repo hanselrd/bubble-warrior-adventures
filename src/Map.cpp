@@ -7,6 +7,10 @@
 #include <stdexcept>
 #include "Config.hpp"
 
+constexpr unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+constexpr unsigned FLIPPED_VERTICALLY_FLAG = 0x40000000;
+constexpr unsigned FLIPPED_DIAGONALLY_FLAG = 0x20000000;
+
 Map::Map(const std::string& filename) {
     auto success = _doc.load_file((MAPS_DIR + filename).c_str());
 
@@ -198,19 +202,34 @@ void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 Map::Tile::Tile(const Map& map, unsigned gid)
     : _gid(gid) {
+    bool flipped_horizontally = _gid & FLIPPED_HORIZONTALLY_FLAG;
+    bool flipped_vertically = _gid & FLIPPED_VERTICALLY_FLAG;
+    bool flipped_diagonally = _gid & FLIPPED_DIAGONALLY_FLAG;
+
+    _gid &= ~(FLIPPED_HORIZONTALLY_FLAG |
+        FLIPPED_VERTICALLY_FLAG |
+        FLIPPED_DIAGONALLY_FLAG);
+
     for (const auto& tileset : map.getTilesets()) {
-        if (gid > tileset.getFirstGid() &&
-            gid < tileset.getFirstGid() + tileset.getTileCount()) {
+        if (_gid > tileset.getFirstGid() &&
+            _gid < tileset.getFirstGid() + tileset.getTileCount()) {
             const auto& texture = tileset.getTexture();
             setTexture(texture);
-            auto tid = gid - tileset.getFirstGid();
+            auto tid = _gid - tileset.getFirstGid();
             auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() :
                 texture.getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
             auto x = tileset.getMargin() + ((tid % columns) * tileset.getTileWidth())
                 + (tileset.getSpacing() * (tid % columns));
             auto y = tileset.getMargin() + ((tid / columns) * tileset.getTileHeight())
                 + (tileset.getSpacing() * (tid / columns));
+
             setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
+            if (flipped_diagonally)
+                ;// setTextureRect(sf::IntRect(x + tileset.getTileWidth(), y + tileset.getTileHeight(), -tileset.getTileWidth(), -tileset.getTileHeight()));
+            if (flipped_horizontally)
+                setTextureRect(sf::IntRect(x, y + tileset.getTileHeight(), tileset.getTileWidth(), -tileset.getTileHeight()));
+            if (flipped_vertically)
+                setTextureRect(sf::IntRect(x + tileset.getTileWidth(), y, -tileset.getTileWidth(), tileset.getTileHeight()));
             break;
         }
     }
