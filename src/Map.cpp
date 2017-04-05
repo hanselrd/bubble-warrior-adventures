@@ -251,7 +251,7 @@ const sf::IntRect& Map::Object::getRect() const {
 }
 
 sf::FloatRect Map::Object::getLocalBounds() const {
-    return sf::FloatRect(0.f, 0.f, _rect.width, _rect.height);
+   return sf::FloatRect(0.f, 0.f, _rect.width, _rect.height);
 }
 
 void Map::Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {

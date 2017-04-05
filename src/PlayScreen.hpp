@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.hpp"
+#include "Player.hpp"
 #include "Map.hpp"
 #include "State.hpp"
 
@@ -13,5 +13,5 @@ public:
 private:
     sf::View _view;
     Map _map; // for testing
-    Entity _player;
+    Player _player;
 };

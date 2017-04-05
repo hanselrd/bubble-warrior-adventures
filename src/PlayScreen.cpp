@@ -1,6 +1,7 @@
 #include "PlayScreen.hpp"
 #include "Config.hpp"
 #include "Locator.hpp"
+#include "Player.hpp"
 #include "ResourceHandler.hpp"
 #include "Script.hpp"
 #include "Settings.hpp"
@@ -8,8 +9,8 @@
 #include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("world.tmx")
-    , _player(8, sf::Color(0xFF9900FF)) {
+    : _map("castle_interior_polygon_walls.tmx"),
+      _player("regular_hero_male.png", 64) {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -127,7 +128,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
-    _player.setPosition(100, 100);
+    _player.setPosition(1446, 1400);
 
     _view.setCenter(_player.getPosition());
     _view.setSize(window.getSize().x, window.getSize().y);
@@ -136,6 +137,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
 void PlayScreen::handleEvent(sf::Event& e) {
     _gui.handleEvent(e);
+    _player.handleEvent(e);
 }
 
 void PlayScreen::update(float delta) {
