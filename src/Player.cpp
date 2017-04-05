@@ -115,7 +115,28 @@ void Player::animateDown() {
 
 }
 void Player::animateStanding() {
-
+    sf::IntRect current_sprite = _sprite.getTextureRect();
+    
+    if (current_sprite.top == (64 * 8)) {
+        sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+        sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+        _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));  
+    }
+    else if (current_sprite.top == (64 * 9)) {
+        sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+        sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+        _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+    }
+    else if (current_sprite.top == (64 * 10)) {
+        sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+        sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+        _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions)); 
+    }
+    else if (current_sprite.top == (64 * 11)) {
+        sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
+        sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
+        _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+    }
 }
 void Player::defaultPlayerStats() {
     _level = 1;
