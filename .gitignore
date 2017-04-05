@@ -339,3 +339,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Linux stuff
+.~lock.*
