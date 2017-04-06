@@ -6,6 +6,10 @@ Player::Player(std::string file_path, int sprite_format) : Entity(file_path, spr
     Player::defaultPlayerStats();
 }
 void Player::levelUp() {
+    // Increase the experience cap and reset current exp to 0;
+    _maxExperience *= 1.3;
+    _experience = 0;
+
     if (_level % 5 == 0) {
         _movementSpeed += 0.05f;
     }
@@ -85,29 +89,30 @@ void Player::animateUp() {
     }
 
 }
+
 void Player::animateDown() {
+
+    
+    /*sf::IntRect temp = sf::IntRect(64, (64 * 10), 64, 64);
     if (_animationClock.getElapsedTime().asSeconds() > 0.05f) {
-
-        // If the animation is at its end or not facing correct direction, 
-        // start the animation at the first frame
-        if (_sprite.getTextureRect().top != (64 * 10) || _sprite.getTextureRect().left == (64 * 8)) {
-            // _spriteFormat = after non-standing frame (second frame 64 * 1)
-            // _spriteFormat * 10 = 10th frame down of sprite sheet (64 * 10)
-            sf::Vector2i new_rect_coords = sf::Vector2i((_spriteFormat * 1), (_spriteFormat * 10));
-            sf::Vector2i new_rect_dimensions = sf::Vector2i(_spriteFormat, _spriteFormat);
-
-            _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+        if (_sprite.getTextureRect().left == (64 * 8) || _sprite.getTextureRect().top != (64 * 10)) {
+            _sprite.setTextureRect(temp);
         }
+        //if (_sprite.getTextureRect().top != (64 * 10) || _sprite.getTextureRect().left == (64 * 8)) {
+        //    sf::Vector2i new_rect_coords = sf::Vector2i((_spriteFormat * 1), (_spriteFormat * 10));
+        //    sf::Vector2i new_rect_dimensions = sf::Vector2i(_spriteFormat, _spriteFormat);
 
-        // If the sprite is somewhere in the loop, progress it
+        //    _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
+        //}
+
         else {
             sf::Vector2i new_rect_coords = sf::Vector2i(_sprite.getTextureRect().left + 64, _sprite.getTextureRect().top);
             sf::Vector2i new_rect_dimensions = sf::Vector2i(_spriteFormat, _spriteFormat);
             _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 
         }
-    }
-    _animationClock.restart();
+    }*/
+    //_animationClock.restart();
 }
 /*
 * This function changes the current sf::IntRect being shown on the sprite to the 
@@ -144,7 +149,7 @@ void Player::animateStanding() {
 void Player::defaultPlayerStats() {
     _level = 1;
     _experience = 0;
-    _maxExperience = 10000;
+    _maxExperience = 20;
     _health = 10;
     _maxHealth = 10;
     _mana = 10;
@@ -174,17 +179,20 @@ void Player::handleEvent(sf::Event &e) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         animateLeft();
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         animateRight();
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         animateUp();
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         animateDown();
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+        levelUp();
+    }
     else {
-        animateStanding();
+        //animateStanding();
     }
 
     _animationClock.restart();

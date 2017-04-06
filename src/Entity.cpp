@@ -6,6 +6,7 @@ Entity::Entity(std::string file_path, int sprite_format) {
     _sprite.setTextureRect(sf::IntRect(0, (64 * 10), sprite_format, sprite_format));
     _spriteFormat = sprite_format;
     _level = 1;
+    _facing = directions::DOWN;
 }
 
 Entity::~Entity() {}

@@ -9,7 +9,9 @@ public:
     sf::FloatRect getLocalBounds() const override;
 
     unsigned getLevel();
+    enum directions{UP, LEFT, DOWN, RIGHT};
 
+    directions _facing;
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

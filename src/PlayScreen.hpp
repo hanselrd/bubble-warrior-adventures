@@ -10,8 +10,11 @@ public:
     void update(float delta) override;
     void draw(sf::RenderWindow& window) override;
 
+    void initializeOverlay(sf::RenderWindow &window);
+    void updateOverlay();
 private:
     sf::View _view;
     Map _map; // for testing
     Player _player;
+    tgui::Panel::Ptr _playerPanelStats;
 };

@@ -13,7 +13,6 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
       _player("regular_hero_male.png", 64) {
     _gui.setWindow(window);
 
-    auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
 
     Script testConfig("test_config.py");
@@ -22,100 +21,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     Script testTmx("test_tmx.py");
     testTmx("main", std::ref(_map));
 
-    auto windowWidth = tgui::bindWidth(_gui);
-    auto windowHeight = tgui::bindHeight(_gui);
-
-    auto theme = resourceHandler->get<tgui::Theme>("default");
-
-    auto lblCoords = tgui::Label::create();
-    lblCoords->setTextColor(sf::Color::Cyan);
-    lblCoords->setTextSize(30);
-    lblCoords->setPosition(0, 30);
-    _gui.add(lblCoords, "lblCoords");
-
-    auto btnMainMenu = tgui::Button::create();
-    btnMainMenu->setPosition(0, 60);
-    btnMainMenu->setText("Main Menu");
-    btnMainMenu->connect("pressed", [&] {
-        Locator<StateHandler>::get()->push<TitleScreen>(std::ref(window));
-    });
-    _gui.add(btnMainMenu);
-
-    tgui::Panel::Ptr panelPlayerStats = theme->load("Panel");
-    panelPlayerStats->setSize(windowWidth, 60);
-    panelPlayerStats->setPosition(0, windowHeight - panelPlayerStats->getSize().y);
-
-    // Offsets
-    constexpr unsigned STATS_OFFSET = 170;
-
-    auto lblName = tgui::Label::create("Player");
-    lblName->setTextColor(sf::Color::White);
-    lblName->setTextSize(25);
-    lblName->setPosition(10, 0);
-    panelPlayerStats->add(lblName);
-
-    auto lblLVL = tgui::Label::create("Lv. " + std::to_string(_player.getLevel()));
-    lblLVL->setTextColor(sf::Color::White);
-    lblLVL->setTextSize(25);
-    lblLVL->setPosition(10, panelPlayerStats->getSize().y / 2);
-    panelPlayerStats->add(lblLVL);
-
-    auto lblHP = tgui::Label::create("HP");
-    lblHP->setTextColor(sf::Color::White);
-    lblHP->setTextSize(15);
-    lblHP->setPosition(STATS_OFFSET, 0);
-    panelPlayerStats->add(lblHP);
-
-    auto prgbarHP = tgui::ProgressBar::create();
-	prgbarHP->getRenderer()->setBackgroundColor(sf::Color::Black);
-	prgbarHP->getRenderer()->setForegroundColor(sf::Color::Red);
-	prgbarHP->getRenderer()->setTextColor(sf::Color::White);
-	prgbarHP->setMaximum(_player.getMaxHealth());
-	prgbarHP->setMinimum(0);
-    prgbarHP->setSize(windowWidth / 5, prgbarHP->getSize().y * 1.7);
-    prgbarHP->setPosition(lblHP->getPosition().x, lblHP->getTextSize());
-	prgbarHP->setValue(_player.getHealth());
-	prgbarHP->setText(std::to_string(prgbarHP->getValue()) + "/" + std::to_string(prgbarHP->getMaximum()));
-	panelPlayerStats->add(prgbarHP);
-
-    auto lblMP = tgui::Label::create("MP");
-    lblMP->setTextColor(sf::Color::White);
-    lblMP->setTextSize(15);
-    lblMP->setPosition(STATS_OFFSET + windowWidth / 4, 0);
-    panelPlayerStats->add(lblMP);
-
-    auto prgbarMP = tgui::ProgressBar::create();
-	prgbarMP->getRenderer()->setBackgroundColor(sf::Color::Black);
-	prgbarMP->getRenderer()->setForegroundColor(sf::Color::Blue);
-	prgbarMP->getRenderer()->setTextColor(sf::Color::White);
-	prgbarMP->setMaximum(_player.getMaxMana());
-	prgbarMP->setMinimum(0);
-    prgbarMP->setSize(windowWidth / 5, prgbarMP->getSize().y * 1.7);
-	prgbarMP->setPosition(lblMP->getPosition().x, lblMP->getTextSize());
-	prgbarMP->setValue(_player.getMana());
-	prgbarMP->setText(std::to_string(prgbarMP->getValue()) + "/" + std::to_string(prgbarMP->getMaximum()));
-	panelPlayerStats->add(prgbarMP);
-
-    auto lblEXP = tgui::Label::create("EXP");
-    lblEXP->setTextColor(sf::Color::White);
-    lblEXP->setTextSize(15);
-    lblEXP->setPosition(STATS_OFFSET + windowWidth / 2, 0);
-    panelPlayerStats->add(lblEXP);
-
-    auto prgbarEXP = tgui::ProgressBar::create();
-	prgbarEXP->getRenderer()->setBackgroundColor(sf::Color::Black);
-	prgbarEXP->getRenderer()->setForegroundColor(sf::Color::Green);
-	prgbarEXP->getRenderer()->setTextColor(sf::Color::White);
-	prgbarEXP->setMaximum(_player.getMaxExperience());
-	prgbarEXP->setMinimum(0);
-    prgbarEXP->setSize(windowWidth / 5, prgbarEXP->getSize().y * 1.7);
-	prgbarEXP->setPosition(lblEXP->getPosition().x, lblEXP->getTextSize());
-	prgbarEXP->setValue(_player.getExperience());
-	prgbarEXP->setText(std::to_string(prgbarEXP->getValue()) + "/" + std::to_string(prgbarEXP->getMaximum()));
-	panelPlayerStats->add(prgbarEXP);
-
-    _gui.add(panelPlayerStats);
-
+    initializeOverlay(window);
+    updateOverlay();
     /*
         Don't put the map in the resource cache because
         it contains a sf::Texture for each tileset
@@ -131,8 +38,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     _player.setPosition(1446, 1400);
 
     _view.setCenter(_player.getPosition());
-    _view.setSize(window.getSize().x, window.getSize().y);
-    _view.zoom(0.5);
+    _view.setSize((float)window.getSize().x, (float)window.getSize().y);
+    _view.zoom(0.9f);
 }
 
 void PlayScreen::handleEvent(sf::Event& e) {
@@ -178,4 +85,111 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_player);
     window.draw(_map.getLayers().at(3));
     _gui.draw();
+}
+
+void PlayScreen::initializeOverlay(sf::RenderWindow &window)
+{
+
+    auto resourceHandler = Locator<ResourceHandler>::get();
+
+    auto windowWidth = tgui::bindWidth(_gui);
+    auto windowHeight = tgui::bindHeight(_gui);
+
+    auto theme = resourceHandler->get<tgui::Theme>("default");
+
+    auto lblCoords = tgui::Label::create();
+    lblCoords->setTextColor(sf::Color::Cyan);
+    lblCoords->setTextSize(30);
+    lblCoords->setPosition(0, 30);
+    _gui.add(lblCoords, "lblCoords");
+
+    auto btnMainMenu = tgui::Button::create();
+    btnMainMenu->setPosition(0, 60);
+    btnMainMenu->setText("Main Menu");
+    btnMainMenu->connect("pressed", [&] {
+        Locator<StateHandler>::get()->push<TitleScreen>(std::ref(window));
+    });
+    _gui.add(btnMainMenu, "btnMainMenu");
+
+    tgui::Panel::Ptr _panelPlayerStats = theme->load("Panel");
+    _panelPlayerStats->setSize(windowWidth, 60);
+    _panelPlayerStats->setPosition(0, windowHeight - _panelPlayerStats->getSize().y);
+
+    // Offsets
+    constexpr unsigned STATS_OFFSET = 170;
+
+    auto lblName = tgui::Label::create("Player");
+    lblName->setTextColor(sf::Color::White);
+    lblName->setTextSize(25);
+    lblName->setPosition(10, 0);
+    _panelPlayerStats->add(lblName, "lblName");
+
+    auto lblLevel = tgui::Label::create("Lv. " + std::to_string(_player.getLevel()));
+    lblLevel->setTextColor(sf::Color::White);
+    lblLevel->setTextSize(25);
+    lblLevel->setPosition(10, _panelPlayerStats->getSize().y / 2);
+    _panelPlayerStats->add(lblLevel, "lblLevel");
+
+    auto lblHealth = tgui::Label::create("HP");
+    lblHealth->setTextColor(sf::Color::White);
+    lblHealth->setTextSize(15);
+    lblHealth->setPosition(STATS_OFFSET, 0);
+    _panelPlayerStats->add(lblHealth, "lblHealth");
+
+    auto prgbarHealth = tgui::ProgressBar::create();
+    prgbarHealth->getRenderer()->setBackgroundColor(sf::Color::Black);
+    prgbarHealth->getRenderer()->setForegroundColor(sf::Color::Red);
+    prgbarHealth->getRenderer()->setTextColor(sf::Color::White);
+    prgbarHealth->setMaximum(_player.getMaxHealth());
+    prgbarHealth->setMinimum(0);
+    prgbarHealth->setSize(windowWidth / 5, prgbarHealth->getSize().y * 1.7);
+    prgbarHealth->setPosition(lblHealth->getPosition().x, lblHealth->getTextSize());
+    prgbarHealth->setValue(_player.getHealth());
+    prgbarHealth->setText(std::to_string(prgbarHealth->getValue()) + "/" + std::to_string(prgbarHealth->getMaximum()));
+    _panelPlayerStats->add(prgbarHealth, "prgbarHealth");
+
+    auto lblMana = tgui::Label::create("MP");
+    lblMana->setTextColor(sf::Color::White);
+    lblMana->setTextSize(15);
+    lblMana->setPosition(STATS_OFFSET + windowWidth / 4, 0);
+    _panelPlayerStats->add(lblMana, "lblMana");
+
+    auto prgbarMana = tgui::ProgressBar::create();
+    prgbarMana->getRenderer()->setBackgroundColor(sf::Color::Black);
+    prgbarMana->getRenderer()->setForegroundColor(sf::Color::Blue);
+    prgbarMana->getRenderer()->setTextColor(sf::Color::White);
+    prgbarMana->setMaximum(_player.getMaxMana());
+    prgbarMana->setMinimum(0);
+    prgbarMana->setSize(windowWidth / 5, prgbarMana->getSize().y * 1.7);
+    prgbarMana->setPosition(lblMana->getPosition().x, lblMana->getTextSize());
+    prgbarMana->setValue(_player.getMana());
+    prgbarMana->setText(std::to_string(prgbarMana->getValue()) + "/" + std::to_string(prgbarMana->getMaximum()));
+    _panelPlayerStats->add(prgbarMana, "prgbarMana");
+
+    auto lblExperience = tgui::Label::create("EXP");
+    lblExperience->setTextColor(sf::Color::White);
+    lblExperience->setTextSize(15);
+    lblExperience->setPosition(STATS_OFFSET + windowWidth / 2, 0);
+    _panelPlayerStats->add(lblExperience, "lblExperience");
+
+    auto prgbarExperience = tgui::ProgressBar::create();
+    prgbarExperience->getRenderer()->setBackgroundColor(sf::Color::Black);
+    prgbarExperience->getRenderer()->setForegroundColor(sf::Color::Green);
+    prgbarExperience->getRenderer()->setTextColor(sf::Color::White);
+    prgbarExperience->setMaximum(_player.getMaxExperience());
+    prgbarExperience->setMinimum(0);
+    prgbarExperience->setSize(windowWidth / 5, prgbarExperience->getSize().y * 1.7);
+    prgbarExperience->setPosition(lblExperience->getPosition().x, lblExperience->getTextSize());
+    prgbarExperience->setValue(_player.getExperience());
+    prgbarExperience->setText(std::to_string(prgbarExperience->getValue()) + "/" + std::to_string(prgbarExperience->getMaximum()));
+    _panelPlayerStats->add(prgbarExperience, "prgbarExperience");
+
+    _gui.add(_panelPlayerStats, "_panelPlayerStats");
+
+}
+
+void PlayScreen::updateOverlay()
+{
+    //tgui::ProgressBar::Ptr hpbar = _playerPanelStats->get<tgui::ProgressBar>("prgbarHealth", true);
+    //hpbar->setValue(3);
 }
