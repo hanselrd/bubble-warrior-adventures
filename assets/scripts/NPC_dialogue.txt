@@ -1,0 +1,52 @@
+NPC list
+Name: General Tiren
+ID: GeneralTiren.png
+Dialogue:  "It's time.  Are you sure you're ready?" 
+
+Name: Kitren
+ID: Kitren.png, Kitren_no_spear.png
+Dialogue:
+
+Name: 
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
+
+Name:
+ID:
+Dialogue:
