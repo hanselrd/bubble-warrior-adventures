@@ -13,7 +13,6 @@ void Player::levelUp() {
 void Player::animateLeft() {
 
     if (_animationClock.getElapsedTime().asSeconds() > 0.05f) {
-        std::cout << _sprite.getTextureRect().top;
            
             // If the animation is at its end or not facing correct direction, 
             // start the animation at the first frame
@@ -39,7 +38,6 @@ void Player::animateLeft() {
 }
 void Player::animateRight() {
     if (_animationClock.getElapsedTime().asSeconds() > 0.05f) {
-        std::cout << _sprite.getTextureRect().top;
 
         // If the animation is at its end or not facing correct direction, 
         // start the animation at the first frame
@@ -64,7 +62,6 @@ void Player::animateRight() {
 } 
 void Player::animateUp() {
     if (_animationClock.getElapsedTime().asSeconds() > 0.05f) {
-        std::cout << _sprite.getTextureRect().top;
 
         // If the animation is at its end or not facing correct direction, 
         // start the animation at the first frame
@@ -90,7 +87,6 @@ void Player::animateUp() {
 }
 void Player::animateDown() {
     if (_animationClock.getElapsedTime().asSeconds() > 0.05f) {
-        std::cout << _sprite.getTextureRect().top;
 
         // If the animation is at its end or not facing correct direction, 
         // start the animation at the first frame
@@ -110,29 +106,36 @@ void Player::animateDown() {
             _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
 
         }
-        _animationClock.restart();
     }
-
+    _animationClock.restart();
 }
+/*
+* This function changes the current sf::IntRect being shown on the sprite to the 
+* left most (x=0) position for that direction (y = 64 * n) on the sprite sheet.
+*/
 void Player::animateStanding() {
     sf::IntRect current_sprite = _sprite.getTextureRect();
     
-    if (current_sprite.top == (64 * 8)) {
+    // Player facing up
+    if (current_sprite.top == (_spriteFormat * 8)) {
         sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
         sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
         _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));  
     }
-    else if (current_sprite.top == (64 * 9)) {
+    // Player facing left
+    else if (current_sprite.top == (_spriteFormat * 9)) {
         sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
         sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
         _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
     }
-    else if (current_sprite.top == (64 * 10)) {
+    // Player facing down
+    else if (current_sprite.top == (_spriteFormat * 10)) {
         sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
         sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
         _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions)); 
     }
-    else if (current_sprite.top == (64 * 11)) {
+    // Player facing right
+    else if (current_sprite.top == (_spriteFormat * 11)) {
         sf::Vector2i new_rect_coords = sf::Vector2i(0, current_sprite.top);
         sf::Vector2i new_rect_dimensions = sf::Vector2i(current_sprite.width, current_sprite.height);
         _sprite.setTextureRect(sf::IntRect(new_rect_coords, new_rect_dimensions));
@@ -141,13 +144,31 @@ void Player::animateStanding() {
 void Player::defaultPlayerStats() {
     _level = 1;
     _experience = 0;
-    _maxExperience = 10;
+    _maxExperience = 10000;
     _health = 10;
     _maxHealth = 10;
     _mana = 10;
     _maxMana = 10;
     _movementSpeed = 1.0f;
     _armor = 0.0f;
+}
+unsigned Player::getMaxMana() {
+    return _maxMana;
+}
+unsigned Player::getMaxHealth() {
+    return _maxHealth;
+}
+unsigned Player::getMaxExperience() {
+    return _maxExperience;
+}
+unsigned Player::getMana() {
+    return _mana;
+}
+unsigned Player::getHealth() {
+    return _health;
+}
+unsigned Player::getExperience() {
+    return _experience;
 }
 void Player::handleEvent(sf::Event &e) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -165,4 +186,6 @@ void Player::handleEvent(sf::Event &e) {
     else {
         animateStanding();
     }
+
+    _animationClock.restart();
 }

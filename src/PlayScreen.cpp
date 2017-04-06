@@ -48,13 +48,13 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     // Offsets
     constexpr unsigned STATS_OFFSET = 170;
 
-    auto lblName = tgui::Label::create("1234567890");
+    auto lblName = tgui::Label::create("Player");
     lblName->setTextColor(sf::Color::White);
     lblName->setTextSize(25);
     lblName->setPosition(10, 0);
     panelPlayerStats->add(lblName);
 
-    auto lblLVL = tgui::Label::create("Lv. 67");
+    auto lblLVL = tgui::Label::create("Lv. " + std::to_string(_player.getLevel()));
     lblLVL->setTextColor(sf::Color::White);
     lblLVL->setTextSize(25);
     lblLVL->setPosition(10, panelPlayerStats->getSize().y / 2);
@@ -70,11 +70,11 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 	prgbarHP->getRenderer()->setBackgroundColor(sf::Color::Black);
 	prgbarHP->getRenderer()->setForegroundColor(sf::Color::Red);
 	prgbarHP->getRenderer()->setTextColor(sf::Color::White);
-	prgbarHP->setMaximum(10);
+	prgbarHP->setMaximum(_player.getMaxHealth());
 	prgbarHP->setMinimum(0);
     prgbarHP->setSize(windowWidth / 5, prgbarHP->getSize().y * 1.7);
     prgbarHP->setPosition(lblHP->getPosition().x, lblHP->getTextSize());
-	prgbarHP->setValue(9);
+	prgbarHP->setValue(_player.getHealth());
 	prgbarHP->setText(std::to_string(prgbarHP->getValue()) + "/" + std::to_string(prgbarHP->getMaximum()));
 	panelPlayerStats->add(prgbarHP);
 
@@ -88,11 +88,11 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 	prgbarMP->getRenderer()->setBackgroundColor(sf::Color::Black);
 	prgbarMP->getRenderer()->setForegroundColor(sf::Color::Blue);
 	prgbarMP->getRenderer()->setTextColor(sf::Color::White);
-	prgbarMP->setMaximum(10);
+	prgbarMP->setMaximum(_player.getMaxMana());
 	prgbarMP->setMinimum(0);
     prgbarMP->setSize(windowWidth / 5, prgbarMP->getSize().y * 1.7);
 	prgbarMP->setPosition(lblMP->getPosition().x, lblMP->getTextSize());
-	prgbarMP->setValue(9);
+	prgbarMP->setValue(_player.getMana());
 	prgbarMP->setText(std::to_string(prgbarMP->getValue()) + "/" + std::to_string(prgbarMP->getMaximum()));
 	panelPlayerStats->add(prgbarMP);
 
@@ -105,12 +105,12 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto prgbarEXP = tgui::ProgressBar::create();
 	prgbarEXP->getRenderer()->setBackgroundColor(sf::Color::Black);
 	prgbarEXP->getRenderer()->setForegroundColor(sf::Color::Green);
-	prgbarEXP->getRenderer()->setTextColor(sf::Color::Black);
-	prgbarEXP->setMaximum(10);
+	prgbarEXP->getRenderer()->setTextColor(sf::Color::White);
+	prgbarEXP->setMaximum(_player.getMaxExperience());
 	prgbarEXP->setMinimum(0);
     prgbarEXP->setSize(windowWidth / 5, prgbarEXP->getSize().y * 1.7);
 	prgbarEXP->setPosition(lblEXP->getPosition().x, lblEXP->getTextSize());
-	prgbarEXP->setValue(9);
+	prgbarEXP->setValue(_player.getExperience());
 	prgbarEXP->setText(std::to_string(prgbarEXP->getValue()) + "/" + std::to_string(prgbarEXP->getMaximum()));
 	panelPlayerStats->add(prgbarEXP);
 

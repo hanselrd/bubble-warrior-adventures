@@ -8,10 +8,14 @@ public:
     virtual ~Entity();
     sf::FloatRect getLocalBounds() const override;
 
+    unsigned getLevel();
+
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 protected:
+
+    int _level;
     int _spriteFormat;
     sf::Sprite _sprite;
     sf::Texture _texture;

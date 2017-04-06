@@ -5,17 +5,23 @@
 class Player : public Entity {
 public:
     Player(std::string file_path, int sprite_format);
-    std::string getLevel();
     void handleEvent(sf::Event &e);
 
+    unsigned getMaxMana();
+    unsigned getMaxHealth();
+    unsigned getMaxExperience();
+    unsigned getMana();
+    unsigned getHealth();
+    unsigned getExperience();
 private:
     
-    unsigned _mana, _experience, _level;
+    unsigned _mana, _experience;
     unsigned _maxMana, _maxHealth, _maxExperience;
     unsigned _attackDamage;
     float _movementSpeed, _armor;
 
     sf::Clock _animationClock;
+
 
     void levelUp();
     void defaultPlayerStats();
