@@ -48,6 +48,9 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
+
+    _delta = delta;
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         _player.move(0, std::ceil(-70 * delta));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -78,6 +81,7 @@ void PlayScreen::update(float delta) {
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
+    _player.update(_delta);
     window.setView(_view);
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));

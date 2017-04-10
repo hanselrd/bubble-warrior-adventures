@@ -20,14 +20,6 @@ private:
     unsigned _attackDamage;
     float _movementSpeed, _armor;
 
-    sf::Clock _animationClock;
-
-
     void levelUp();
     void defaultPlayerStats();
-    void animateLeft();
-    void animateRight();
-    void animateUp();
-    void animateDown();
-    void animateStanding();
 };
