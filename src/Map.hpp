@@ -78,11 +78,12 @@ public:
         std::vector<Object> _objects;
     };
 
-    class Tile final : public sf::Drawable {
+    class Tile final : public sf::Drawable, public sf::Transformable {
     public:
-        explicit Tile(const Map& map, unsigned gid, sf::Vector2f position);
+        explicit Tile(const Map& map, unsigned gid);
         unsigned getGid() const;
         sf::FloatRect getBounds() const;
+        void update();
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
