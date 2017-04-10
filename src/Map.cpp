@@ -2,6 +2,7 @@
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <pybind11/stl.h>
 #include <algorithm>
+#include <bitset>
 #include <cstring>
 #include <functional>
 #include <stdexcept>
@@ -74,7 +75,8 @@ Map::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     auto imageNode = tilesetNode.child("image");
     if (!imageNode.empty()) {
         std::string source = imageNode.attribute("source").as_string();
-        _texture.loadFromFile(ASSETS_DIR + source.substr(3));
+        _texture = std::make_shared<sf::Texture>();
+        _texture->loadFromFile(ASSETS_DIR + source.substr(3));
     }
 }
 
@@ -110,7 +112,7 @@ unsigned Map::Tileset::getColumns() const {
     return _columns;
 }
 
-const sf::Texture& Map::Tileset::getTexture() const {
+std::shared_ptr<sf::Texture> Map::Tileset::getTexture() const {
     return _texture;
 }
 
@@ -143,10 +145,8 @@ Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
                     y += map.getTileHeight();
                 }
 
-                if (gid > 0) {
-                    _tiles.push_back(Tile(map, gid));
-                    _tiles.back().setPosition(x, y);
-                }
+                if (gid > 0)
+                    _tiles.push_back(Tile(map, gid, sf::Vector2f(x, y)));
 
                 x += map.getTileWidth();
             }
@@ -189,7 +189,7 @@ void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (_visible) {
         if (_type == Type::Tile) {
             for (const auto& tile : _tiles)
-                if (viewRect.intersects(tile.getGlobalBounds()))
+                if (viewRect.intersects(tile.getBounds()))
                     target.draw(tile, states);
         }
         else if (_type == Type::Object) {
@@ -200,11 +200,17 @@ void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     }
 }
 
-Map::Tile::Tile(const Map& map, unsigned gid)
-    : _gid(gid) {
+Map::Tile::Tile(const Map& map, unsigned gid, sf::Vector2f position)
+    : _gid(gid)
+    , _vertices(sf::Quads, 4) {
     bool flipped_horizontally = _gid & FLIPPED_HORIZONTALLY_FLAG;
     bool flipped_vertically = _gid & FLIPPED_VERTICALLY_FLAG;
     bool flipped_diagonally = _gid & FLIPPED_DIAGONALLY_FLAG;
+
+    std::bitset<3> bits;
+    bits.set(0, flipped_vertically);
+    bits.set(1, flipped_horizontally);
+    bits.set(2, flipped_diagonally);
 
     _gid &= ~(FLIPPED_HORIZONTALLY_FLAG |
         FLIPPED_VERTICALLY_FLAG |
@@ -214,29 +220,39 @@ Map::Tile::Tile(const Map& map, unsigned gid)
         if (_gid > tileset.getFirstGid() &&
             _gid < tileset.getFirstGid() + tileset.getTileCount()) {
             const auto& texture = tileset.getTexture();
-            setTexture(texture);
+            _texture = texture;
             auto tid = _gid - tileset.getFirstGid();
             auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() :
-                texture.getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
+                texture->getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
             auto x = tileset.getMargin() + ((tid % columns) * tileset.getTileWidth())
                 + (tileset.getSpacing() * (tid % columns));
             auto y = tileset.getMargin() + ((tid / columns) * tileset.getTileHeight())
                 + (tileset.getSpacing() * (tid / columns));
 
-            setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
-            if (flipped_diagonally)
-                ;// setTextureRect(sf::IntRect(x + tileset.getTileWidth(), y + tileset.getTileHeight(), -tileset.getTileWidth(), -tileset.getTileHeight()));
-            if (flipped_horizontally)
-                setTextureRect(sf::IntRect(x, y + tileset.getTileHeight(), tileset.getTileWidth(), -tileset.getTileHeight()));
-            if (flipped_vertically)
-                setTextureRect(sf::IntRect(x + tileset.getTileWidth(), y, -tileset.getTileWidth(), tileset.getTileHeight()));
-            break;
+            _vertices[0].position = sf::Vector2f(position.x, position.y);
+            _vertices[1].position = sf::Vector2f(position.x + tileset.getTileWidth(), position.y);
+            _vertices[2].position = sf::Vector2f(position.x + tileset.getTileWidth(), position.y + tileset.getTileHeight());
+            _vertices[3].position = sf::Vector2f(position.x, position.y + tileset.getTileHeight());
+
+            _vertices[0].texCoords = sf::Vector2f(x, y);
+            _vertices[1].texCoords = sf::Vector2f(x + tileset.getTileWidth(), y);
+            _vertices[2].texCoords = sf::Vector2f(x + tileset.getTileWidth(), y + tileset.getTileHeight());
+            _vertices[3].texCoords = sf::Vector2f(x, y + tileset.getTileHeight());
+            //setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
         }
     }
 }
 
 unsigned Map::Tile::getGid() const {
     return _gid;
+}
+
+sf::FloatRect Map::Tile::getBounds() const {
+    return _vertices.getBounds();
+}
+
+void Map::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    target.draw(_vertices, _texture.get());
 }
 
 Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
@@ -251,7 +267,7 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     if (gid > 0) {
         // Workaround for Tiled object tile bug
         _rect.top -= _rect.width;
-        _tile = std::make_shared<Tile>(std::ref(map), gid);
+        _tile = std::make_shared<Tile>(std::ref(map), gid, sf::Vector2f(_rect.left, _rect.top));
     }
 
     setPosition(_rect.left, _rect.top);
@@ -306,8 +322,8 @@ void initMap(py::module& m) {
         .value("Image", Map::Layer::Type::Image)
         .export_values();
 
-    py::class_<Map::Tile, sf::Transformable>(m_tmx, "Tile")
-        .def(py::init<const Map&, unsigned>())
+    py::class_<Map::Tile>(m_tmx, "Tile")
+        .def(py::init<const Map&, unsigned, sf::Vector2f>())
         .def_property_readonly("gid", &Map::Tile::getGid);
 
     py::class_<Map::Object, Object>(m_tmx, "Object")

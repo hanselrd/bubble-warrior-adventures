@@ -11,9 +11,10 @@ def main(map):
     for layer in map.layers:
         print('    %s [%s]:' % (layer.name, layer.type))
         if layer.type == Layer.Tile:
-            for tile in layer.tiles:
-                print(tile.pos.x, end=' ')
-            print()
+            pass
+            #for tile in layer.tiles:
+                #print(tile.pos.x, end=' ')
+            #print()
 
         elif layer.type == Layer.Object:
             print('      objects:',

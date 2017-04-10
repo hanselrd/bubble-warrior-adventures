@@ -40,14 +40,14 @@ public:
         unsigned getMargin() const;
         unsigned getTileCount() const;
         unsigned getColumns() const;
-        const sf::Texture& getTexture() const;
+        std::shared_ptr<sf::Texture> getTexture() const;
 
     private:
         unsigned _firstGid;
         std::string _name;
         unsigned _tileWidth, _tileHeight, _spacing,
             _margin, _tileCount, _columns;
-        sf::Texture _texture;
+        std::shared_ptr<sf::Texture> _texture;
     };
 
     class Tile;
@@ -78,13 +78,18 @@ public:
         std::vector<Object> _objects;
     };
 
-    class Tile final : public sf::Sprite {
+    class Tile final : public sf::Drawable {
     public:
-        explicit Tile(const Map& map, unsigned gid);
+        explicit Tile(const Map& map, unsigned gid, sf::Vector2f position);
         unsigned getGid() const;
+        sf::FloatRect getBounds() const;
 
     private:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
         unsigned _gid;
+        sf::VertexArray _vertices;
+        std::shared_ptr<sf::Texture> _texture;
     };
 
     class Object final : public ::Object {
