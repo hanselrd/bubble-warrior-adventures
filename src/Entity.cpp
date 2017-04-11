@@ -9,6 +9,7 @@ Entity::Entity(std::string file_path, int sprite_format) {
     _spriteFormat = sprite_format;
     _level = 1;
     _facing = directions::DOWN;
+    _frameDelay = 0.02f;
     
 
     _walkingUp.setSpriteSheet(_texture);
@@ -85,9 +86,9 @@ void Entity::setAnimation(const Animation& animation)
     setFrame(m_currentFrame);
 }
 
-void Entity::setFrameTime(sf::Time time)
+void Entity::setFrameTime(float time)
 {
-    m_frameTime = time;
+    _frameDelay = time;
 }
 
 void Entity::play()
@@ -143,11 +144,6 @@ bool Entity::isPlaying() const
     return !m_isPaused;
 }
 
-sf::Time Entity::getFrameTime() const
-{
-    return m_frameTime;
-}
-
 void Entity::setFrame(std::size_t newFrame, bool resetTime)
 {
     if (m_animation)
@@ -172,24 +168,52 @@ void Entity::setFrame(std::size_t newFrame, bool resetTime)
     }
 
     if (resetTime) {
-        m_currentTime = sf::Time::Zero;
+        m_currentTime = 0.0f;
     }
 }
 
-void Entity::update(int deltaTime)
+void Entity::update(float deltaTime)
 {
-    std::cout << deltaTime;
-    // if not paused and we have a valid animation
+    std::cout << deltaTime << std::endl;
+    if (!m_isPaused && m_animation)
+    {
+        _frameDelay += deltaTime;
+
+        if (_frameDelay > 0.06f) {
+            // get next Frame index
+            if (m_currentFrame + 1 < m_animation->getSize())
+                m_currentFrame++;
+            else
+            {
+                // animation has ended
+                m_currentFrame = 0; // reset to start
+
+                if (!m_isLooped)
+                {
+                    m_isPaused = true;
+                }
+
+            }
+        }
+
+        // set the current frame, not reseting the time
+        setFrame(m_currentFrame, false);
+    }
+
+
+
+
+ /*   // if not paused and we have a valid animation
     if (!m_isPaused && m_animation)
     {
         // add delta time
-        m_currentTime += sf::Time(sf::seconds(deltaTime));
+        m_currentTime += (deltaTime);
 
         // if current time is bigger then the frame time advance one frame
-        if (m_currentTime >= m_frameTime)
+        if (m_frameTime == 0)
         {
             // reset time, but keep the remainder
-            m_currentTime = sf::microseconds(m_currentTime.asMicroseconds() % m_frameTime.asMicroseconds());
+           // m_currentTime = m_currentTime % m_frameTime;
 
             // get next Frame index
             if (m_currentFrame + 1 < m_animation->getSize())
@@ -209,5 +233,5 @@ void Entity::update(int deltaTime)
             // set the current frame, not reseting the time
             setFrame(m_currentFrame, false);
         }
-    }
+    }*/
 }

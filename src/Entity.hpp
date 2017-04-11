@@ -17,9 +17,9 @@ public:
     directions _facing;
 
     // All animation stuff
-    void update(int deltaTime);
+    void update(float deltaTime);
     void setAnimation(const Animation& animation);
-    void setFrameTime(sf::Time time);
+    void setFrameTime(float time);
     void play();
     void play(const Animation& animation);
     void pause();
@@ -47,8 +47,8 @@ protected:
 
     // All animation stuff
     const Animation* m_animation;
-    sf::Time m_frameTime;
-    sf::Time m_currentTime;
+    float _frameDelay;
+    float m_currentTime;
     std::size_t m_currentFrame;
     bool m_isPaused;
     bool m_isLooped;

@@ -43,8 +43,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 }
 
 void PlayScreen::handleEvent(sf::Event& e) {
-    _gui.handleEvent(e);
     _player.handleEvent(e);
+    _gui.handleEvent(e);
 }
 
 void PlayScreen::update(float delta) {
@@ -61,7 +61,7 @@ void PlayScreen::update(float delta) {
         _player.move(std::floor(70 * delta), 0);
 
     auto playerPos = _player.getPosition();
-
+    _player.update(delta);
     auto lblCoords = _gui.get<tgui::Label>("lblCoords");
     lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
 
@@ -81,7 +81,6 @@ void PlayScreen::update(float delta) {
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
-    _player.update(_delta);
     window.setView(_view);
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
