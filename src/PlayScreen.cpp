@@ -10,7 +10,7 @@
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _map("castle_interior_polygon_walls.tmx"),
-      _player("regular_hero_male.png", 64) {
+      _player("regular_hero_male.png", "Player_temp", 64) {
     _gui.setWindow(window);
 
     auto settings = Locator<Settings>::get();
@@ -22,7 +22,6 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     testTmx("main", std::ref(_map));
 
     initializeOverlay(window);
-    updateOverlay();
 
     _player.setPosition(1446, 1400);
     sf::Vector2f temp = _player.getPosition();
@@ -34,6 +33,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 void PlayScreen::handleEvent(sf::Event& e) {
     _player.handleEvent(e);
     _gui.handleEvent(e);
+    updateOverlay();
 }
 
 void PlayScreen::update(float delta) {
@@ -108,7 +108,7 @@ void PlayScreen::initializeOverlay(sf::RenderWindow &window)
     // Offsets
     constexpr unsigned STATS_OFFSET = 170;
 
-    auto lblName = tgui::Label::create("Player");
+    auto lblName = tgui::Label::create(_player.getName());
     lblName->setTextColor(sf::Color::White);
     lblName->setTextSize(25);
     lblName->setPosition(10, 0);
@@ -180,6 +180,21 @@ void PlayScreen::initializeOverlay(sf::RenderWindow &window)
 
 void PlayScreen::updateOverlay()
 {
-    //tgui::ProgressBar::Ptr hpbar = _playerPanelStats->get<tgui::ProgressBar>("prgbarHealth", true);
-    //hpbar->setValue(3);
+    tgui::Label::Ptr lvl = _gui.get<tgui::Label>("lblLevel", true);
+    lvl->setText("Lv. " + std::to_string(_player.getLevel()));
+
+    tgui::ProgressBar::Ptr hpbar = _gui.get<tgui::ProgressBar>("prgbarHealth", true);
+    hpbar->setValue(_player.getHealth());
+    hpbar->setMaximum(_player.getMaxHealth());
+    hpbar->setText(std::to_string(_player.getHealth()) + "/" + std::to_string(_player.getMaxHealth()));
+
+    tgui::ProgressBar::Ptr mpbar = _gui.get<tgui::ProgressBar>("prgbarMana", true);
+    mpbar->setValue(_player.getMana());
+    mpbar->setMaximum(_player.getMaxMana());
+    mpbar->setText(std::to_string(_player.getMana()) + "/" + std::to_string(_player.getMaxMana()));    
+    
+    tgui::ProgressBar::Ptr expbar = _gui.get<tgui::ProgressBar>("prgbarExperience", true);
+    expbar->setValue(_player.getExperience());
+    expbar->setMaximum(_player.getMaxExperience());
+    expbar->setText(std::to_string(_player.getExperience()) + "/" + std::to_string(_player.getMaxExperience()));
 }

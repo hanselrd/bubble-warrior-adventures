@@ -5,15 +5,19 @@
 
 class Entity : public Object {
 public:
+    // Constructor
     Entity(std::string file_path, int sprite_format);
     virtual ~Entity();
-    sf::FloatRect getLocalBounds() const override;
 
+    // Enum
+    enum directions{UP, LEFT, DOWN, RIGHT};
+    directions _facing;
+
+    // Functions
     unsigned getLevel();
     sf::IntRect getIntRect();
-    enum directions{UP, LEFT, DOWN, RIGHT};
+    sf::FloatRect getLocalBounds() const override;
 
-    directions _facing;
 
     // All animation stuff
     void update(float deltaTime);
@@ -31,10 +35,13 @@ private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 protected:
+    // Variables
     int _level;
     int _spriteFormat;
     unsigned _health;
+    std::string _name;
 
+    // SFML variables
     sf::Sprite _sprite;
     sf::IntRect _intRect;
     sf::Texture _texture;
@@ -56,5 +63,4 @@ protected:
     Animation* _currentAnimation;
 
     void loadAnimations();
-
 };

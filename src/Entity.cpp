@@ -3,12 +3,15 @@
 Entity::Entity(std::string file_path, int sprite_format) {
     _texture.loadFromFile("assets/sprites/" + file_path);
     _sprite.setTexture(_texture);
-    _sprite.setTextureRect(sf::IntRect(0, (64 * 10), sprite_format, sprite_format));
+    _intRect = sf::IntRect(0, (sprite_format * 10), sprite_format, sprite_format);
+    _sprite.setTextureRect(_intRect);
     _spriteFormat = sprite_format;
     _level = 1;
+    _health = 10;
     _facing = directions::DOWN;
     _frameDelay = 0.02f;
     _currentFrame = 0;
+    _name = "null";
     
     Entity::loadAnimations();
 }

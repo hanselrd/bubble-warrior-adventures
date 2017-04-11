@@ -4,7 +4,7 @@
 
 class Player : public Entity {
 public:
-    Player(std::string file_path, int sprite_format);
+    Player(std::string file_path, std::string player_name, int sprite_format);
     void handleEvent(sf::Event &e);
 
     unsigned getMaxMana();
@@ -13,10 +13,12 @@ public:
     unsigned getMana();
     unsigned getHealth();
     unsigned getExperience();
+    std::string getName();
 private:
     
     unsigned _mana, _experience;
-    unsigned _maxMana, _maxHealth, _maxExperience;
+    unsigned _maxMana, _maxHealth;
+    float _maxExperience;
     unsigned _attackDamage;
     float _movementSpeed, _armor;
     bool noKeyWasPressed;

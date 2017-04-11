@@ -1,22 +1,29 @@
 #include "Player.hpp"
 #include <iostream>
 
-Player::Player(std::string file_path, int sprite_format) : Entity(file_path, sprite_format) {
+Player::Player(std::string file_path, std::string player_name, int sprite_format) : Entity(file_path, sprite_format) {
     // Set up initial stats
     Player::defaultPlayerStats();
-    _intRect= sf::IntRect(0, 64 * 8, 64, 64);
+    _intRect= sf::IntRect(0, sprite_format * 8, sprite_format, sprite_format);
+    _name = player_name;
     _attackDamage = 1;
-
+    _experience = 0.0f;
     noKeyWasPressed = true;
 }
 void Player::levelUp() {
     // Increase the experience cap and reset current exp to 0;
-    _maxExperience = (unsigned int)std::ceil(_maxExperience * 1.3);
-    _experience = 0;
+    _maxExperience = std::ceil(_maxExperience * 1.1);
+    _experience = 0.0f;
+    _level += 1;
 
     if (_level % 5 == 0) {
         _movementSpeed += 0.05f;
     }
+    _maxMana += 10;
+    _mana += 10;
+
+    _maxHealth += 10;
+    _health += 10;
 }
 void Player::defaultPlayerStats() {
     _level = 1;
@@ -46,6 +53,9 @@ unsigned Player::getHealth() {
 }
 unsigned Player::getExperience() {
     return _experience;
+}
+std::string Player::getName() {
+    return _name;
 }
 void Player::handleEvent(sf::Event &e) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -78,8 +88,18 @@ void Player::handleEvent(sf::Event &e) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
         levelUp();
+        std::cout << "Level: " << _level << " Health: " << _maxHealth << std::endl;
     }
-    else {        
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+        if (_health >= 5) {
+            _health -= 5;
+            std::cout << "Been damaged by 5hp. Health:" << _health << std::endl;
+        }
+        else {
+            std::cout << "You died. Health: " << _health << std::endl;
+        }
+    }
+    else {    
         // if no key was pressed stop the animation
         if (noKeyWasPressed)
         {
@@ -88,5 +108,4 @@ void Player::handleEvent(sf::Event &e) {
         noKeyWasPressed = true;
         _isLooped = false;
     }
-
 }
