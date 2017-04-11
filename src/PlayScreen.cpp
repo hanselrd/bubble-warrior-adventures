@@ -23,21 +23,10 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
     initializeOverlay(window);
     updateOverlay();
-    /*
-        Don't put the map in the resource cache because
-        it contains a sf::Texture for each tileset
-        which stays alive longer than the sf::RenderWindow
-        and results in the game crashing
-    */
 
-    //_player.setRadius(8);
-    //_player.setFillColor(sf::Color::Cyan);
-    //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
-    //_player.setPosition(playerSpawn.left, playerSpawn.top);
-    //_player.setPosition(1446, 316);
     _player.setPosition(1446, 1400);
-
-    _view.setCenter(_player.getPosition());
+    sf::Vector2f temp = _player.getPosition();
+    _view.setCenter(temp);
     _view.setSize((float)window.getSize().x, (float)window.getSize().y);
     _view.zoom(0.6f);
 }
@@ -48,8 +37,6 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
-
-    _delta = delta;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         _player.move(0, std::ceil(-70 * delta));

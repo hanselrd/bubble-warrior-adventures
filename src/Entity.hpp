@@ -24,7 +24,6 @@ public:
     void pause();
     void stop();
     const Animation* getAnimation() const;
-    bool isLooped() const;
     bool isPlaying() const;
     void setFrame(std::size_t newFrame);
 
@@ -55,5 +54,7 @@ protected:
     Animation _standing;
 
     Animation* _currentAnimation;
+
+    void loadAnimations();
 
 };

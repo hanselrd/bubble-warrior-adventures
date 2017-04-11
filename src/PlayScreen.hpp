@@ -17,5 +17,4 @@ private:
     Map _map; // for testing
     Player _player;
     tgui::Panel::Ptr _playerPanelStats;
-    float _delta;
 };

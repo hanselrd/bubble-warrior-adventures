@@ -1,7 +1,5 @@
 #include "Entity.hpp"
 
-#include <iostream>
-
 Entity::Entity(std::string file_path, int sprite_format) {
     _texture.loadFromFile("assets/sprites/" + file_path);
     _sprite.setTexture(_texture);
@@ -12,54 +10,7 @@ Entity::Entity(std::string file_path, int sprite_format) {
     _frameDelay = 0.02f;
     _currentFrame = 0;
     
-
-    _walkingUp.setSpriteSheet(_texture);
-    _walkingUp.addFrame(sf::IntRect((64 * 1), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 2), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 3), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 4), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 5), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 6), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 7), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 8), (64 * 8), 64, 64));
-
-    _walkingLeft.setSpriteSheet(_texture);
-    _walkingLeft.addFrame(sf::IntRect((64 * 1), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 2), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 3), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 4), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 5), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 6), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 7), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 8), (64 * 9), 64, 64));
-
-    _walkingDown.setSpriteSheet(_texture);
-    _walkingDown.addFrame(sf::IntRect((64 * 1), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 2), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 3), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 4), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 5), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 6), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 7), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 8), (64 * 10), 64, 64));
-
-    _walkingRight.setSpriteSheet(_texture);
-    _walkingRight.addFrame(sf::IntRect((64 * 1), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 2), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 3), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 4), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 5), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 6), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 7), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 8), (64 * 11), 64, 64));
-
-    _standing.setSpriteSheet(_texture);
-    _standing.addFrame(sf::IntRect(0, (64 * 8), 64, 64));  // Up
-    _standing.addFrame(sf::IntRect(0, (64 * 9), 64, 64));  // Left
-    _standing.addFrame(sf::IntRect(0, (64 * 10), 64, 64)); // Down
-    _standing.addFrame(sf::IntRect(0, (64 * 11), 64, 64)); // Right
-
-     _currentAnimation = &_walkingDown;
+    Entity::loadAnimations();
 }
 
 Entity::~Entity() {}
@@ -138,11 +89,6 @@ const Animation* Entity::getAnimation() const
     return _animation;
 }
 
-bool Entity::isLooped() const
-{
-    return _isLooped;
-}
-
 bool Entity::isPlaying() const
 {
     return !_isPaused;
@@ -190,4 +136,55 @@ void Entity::update(float deltaTime)
         setFrame(_currentFrame);
     }
 
+}
+
+void Entity::loadAnimations() {
+
+    _walkingUp.setSpriteSheet(_texture);
+    _walkingUp.addFrame(sf::IntRect((64 * 1), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 2), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 3), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 4), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 5), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 6), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 7), (64 * 8), 64, 64));
+    _walkingUp.addFrame(sf::IntRect((64 * 8), (64 * 8), 64, 64));
+
+    _walkingLeft.setSpriteSheet(_texture);
+    _walkingLeft.addFrame(sf::IntRect((64 * 1), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 2), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 3), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 4), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 5), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 6), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 7), (64 * 9), 64, 64));
+    _walkingLeft.addFrame(sf::IntRect((64 * 8), (64 * 9), 64, 64));
+
+    _walkingDown.setSpriteSheet(_texture);
+    _walkingDown.addFrame(sf::IntRect((64 * 1), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 2), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 3), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 4), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 5), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 6), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 7), (64 * 10), 64, 64));
+    _walkingDown.addFrame(sf::IntRect((64 * 8), (64 * 10), 64, 64));
+
+    _walkingRight.setSpriteSheet(_texture);
+    _walkingRight.addFrame(sf::IntRect((64 * 1), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 2), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 3), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 4), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 5), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 6), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 7), (64 * 11), 64, 64));
+    _walkingRight.addFrame(sf::IntRect((64 * 8), (64 * 11), 64, 64));
+
+    _standing.setSpriteSheet(_texture);
+    _standing.addFrame(sf::IntRect(0, (64 * 8), 64, 64));  // Up
+    _standing.addFrame(sf::IntRect(0, (64 * 9), 64, 64));  // Left
+    _standing.addFrame(sf::IntRect(0, (64 * 10), 64, 64)); // Down
+    _standing.addFrame(sf::IntRect(0, (64 * 11), 64, 64)); // Right
+
+    _currentAnimation = &_walkingDown;
 }
