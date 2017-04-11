@@ -10,6 +10,7 @@ Entity::Entity(std::string file_path, int sprite_format) {
     _level = 1;
     _facing = directions::DOWN;
     _frameDelay = 0.02f;
+    _currentFrame = 0;
     
 
     _walkingUp.setSpriteSheet(_texture);
@@ -52,6 +53,12 @@ Entity::Entity(std::string file_path, int sprite_format) {
     _walkingRight.addFrame(sf::IntRect((64 * 7), (64 * 11), 64, 64));
     _walkingRight.addFrame(sf::IntRect((64 * 8), (64 * 11), 64, 64));
 
+    _standing.setSpriteSheet(_texture);
+    _standing.addFrame(sf::IntRect(0, (64 * 8), 64, 64));  // Up
+    _standing.addFrame(sf::IntRect(0, (64 * 9), 64, 64));  // Left
+    _standing.addFrame(sf::IntRect(0, (64 * 10), 64, 64)); // Down
+    _standing.addFrame(sf::IntRect(0, (64 * 11), 64, 64)); // Right
+
      _currentAnimation = &_walkingDown;
 }
 
@@ -65,13 +72,14 @@ sf::FloatRect Entity::getLocalBounds() const {
 }
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    states.transform *= getTransform();
-    target.draw(_sprite, states);
+    if (_animation && &_tempTexture)
+    {
+        states.transform *= getTransform();
+        states.texture = _tempTexture;
+        target.draw(_sprite, states);
+    }
 }
 
-sf::Texture Entity::getTexture() {
-    return _texture;
-}
 sf::IntRect Entity::getIntRect() {
     return _intRect;
 }
@@ -80,10 +88,8 @@ sf::IntRect Entity::getIntRect() {
 
 void Entity::setAnimation(const Animation& animation)
 {
-    m_animation = &animation;
-    m_texture = m_animation->getSpriteSheet();
-    m_currentFrame = 0;
-    setFrame(m_currentFrame);
+    _animation = &animation;
+    setFrame(_currentFrame);
 }
 
 void Entity::setFrameTime(float time)
@@ -93,7 +99,7 @@ void Entity::setFrameTime(float time)
 
 void Entity::play()
 {
-    m_isPaused = false;
+    _isPaused = false;
 }
 
 void Entity::play(const Animation& animation)
@@ -105,133 +111,83 @@ void Entity::play(const Animation& animation)
 
 void Entity::pause()
 {
-    m_isPaused = true;
+    _isPaused = true;
 }
 
 void Entity::stop()
 {
-    m_isPaused = true;
-    m_currentFrame = 0;
-    setFrame(m_currentFrame);
-}
+    _isPaused = true;
+    if (_facing == UP) {
+        _currentFrame = 0;
+    }
+    else if (_facing == LEFT) {
+        _currentFrame = 1;
+    }
+    else if (_facing == DOWN) {
+        _currentFrame = 2;
+    }
+    else if (_facing == RIGHT) {
+        _currentFrame = 3;
+    }
 
-void Entity::setLooped(bool looped)
-{
-    m_isLooped = looped;
-}
-
-void Entity::setColor(const sf::Color& color)
-{
-    // Update the vertices' color
-    m_vertices[0].color = color;
-    m_vertices[1].color = color;
-    m_vertices[2].color = color;
-    m_vertices[3].color = color;
+    setAnimation(_standing);
 }
 
 const Animation* Entity::getAnimation() const
 {
-    return m_animation;
+    return _animation;
 }
 
 bool Entity::isLooped() const
 {
-    return m_isLooped;
+    return _isLooped;
 }
 
 bool Entity::isPlaying() const
 {
-    return !m_isPaused;
+    return !_isPaused;
 }
 
-void Entity::setFrame(std::size_t newFrame, bool resetTime)
+void Entity::setFrame(std::size_t newFrame)
 {
-    if (m_animation)
+    if (_animation)
     {
         //calculate new vertex positions and texture coordiantes
-        sf::IntRect rect = m_animation->getFrame(newFrame);
-
-        m_vertices[0].position = sf::Vector2f(0.f, 0.f);
-        m_vertices[1].position = sf::Vector2f(0.f, static_cast<float>(rect.height));
-        m_vertices[2].position = sf::Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height));
-        m_vertices[3].position = sf::Vector2f(static_cast<float>(rect.width), 0.f);
-
-        float left = static_cast<float>(rect.left) + 0.0001f;
-        float right = left + static_cast<float>(rect.width);
-        float top = static_cast<float>(rect.top);
-        float bottom = top + static_cast<float>(rect.height);
-
-        m_vertices[0].texCoords = sf::Vector2f(left, top);
-        m_vertices[1].texCoords = sf::Vector2f(left, bottom);
-        m_vertices[2].texCoords = sf::Vector2f(right, bottom);
-        m_vertices[3].texCoords = sf::Vector2f(right, top);
+        sf::IntRect rect = _animation->getFrame(newFrame);
+        _intRect = rect;
+        _sprite.setTextureRect(rect);
     }
 
-    if (resetTime) {
-        m_currentTime = 0.0f;
-    }
 }
 
 void Entity::update(float deltaTime)
 {
-    std::cout << deltaTime << std::endl;
-    if (!m_isPaused && m_animation)
+    if (!_isPaused && _animation)
     {
         _frameDelay += deltaTime;
 
-        if (_frameDelay > 0.06f) {
+        if (_frameDelay > 0.10f) {
             // get next Frame index
-            if (m_currentFrame + 1 < m_animation->getSize())
-                m_currentFrame++;
-            else
-            {
-                // animation has ended
-                m_currentFrame = 0; // reset to start
-
-                if (!m_isLooped)
+            if (_currentFrame + 1 < _animation->getSize()) {
+                _currentFrame++;
+                _frameDelay = 0; // reset to start
+            }
+            else {
+                // Animation has ended
+                _currentFrame = 0;
+                // Entity stops moving
+                if (!_isLooped)
                 {
-                    m_isPaused = true;
+                    sf::IntRect temp = _sprite.getTextureRect();
+                    temp.left = 0;
+                    _intRect = temp;
+                    _isPaused = true;
                 }
-
             }
         }
 
         // set the current frame, not reseting the time
-        setFrame(m_currentFrame, false);
+        setFrame(_currentFrame);
     }
 
-
-
-
- /*   // if not paused and we have a valid animation
-    if (!m_isPaused && m_animation)
-    {
-        // add delta time
-        m_currentTime += (deltaTime);
-
-        // if current time is bigger then the frame time advance one frame
-        if (m_frameTime == 0)
-        {
-            // reset time, but keep the remainder
-           // m_currentTime = m_currentTime % m_frameTime;
-
-            // get next Frame index
-            if (m_currentFrame + 1 < m_animation->getSize())
-                m_currentFrame++;
-            else
-            {
-                // animation has ended
-                m_currentFrame = 0; // reset to start
-
-                if (!m_isLooped)
-                {
-                    m_isPaused = true;
-                }
-
-            }
-
-            // set the current frame, not reseting the time
-            setFrame(m_currentFrame, false);
-        }
-    }*/
 }

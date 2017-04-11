@@ -19,6 +19,7 @@ private:
     unsigned _maxMana, _maxHealth, _maxExperience;
     unsigned _attackDamage;
     float _movementSpeed, _armor;
+    bool noKeyWasPressed;
 
     void levelUp();
     void defaultPlayerStats();

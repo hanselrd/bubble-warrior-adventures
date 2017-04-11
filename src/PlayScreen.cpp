@@ -39,7 +39,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
     _view.setCenter(_player.getPosition());
     _view.setSize((float)window.getSize().x, (float)window.getSize().y);
-    _view.zoom(0.9f);
+    _view.zoom(0.6f);
 }
 
 void PlayScreen::handleEvent(sf::Event& e) {
