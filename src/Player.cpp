@@ -9,6 +9,7 @@ Player::Player(std::string file_path, std::string player_name, int sprite_format
     _attackDamage = 1;
     _experience = 0.0f;
     noKeyWasPressed = true;
+    _sprite.setOrigin(_intRect.width / 2, _intRect.height / 2);
 
     Player::loadAttackAnimations();
 }
@@ -71,21 +72,21 @@ void Player::handleEvent(sf::Event &e) {
         _facing = LEFT;
         play(*_currentAnimation);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         _isLooped = true;
         noKeyWasPressed = false;
         _currentAnimation = &_walkingRight;
         _facing = RIGHT;
         play(*_currentAnimation);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         _isLooped = true;
         noKeyWasPressed = false;
         _currentAnimation = &_walkingUp;
         _facing = UP;
         play(*_currentAnimation);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         _isLooped = true;
         noKeyWasPressed = false;
         _currentAnimation = &_walkingDown;
@@ -99,7 +100,7 @@ void Player::handleEvent(sf::Event &e) {
         levelUp();
         std::cout << "Level: " << _level << " Health: " << _maxHealth << std::endl;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
         if (_health >= 5) {
             _health -= 5;
             std::cout << "Been damaged by 5hp. Health:" << _health << std::endl;
@@ -108,7 +109,7 @@ void Player::handleEvent(sf::Event &e) {
             std::cout << "You died. Health: " << _health << std::endl;
         }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
         // Error handling for the different animation lengths
         if (_currentFrame != 0) {
             _currentFrame = 0;
@@ -143,12 +144,12 @@ void Player::handleEvent(sf::Event &e) {
 
 void Player::loadAttackAnimations() {
     _attackUp.setSpriteSheet(_texture);
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 22), (64 * 3), (64 * 3)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 22), (64 * 3), (64 * 3)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 22), (64 * 3), (64 * 3)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 22), (64 * 3), (64 * 3)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 22), (64 * 3), (64 * 3)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 22), (64 * 3), (64 * 3)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 22), (64 * 3), (64 * 1)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 22), (64 * 3), (64 * 1)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 22), (64 * 3), (64 * 1)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 22), (64 * 3), (64 * 1)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 22), (64 * 3), (64 * 1)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 22), (64 * 3), (64 * 1)));
 
     _attackLeft.setSpriteSheet(_texture);
     _attackLeft.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 25), 64 * 3, 64 * 3));
