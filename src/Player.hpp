@@ -1,6 +1,7 @@
 #pragma once
-#include "Entity.hpp"
+#include "Animation.hpp"
 #include <SFML/System.hpp>
+#include "Entity.hpp"
 
 class Player : public Entity {
 public:
@@ -25,4 +26,10 @@ private:
 
     void levelUp();
     void defaultPlayerStats();
+    void loadAttackAnimations();
+
+    Animation _attackUp;
+    Animation _attackLeft;
+    Animation _attackDown;
+    Animation _attackRight;
 };

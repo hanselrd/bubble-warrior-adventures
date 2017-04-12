@@ -37,7 +37,7 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
-
+   // _player.setOrigin(_player.getIntRect().left / 2, _player.getIntRect().top / 2);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         _player.move(0, std::ceil(-70 * delta));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -63,7 +63,6 @@ void PlayScreen::update(float delta) {
             }
         }
     }
-
     _view.setCenter(playerPos);
 }
 
@@ -79,7 +78,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
 
 void PlayScreen::initializeOverlay(sf::RenderWindow &window)
 {
-
     auto resourceHandler = Locator<ResourceHandler>::get();
 
     auto windowWidth = tgui::bindWidth(_gui);
@@ -175,7 +173,6 @@ void PlayScreen::initializeOverlay(sf::RenderWindow &window)
     _panelPlayerStats->add(prgbarExperience, "prgbarExperience");
 
     _gui.add(_panelPlayerStats, "_panelPlayerStats");
-
 }
 
 void PlayScreen::updateOverlay()

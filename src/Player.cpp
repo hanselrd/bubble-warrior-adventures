@@ -9,7 +9,10 @@ Player::Player(std::string file_path, std::string player_name, int sprite_format
     _attackDamage = 1;
     _experience = 0.0f;
     noKeyWasPressed = true;
+
+    Player::loadAttackAnimations();
 }
+
 void Player::levelUp() {
     // Increase the experience cap and reset current exp to 0;
     _maxExperience = std::ceil(_maxExperience * 1.1);
@@ -25,6 +28,7 @@ void Player::levelUp() {
     _maxHealth += 10;
     _health += 10;
 }
+
 void Player::defaultPlayerStats() {
     _level = 1;
     _experience = 0;
@@ -36,6 +40,7 @@ void Player::defaultPlayerStats() {
     _movementSpeed = 1.0f;
     _armor = 0.0f;
 }
+
 unsigned Player::getMaxMana() {
     return _maxMana;
 }
@@ -57,6 +62,7 @@ unsigned Player::getExperience() {
 std::string Player::getName() {
     return _name;
 }
+
 void Player::handleEvent(sf::Event &e) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         _isLooped = true;
@@ -86,6 +92,9 @@ void Player::handleEvent(sf::Event &e) {
         _facing = DOWN;
         play(*_currentAnimation);
     }
+    /*
+    *   "Cheat codes" for testing
+    */
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
         levelUp();
         std::cout << "Level: " << _level << " Health: " << _maxHealth << std::endl;
@@ -99,13 +108,69 @@ void Player::handleEvent(sf::Event &e) {
             std::cout << "You died. Health: " << _health << std::endl;
         }
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+        // Error handling for the different animation lengths
+        if (_currentFrame != 0) {
+            _currentFrame = 0;
+        }
+        _isLooped = true;
+        noKeyWasPressed = false;
+        if (_facing == UP) {
+            _currentAnimation = &_attackUp;
+        }
+        else if (_facing == LEFT) {
+            _currentAnimation = &_attackLeft;
+        }
+        else if (_facing == DOWN) {
+            _currentAnimation = &_attackDown;
+        }
+        else if (_facing == RIGHT) {
+            _currentAnimation = &_attackRight;
+        }
+        play(*_currentAnimation);
+    }
     else {    
         // if no key was pressed stop the animation
         if (noKeyWasPressed)
         {
+            _currentFrame = 0;
             stop();
         }
         noKeyWasPressed = true;
         _isLooped = false;
     }
+}
+
+void Player::loadAttackAnimations() {
+    _attackUp.setSpriteSheet(_texture);
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 22), (64 * 3), (64 * 3)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 22), (64 * 3), (64 * 3)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 22), (64 * 3), (64 * 3)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 22), (64 * 3), (64 * 3)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 22), (64 * 3), (64 * 3)));
+    _attackUp.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 22), (64 * 3), (64 * 3)));
+
+    _attackLeft.setSpriteSheet(_texture);
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 25), 64 * 3, 64 * 3));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 25), 64 * 3, 64 * 3));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 25), 64 * 3, 64 * 3));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 25), 64 * 3, 64 * 3));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 25), 64 * 3, 64 * 3));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 25), 64 * 3, 64 * 3));
+
+    _attackDown.setSpriteSheet(_texture);
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 28), 64 * 3, 64 * 3));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 28), 64 * 3, 64 * 3));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 28), 64 * 3, 64 * 3));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 28), 64 * 3, 64 * 3));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 28), 64 * 3, 64 * 3));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 28), 64 * 3, 64 * 3));
+
+    _attackRight.setSpriteSheet(_texture);
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 31), 64 * 3, 64 * 3));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 31), 64 * 3, 64 * 3));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 31), 64 * 3, 64 * 3));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 31), 64 * 3, 64 * 3));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 31), 64 * 3, 64 * 3));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 31), 64 * 3, 64 * 3));
 }

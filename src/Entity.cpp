@@ -189,5 +189,5 @@ void Entity::loadAnimations() {
     _standing.addFrame(sf::IntRect(0, (64 * 10), 64, 64)); // Down
     _standing.addFrame(sf::IntRect(0, (64 * 11), 64, 64)); // Right
 
-    _currentAnimation = &_walkingDown;
+    _currentAnimation = &_standing;
 }
