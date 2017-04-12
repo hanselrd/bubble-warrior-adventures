@@ -28,7 +28,8 @@ void bwa::Game::run() {
 	float last_time = 0.f, current_time, fps;
 	bool show_fps_counter = _lua["show_fps_counter"];
 	sf::Texture texture;
-	sf::IntRect heroRect(0, (64 * 8), (64), (64));
+	sf::IntRect heroRect(0, (64 * 8), (64*1), (64*1));
+	sf::IntRect heroAttack(0, (64 * 22), (64 * 3), (64 * 3));
 	texture.loadFromFile("assets/sprites/golden_hero_female_no_shield.png");
 	sf::Sprite heroSprite(texture, heroRect);
 	heroSprite.setPosition(400, 400);
@@ -57,6 +58,10 @@ void bwa::Game::run() {
 				heroRect.top = (64 * 11);
 				heroSprite.move(5, 0);
 			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+				heroSprite.setTextureRect(heroAttack);
+				heroSprite.setOrigin(heroAttack.width / 2, 0);
+			}
 		}
 		// calculates fps
 		if (show_fps_counter) {
@@ -72,6 +77,7 @@ void bwa::Game::run() {
 				heroRect.left = 0;
 			else heroRect.left += (64*1);
 			heroSprite.setTextureRect(heroRect);
+			heroSprite.setOrigin(heroRect.width / 2, 0);
 			clock2.restart();
 		}
 

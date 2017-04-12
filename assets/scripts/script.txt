@@ -1,0 +1,4 @@
+Script
+Jaime spawns in, with no helm so you can see her face.  She can explore the bottom floor of the castle.  This phase ends when she either speaks with General Tiren or goes to leave.  
+
+NPC1:  Oh, you're awake.  Are 
