@@ -137,6 +137,7 @@ void Entity::update(float deltaTime)
 
         // set the current frame, not reseting the time
         setFrame(_currentFrame);
+        _sprite.setOrigin(_intRect.width / 2, _intRect.height / 2);
     }
 
 }

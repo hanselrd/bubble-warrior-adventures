@@ -152,26 +152,26 @@ void Player::loadAttackAnimations() {
     _attackUp.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 22), (64 * 3), (64 * 1)));
 
     _attackLeft.setSpriteSheet(_texture);
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 25), 64 * 3, 64 * 3));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 25), 64 * 3, 64 * 3));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 25), 64 * 3, 64 * 3));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 25), 64 * 3, 64 * 3));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 25), 64 * 3, 64 * 3));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 25), 64 * 3, 64 * 3));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 25), 64 * 3, 64 * 1));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 25), 64 * 3, 64 * 1));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 25), 64 * 3, 64 * 1));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 25), 64 * 3, 64 * 1));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 25), 64 * 3, 64 * 1));
+    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 25), 64 * 3, 64 * 1));
 
     _attackDown.setSpriteSheet(_texture);
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 28), 64 * 3, 64 * 3));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 28), 64 * 3, 64 * 3));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 28), 64 * 3, 64 * 3));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 28), 64 * 3, 64 * 3));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 28), 64 * 3, 64 * 3));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 28), 64 * 3, 64 * 3));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 28), 64 * 3, 64 * 1));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 28), 64 * 3, 64 * 1));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 28), 64 * 3, 64 * 1));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 28), 64 * 3, 64 * 1));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 28), 64 * 3, 64 * 1));
+    _attackDown.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 28), 64 * 3, 64 * 1));
 
     _attackRight.setSpriteSheet(_texture);
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 31), 64 * 3, 64 * 3));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 31), 64 * 3, 64 * 3));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 31), 64 * 3, 64 * 3));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 31), 64 * 3, 64 * 3));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 31), 64 * 3, 64 * 3));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 31), 64 * 3, 64 * 3));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 31), 64 * 3, 64 * 1));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 31), 64 * 3, 64 * 1));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 31), 64 * 3, 64 * 1));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 31), 64 * 3, 64 * 1));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 31), 64 * 3, 64 * 1));
+    _attackRight.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 31), 64 * 3, 64 * 1));
 }
