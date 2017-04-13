@@ -17,7 +17,7 @@ public:
     unsigned getLevel();
     sf::IntRect getIntRect();
     sf::FloatRect getLocalBounds() const override;
-
+    float getMovementSpeed();
 
     // All animation stuff
     void update(float deltaTime);
@@ -38,6 +38,7 @@ protected:
     // Variables
     int _level;
     int _spriteFormat;
+    float _movementSpeed;
     unsigned _health;
     std::string _name;
 

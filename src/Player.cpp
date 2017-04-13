@@ -8,8 +8,8 @@ Player::Player(std::string file_path, std::string player_name, int sprite_format
     _name = player_name;
     _attackDamage = 1;
     _experience = 0.0f;
-    noKeyWasPressed = true;
-    _sprite.setOrigin(_intRect.width / 2, _intRect.height / 2);
+    _noKeyWasPressed = true;
+    _sprite.setOrigin(0- _intRect.width / 2, 0- _intRect.height / 2);
 
     Player::loadAttackAnimations();
 }
@@ -38,7 +38,7 @@ void Player::defaultPlayerStats() {
     _maxHealth = 10;
     _mana = 10;
     _maxMana = 10;
-    _movementSpeed = 1.0f;
+    _movementSpeed = 2.0f;
     _armor = 0.0f;
 }
 
@@ -63,32 +63,35 @@ unsigned Player::getExperience() {
 std::string Player::getName() {
     return _name;
 }
+bool Player::isAttacking() {
+    return _isAttacking;
+}
 
 void Player::handleEvent(sf::Event &e) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         _isLooped = true;
-        noKeyWasPressed = false;
+        _noKeyWasPressed = false;
         _currentAnimation = &_walkingLeft;
         _facing = LEFT;
         play(*_currentAnimation);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         _isLooped = true;
-        noKeyWasPressed = false;
+        _noKeyWasPressed = false;
         _currentAnimation = &_walkingRight;
         _facing = RIGHT;
         play(*_currentAnimation);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         _isLooped = true;
-        noKeyWasPressed = false;
+        _noKeyWasPressed = false;
         _currentAnimation = &_walkingUp;
         _facing = UP;
         play(*_currentAnimation);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         _isLooped = true;
-        noKeyWasPressed = false;
+        _noKeyWasPressed = false;
         _currentAnimation = &_walkingDown;
         _facing = DOWN;
         play(*_currentAnimation);
@@ -115,7 +118,7 @@ void Player::handleEvent(sf::Event &e) {
             _currentFrame = 0;
         }
         _isLooped = true;
-        noKeyWasPressed = false;
+        _noKeyWasPressed = false;
         if (_facing == UP) {
             _currentAnimation = &_attackUp;
         }
@@ -132,12 +135,12 @@ void Player::handleEvent(sf::Event &e) {
     }
     else {    
         // if no key was pressed stop the animation
-        if (noKeyWasPressed)
+        if (_noKeyWasPressed)
         {
             _currentFrame = 0;
             stop();
         }
-        noKeyWasPressed = true;
+        _noKeyWasPressed = true;
         _isLooped = false;
     }
 }

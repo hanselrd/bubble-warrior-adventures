@@ -16,4 +16,5 @@ private:
     sf::View _view;
     Map _map; // for testing
     Player _player;
+    sf::Clock _overlayUpdate;
 };

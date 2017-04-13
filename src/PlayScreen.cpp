@@ -27,7 +27,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     sf::Vector2f temp = _player.getPosition();
     _view.setCenter(temp);
     _view.setSize((float)window.getSize().x, (float)window.getSize().y);
-    _view.zoom(0.6f);
+    _view.zoom(0.5f);
 }
 
 void PlayScreen::handleEvent(sf::Event& e) {
@@ -37,9 +37,8 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
-   // _player.setOrigin(_player.getIntRect().left / 2, _player.getIntRect().top / 2);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        _player.move(0, std::ceil(-70 * delta));
+        _player.move(0, std::ceil(-70 * delta * _player.getMovementSpeed()));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         _player.move(std::ceil(-70 * delta), 0);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -177,21 +176,25 @@ void PlayScreen::initializeOverlay(sf::RenderWindow &window)
 
 void PlayScreen::updateOverlay()
 {
-    tgui::Label::Ptr lvl = _gui.get<tgui::Label>("lblLevel", true);
-    lvl->setText("Lv. " + std::to_string(_player.getLevel()));
+    if (_overlayUpdate.getElapsedTime().asSeconds() >= 0.01f) {
+        tgui::Label::Ptr lvl = _gui.get<tgui::Label>("lblLevel", true);
+        lvl->setText("Lv. " + std::to_string(_player.getLevel()));
 
-    tgui::ProgressBar::Ptr hpbar = _gui.get<tgui::ProgressBar>("prgbarHealth", true);
-    hpbar->setValue(_player.getHealth());
-    hpbar->setMaximum(_player.getMaxHealth());
-    hpbar->setText(std::to_string(_player.getHealth()) + "/" + std::to_string(_player.getMaxHealth()));
+        tgui::ProgressBar::Ptr hpbar = _gui.get<tgui::ProgressBar>("prgbarHealth", true);
+        hpbar->setValue(_player.getHealth());
+        hpbar->setMaximum(_player.getMaxHealth());
+        hpbar->setText(std::to_string(_player.getHealth()) + "/" + std::to_string(_player.getMaxHealth()));
 
-    tgui::ProgressBar::Ptr mpbar = _gui.get<tgui::ProgressBar>("prgbarMana", true);
-    mpbar->setValue(_player.getMana());
-    mpbar->setMaximum(_player.getMaxMana());
-    mpbar->setText(std::to_string(_player.getMana()) + "/" + std::to_string(_player.getMaxMana()));    
-    
-    tgui::ProgressBar::Ptr expbar = _gui.get<tgui::ProgressBar>("prgbarExperience", true);
-    expbar->setValue(_player.getExperience());
-    expbar->setMaximum(_player.getMaxExperience());
-    expbar->setText(std::to_string(_player.getExperience()) + "/" + std::to_string(_player.getMaxExperience()));
+        tgui::ProgressBar::Ptr mpbar = _gui.get<tgui::ProgressBar>("prgbarMana", true);
+        mpbar->setValue(_player.getMana());
+        mpbar->setMaximum(_player.getMaxMana());
+        mpbar->setText(std::to_string(_player.getMana()) + "/" + std::to_string(_player.getMaxMana()));
+
+        tgui::ProgressBar::Ptr expbar = _gui.get<tgui::ProgressBar>("prgbarExperience", true);
+        expbar->setValue(_player.getExperience());
+        expbar->setMaximum(_player.getMaxExperience());
+        expbar->setText(std::to_string(_player.getExperience()) + "/" + std::to_string(_player.getMaxExperience()));
+        
+        _overlayUpdate.restart();
+    }
 }

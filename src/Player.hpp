@@ -14,15 +14,18 @@ public:
     unsigned getMana();
     unsigned getHealth();
     unsigned getExperience();
+    bool isAttacking();
     std::string getName();
 private:
     
     unsigned _mana, _experience;
     unsigned _maxMana, _maxHealth;
-    float _maxExperience;
     unsigned _attackDamage;
-    float _movementSpeed, _armor;
-    bool noKeyWasPressed;
+    float _maxExperience;
+    float _armor;
+
+    bool _isAttacking;
+    bool _noKeyWasPressed;
 
     void levelUp();
     void defaultPlayerStats();

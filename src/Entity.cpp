@@ -1,4 +1,5 @@
 #include "Entity.hpp"
+#include <iostream>
 
 Entity::Entity(std::string file_path, int sprite_format) {
     _texture.loadFromFile("assets/sprites/" + file_path);
@@ -22,7 +23,10 @@ unsigned Entity::getLevel() {
     return _level;
 }
 sf::FloatRect Entity::getLocalBounds() const {
-    return _sprite.getLocalBounds();
+    sf::FloatRect temp = _sprite.getLocalBounds();
+    temp.left = 0- _spriteFormat / 2;
+    temp.top =  0- _spriteFormat / 2;
+    return temp;
 }
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -38,6 +42,9 @@ sf::IntRect Entity::getIntRect() {
     return _intRect;
 }
 
+float Entity::getMovementSpeed() {
+    return _movementSpeed;
+}
 // All animation stuff
 
 void Entity::setAnimation(const Animation& animation)
