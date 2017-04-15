@@ -17,11 +17,13 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
     Script testConfig("test_config.py");
     testConfig("main");
-
     Script testTmx("test_tmx.py");
     testTmx("main", std::ref(_map));
 
     initializeOverlay(window);
+
+    Item a("BubbleItem.png", 32, "HAHAHA", 1, 10, 10, 10, 1.0f, 1.0f, 0.0f, 10.0f);
+    a.setPosition(1446, 1500);
 
     _player.setPosition(1446, 1400);
     sf::Vector2f temp = _player.getPosition();
@@ -40,11 +42,11 @@ void PlayScreen::update(float delta) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         _player.move(0, std::ceil(-70 * delta * _player.getMovementSpeed()));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        _player.move(std::ceil(-70 * delta), 0);
+        _player.move(std::ceil(-70 * delta * _player.getMovementSpeed()), 0);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        _player.move(0, std::floor(70 * delta));
+        _player.move(0, std::floor(70 * delta * _player.getMovementSpeed()));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        _player.move(std::floor(70 * delta), 0);
+        _player.move(std::floor(70 * delta * _player.getMovementSpeed()), 0);
 
     auto playerPos = _player.getPosition();
     _player.update(delta);
@@ -70,6 +72,7 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
+    window.draw(a);
     window.draw(_player);
     window.draw(_map.getLayers().at(3));
     _gui.draw();

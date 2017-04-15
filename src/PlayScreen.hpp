@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include "Map.hpp"
 #include "State.hpp"
+#include "Item.hpp"
 
 class PlayScreen final : public State {
 public:
@@ -16,5 +17,6 @@ private:
     sf::View _view;
     Map _map; // for testing
     Player _player;
+    Item a;
     sf::Clock _overlayUpdate;
 };

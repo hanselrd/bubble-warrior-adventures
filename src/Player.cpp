@@ -38,7 +38,7 @@ void Player::defaultPlayerStats() {
     _maxHealth = 10;
     _mana = 10;
     _maxMana = 10;
-    _movementSpeed = 2.0f;
+    _movementSpeed = 1.3f;
     _armor = 0.0f;
 }
 

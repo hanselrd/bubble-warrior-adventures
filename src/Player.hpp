@@ -1,7 +1,8 @@
 #pragma once
-#include "Animation.hpp"
 #include <SFML/System.hpp>
+#include "Animation.hpp"
 #include "Entity.hpp"
+#include "Inventory.hpp"
 
 class Player : public Entity {
 public:
@@ -26,6 +27,8 @@ private:
 
     bool _isAttacking;
     bool _noKeyWasPressed;
+
+    Inventory _inventory;
 
     void levelUp();
     void defaultPlayerStats();
