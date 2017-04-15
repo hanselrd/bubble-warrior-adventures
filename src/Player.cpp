@@ -7,16 +7,16 @@ Player::Player(std::string file_path, std::string player_name, int sprite_format
     _intRect= sf::IntRect(0, sprite_format * 8, sprite_format, sprite_format);
     _name = player_name;
     _attackDamage = 1;
-    _experience = 0.0f;
+    _experience = 0;
     _noKeyWasPressed = true;
-    _sprite.setOrigin(0- _intRect.width / 2, 0- _intRect.height / 2);
+    _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f);
 
     Player::loadAttackAnimations();
 }
 
 void Player::levelUp() {
     // Increase the experience cap and reset current exp to 0;
-    _maxExperience = std::ceil(_maxExperience * 1.1);
+    _maxExperience = std::ceil(_maxExperience * 1.1f);
     _experience = 0.0f;
     _level += 1;
 
@@ -48,7 +48,7 @@ unsigned Player::getMaxMana() {
 unsigned Player::getMaxHealth() {
     return _maxHealth;
 }
-unsigned Player::getMaxExperience() {
+float Player::getMaxExperience() {
     return _maxExperience;
 }
 unsigned Player::getMana() {
@@ -57,7 +57,7 @@ unsigned Player::getMana() {
 unsigned Player::getHealth() {
     return _health;
 }
-unsigned Player::getExperience() {
+float Player::getExperience() {
     return _experience;
 }
 std::string Player::getName() {

@@ -194,8 +194,8 @@ void PlayScreen::updateOverlay()
         mpbar->setText(std::to_string(_player.getMana()) + "/" + std::to_string(_player.getMaxMana()));
 
         tgui::ProgressBar::Ptr expbar = _gui.get<tgui::ProgressBar>("prgbarExperience", true);
-        expbar->setValue(_player.getExperience());
-        expbar->setMaximum(_player.getMaxExperience());
+        expbar->setValue((unsigned)_player.getExperience());
+        expbar->setMaximum((unsigned)_player.getMaxExperience());
         expbar->setText(std::to_string(_player.getExperience()) + "/" + std::to_string(_player.getMaxExperience()));
         
         _overlayUpdate.restart();

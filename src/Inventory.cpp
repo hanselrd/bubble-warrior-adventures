@@ -26,6 +26,7 @@ bool Inventory::contains(Item &item) {
             temp = true;
         }
     }
+    return temp;
 }
 void Inventory::handleEvents(sf::Event &e) {
 

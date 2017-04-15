@@ -11,18 +11,18 @@ public:
 
     unsigned getMaxMana();
     unsigned getMaxHealth();
-    unsigned getMaxExperience();
+    float getMaxExperience();
     unsigned getMana();
     unsigned getHealth();
-    unsigned getExperience();
+    float getExperience();
     bool isAttacking();
     std::string getName();
 private:
     
-    unsigned _mana, _experience;
+    unsigned _mana;
     unsigned _maxMana, _maxHealth;
     unsigned _attackDamage;
-    float _maxExperience;
+    float _experience, _maxExperience;
     float _armor;
 
     bool _isAttacking;
