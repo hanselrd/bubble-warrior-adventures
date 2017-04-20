@@ -10,7 +10,7 @@
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _map("castle_interior_polygon_walls.tmx"),
-      _player("regular_hero_male.png", "Player_temp", 64) {
+      _player("regular_hero_male.png", "Jaime", 64) {
     _gui.setWindow(window);
 
     auto settings = Locator<Settings>::get();
@@ -196,7 +196,7 @@ void PlayScreen::updateOverlay()
         tgui::ProgressBar::Ptr expbar = _gui.get<tgui::ProgressBar>("prgbarExperience", true);
         expbar->setValue((unsigned)_player.getExperience());
         expbar->setMaximum((unsigned)_player.getMaxExperience());
-        expbar->setText(std::to_string(_player.getExperience()) + "/" + std::to_string(_player.getMaxExperience()));
+        expbar->setText(std::to_string((int)_player.getExperience()) + "/" + std::to_string((int)_player.getMaxExperience()));
         
         _overlayUpdate.restart();
     }
