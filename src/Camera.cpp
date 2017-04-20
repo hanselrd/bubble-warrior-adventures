@@ -12,21 +12,21 @@ Camera::Camera(sf::RenderWindow& window, Player& player)
 void Camera::handleEvent(sf::Event& e) {}
 
 void Camera::update(float delta) {
-    auto playerBounds = _player.getGlobalBounds();
+    auto playerPos= _player.getPosition();
     auto windowSize = _window.getSize();
 
     _view.setCenter(_player.getPosition());
 
-    if (playerBounds.left < (windowSize.x / 2) * CAMERA_ZOOM_FACTOR)
+    if (playerPos.x < (windowSize.x / 2) * CAMERA_ZOOM_FACTOR)
         _view.setCenter((windowSize.x / 2) * CAMERA_ZOOM_FACTOR, _view.getCenter().y);
 
-    if (playerBounds.top < (windowSize.y / 2) * CAMERA_ZOOM_FACTOR)
+    if (playerPos.y < (windowSize.y / 2) * CAMERA_ZOOM_FACTOR)
         _view.setCenter(_view.getCenter().x, (windowSize.y / 2) * CAMERA_ZOOM_FACTOR);
 
-    if (playerBounds.left + playerBounds.width > (_map->getWidth() * _map->getTileWidth()) - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR))
+    if (playerPos.x > (_map->getWidth() * _map->getTileWidth()) - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR))
         _view.setCenter((_map->getWidth() * _map->getTileWidth()) - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR), _view.getCenter().y);
 
-    if (playerBounds.top + playerBounds.height > (_map->getHeight() * _map->getTileHeight()) - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR))
+    if (playerPos.y > (_map->getHeight() * _map->getTileHeight()) - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR))
         _view.setCenter(_view.getCenter().x, (_map->getHeight() * _map->getTileHeight()) - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR));
 
     _window.setView(_view);
