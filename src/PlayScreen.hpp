@@ -1,4 +1,5 @@
 #pragma once
+#include "Camera.hpp"
 #include "Map.hpp"
 #include "Player.hpp"
 #include "State.hpp"
@@ -11,7 +12,7 @@ public:
     void draw(sf::RenderWindow& window) override;
 
 private:
-    sf::View _view;
+    Camera _camera;
     Map _map; // Testing (should use a MapHandler)
     Player _player;
 };

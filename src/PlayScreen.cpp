@@ -8,7 +8,8 @@
 #include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("world.tmx") {
+    : _camera(window, _player)
+    , _map("world.tmx") {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -127,10 +128,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
     _player.setPosition(100, 100);
-
-    _view.setCenter(_player.getPosition());
-    _view.setSize(window.getSize().x, window.getSize().y);
-    _view.zoom(0.5);
+    _camera.setMap(&_map);
 }
 
 void PlayScreen::handleEvent(sf::Event& e) {
@@ -139,6 +137,7 @@ void PlayScreen::handleEvent(sf::Event& e) {
 
 void PlayScreen::update(float delta) {
     _player.update(delta);
+    _camera.update(delta);
 
     auto playerPos = _player.getPosition();
 
@@ -156,12 +155,9 @@ void PlayScreen::update(float delta) {
             }
         }
     }
-
-    _view.setCenter(playerPos);
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
-    window.setView(_view);
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
