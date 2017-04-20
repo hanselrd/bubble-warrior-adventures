@@ -1,4 +1,5 @@
 #include "Item.hpp"
+#include <cmath>
 
 Item::Item() {
     _name = "null";

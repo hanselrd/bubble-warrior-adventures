@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include <cmath>
 #include <iostream>
 
 Player::Player(std::string file_path, std::string player_name, int sprite_format) : Entity(file_path, sprite_format) {
