@@ -1,6 +1,6 @@
 #pragma once
-#include "Entity.hpp"
 #include "Map.hpp"
+#include "Player.hpp"
 #include "State.hpp"
 
 class PlayScreen final : public State {
@@ -12,6 +12,6 @@ public:
 
 private:
     sf::View _view;
-    Map _map; // for testing
-    Entity _player;
+    Map _map; // Testing (should use a MapHandler)
+    Player _player;
 };

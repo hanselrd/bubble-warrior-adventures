@@ -8,8 +8,7 @@
 #include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("ne_tower.tmx")
-    , _player(8, sf::Color(0xFF9900FF)) {
+    : _map("world.tmx") {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -139,14 +138,7 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        _player.move(0, std::ceil(-70 * delta));
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        _player.move(std::ceil(-70 * delta), 0);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        _player.move(0, std::floor(70 * delta));
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        _player.move(std::floor(70 * delta), 0);
+    _player.update(delta);
 
     auto playerPos = _player.getPosition();
 
@@ -157,9 +149,9 @@ void PlayScreen::update(float delta) {
         if (layer.getType() == Map::Layer::Type::Object) {
             for (const auto& object : layer.getObjects()) {
                 sf::FloatRect intersection;
-                while (Object::checkCollision(_player, object, intersection)) {
+                if (Object::checkCollision(_player, object, intersection)) {
                     lblCoords->setText(lblCoords->getText() + " Collision!");
-                    _player.move(intersection.width, 0);
+                    //_player.move(intersection.width, 0);
                 }
             }
         }

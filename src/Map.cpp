@@ -239,7 +239,7 @@ Map::Tile::Tile(const Map& map, unsigned gid)
             // diag first followed by hori and vert flips
             sf::Vector2f tmp;
 
-            /*if (flippedVertically) {
+            if (flippedVertically) {
                 tmp = _vertices[0].texCoords;
                 _vertices[0].texCoords.y = _vertices[2].texCoords.y;
                 _vertices[1].texCoords.y = _vertices[2].texCoords.y;
@@ -259,7 +259,7 @@ Map::Tile::Tile(const Map& map, unsigned gid)
                 tmp = _vertices[1].texCoords;
                 _vertices[1].texCoords = _vertices[3].texCoords;
                 _vertices[3].texCoords = tmp;
-            }*/
+            }
         }
     }
 }
