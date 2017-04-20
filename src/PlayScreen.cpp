@@ -24,7 +24,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto windowWidth = tgui::bindWidth(_gui);
     auto windowHeight = tgui::bindHeight(_gui);
 
-    auto theme = resourceHandler->get<tgui::Theme>("default");
+    auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
 
     auto lblCoords = tgui::Label::create();
     lblCoords->setTextColor(sf::Color::Cyan);
