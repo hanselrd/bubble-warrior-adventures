@@ -14,10 +14,11 @@ public:
     class Tileset;
 
     explicit Map(const std::string& filename);
-    unsigned getWidth() const;
-    unsigned getHeight() const;
-    unsigned getTileWidth() const;
-    unsigned getTileHeight() const;
+    unsigned getWidth() const; // tiles
+    unsigned getHeight() const; // tiles
+    unsigned getTileWidth() const; // pxls
+    unsigned getTileHeight() const; // pxls
+    sf::Vector2u getSize() const; // pxls
     const std::vector<Tileset>& getTilesets() const;
     const std::vector<Layer>& getLayers() const;
 

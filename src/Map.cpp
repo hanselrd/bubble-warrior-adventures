@@ -53,6 +53,10 @@ unsigned Map::getTileHeight() const {
     return _tileHeight;
 }
 
+sf::Vector2u Map::getSize() const {
+    return sf::Vector2u(getWidth() * getTileWidth(), getHeight() * getTileHeight());
+}
+
 const std::vector<Map::Tileset>& Map::getTilesets() const {
     return _tilesets;
 }

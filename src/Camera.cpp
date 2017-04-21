@@ -23,13 +23,17 @@ void Camera::update(float delta) {
     if (playerPos.y < (windowSize.y / 2) * CAMERA_ZOOM_FACTOR)
         _view.setCenter(_view.getCenter().x, (windowSize.y / 2) * CAMERA_ZOOM_FACTOR);
 
-    if (playerPos.x > (_map->getWidth() * _map->getTileWidth()) - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR))
-        _view.setCenter((_map->getWidth() * _map->getTileWidth()) - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR), _view.getCenter().y);
+    if (playerPos.x > _map->getSize().x - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR))
+        _view.setCenter(_map->getSize().x - ((windowSize.x / 2) * CAMERA_ZOOM_FACTOR), _view.getCenter().y);
 
-    if (playerPos.y > (_map->getHeight() * _map->getTileHeight()) - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR))
-        _view.setCenter(_view.getCenter().x, (_map->getHeight() * _map->getTileHeight()) - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR));
+    if (playerPos.y > _map->getSize().y - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR))
+        _view.setCenter(_view.getCenter().x, _map->getSize().y - ((windowSize.y / 2) * CAMERA_ZOOM_FACTOR));
 
     _window.setView(_view);
+}
+
+const sf::View& Camera::getView() const {
+    return _view;
 }
 
 void Camera::setMap(Map* map) {

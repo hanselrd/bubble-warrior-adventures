@@ -8,6 +8,7 @@ public:
     Camera(sf::RenderWindow& window, Player& player);
     void handleEvent(sf::Event& e);
     void update(float delta);
+    const sf::View& getView() const;
     void setMap(Map* map);
 
 private:
