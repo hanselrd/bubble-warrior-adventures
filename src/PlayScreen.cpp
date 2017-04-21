@@ -15,6 +15,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
 
+    _mapHandler = std::make_shared<MapHandler>();
+    Locator<MapHandler>::provide(_mapHandler);
+
     Script testConfig("test_config.py");
     testConfig("main");
 

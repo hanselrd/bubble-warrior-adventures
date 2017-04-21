@@ -1,6 +1,7 @@
 #pragma once
+#include <memory>
 #include "Camera.hpp"
-#include "Map.hpp"
+#include "MapHandler.hpp"
 #include "Player.hpp"
 #include "State.hpp"
 
@@ -15,4 +16,5 @@ private:
     Camera _camera;
     Map _map; // Testing (should use a MapHandler)
     Player _player;
+    std::shared_ptr<MapHandler> _mapHandler;
 };
