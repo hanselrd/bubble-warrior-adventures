@@ -24,8 +24,8 @@ unsigned Entity::getLevel() {
 }
 sf::FloatRect Entity::getLocalBounds() const {
     sf::FloatRect temp = _sprite.getLocalBounds();
-    temp.left = 0- _spriteFormat / 2;
-    temp.top =  0- _spriteFormat / 2;
+    temp.left = 0.0f- _spriteFormat / 2.0f;
+    temp.top =  0.0f- _spriteFormat / 2.0f;
     return temp;
 }
 
@@ -139,13 +139,34 @@ void Entity::update(float deltaTime)
                     _intRect = temp;
                     _isPaused = true;
                 }
+				_frameDelay = 0;
             }
         }
 
         // set the current frame, not reseting the time
         setFrame(_currentFrame);
-        _sprite.setOrigin(_intRect.width / 2, _intRect.height / 2);
+        _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
     }
+	// If it is paused, reset to standing
+	else {
+		if (_facing == UP) {
+			_currentFrame = 0;
+		}
+		else if (_facing == LEFT) {
+			_currentFrame = 1;
+		}
+		else if (_facing == DOWN) {
+			_currentFrame = 2;
+		}
+		else if (_facing == RIGHT) {
+			_currentFrame = 3;
+		}
+		_intRect.width = _spriteFormat;
+		_intRect.height = _spriteFormat;
+		_sprite.setTextureRect(_intRect);
+		_sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
+		setAnimation(_standing);
+	}
 
 }
 

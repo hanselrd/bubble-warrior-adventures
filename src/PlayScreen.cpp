@@ -39,13 +39,13 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !_player.isAttacking())
         _player.move(0, std::ceil(-70 * delta * _player.getMovementSpeed()));
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !_player.isAttacking())
         _player.move(std::ceil(-70 * delta * _player.getMovementSpeed()), 0);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !_player.isAttacking())
         _player.move(0, std::floor(70 * delta * _player.getMovementSpeed()));
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !_player.isAttacking())
         _player.move(std::floor(70 * delta * _player.getMovementSpeed()), 0);
 
     auto playerPos = _player.getPosition();
