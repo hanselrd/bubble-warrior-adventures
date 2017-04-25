@@ -1,22 +1,22 @@
 #pragma once
 #include "Object.hpp"
 
-class Item : public Object {
+class Item final : public Object {
 public:
     Item();
     Item(std::string file_path, int sprite_format);
     Item(std::string file_path, int sprite_format, std::string name, int level, int health, int mana, int damage, float movement, float armor, float current_exp, float max_exp);
     sf::FloatRect getLocalBounds() const override;
 
-    int getItemLevel();
-    int getHealth();
-    int getMana();
-    int getDamage();
-    float getMovementSpeed();
-    float getArmor();
-    float getCurrentItemExperience();
-    float getMaxItemExperience();
-    std::string getName();
+    int getItemLevel() const;
+    int getHealth() const;
+    int getMana() const;
+    int getDamage() const;
+    float getMovementSpeed() const;
+    float getArmor() const;
+    float getCurrentItemExperience() const;
+    float getMaxItemExperience() const;
+    std::string getName() const;
 
     void setItemLevel(int item_level);
     void setHealth(int health);

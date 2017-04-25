@@ -19,7 +19,7 @@ Item Inventory::getItem(int i) {
     return _items.at(i);
 }
 // Inventory::contains would only be used for quest items hopefully
-bool Inventory::contains(Item &item) {
+bool Inventory::contains(const Item &item) const{
     bool temp = false;
     for (int i = 0; i < _items.size(); i++) {
         if (_items.at(i).getName() == item.getName()) {

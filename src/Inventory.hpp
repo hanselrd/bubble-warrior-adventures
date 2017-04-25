@@ -9,7 +9,7 @@ public:
     void removeItem(Item &item);
     Item getItem(int i);
 
-    bool contains(Item &item);
+    bool contains(const Item &item) const;
     void drawInventory(sf::RenderWindow &window);
     void handleEvents(sf::Event &e);
 private:

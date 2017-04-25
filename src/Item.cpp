@@ -37,7 +37,7 @@ Item::Item(std::string file_path, int sprite_format, std::string name, int level
     _sprite.setTexture(_texture);
     _spriteFormat = sprite_format;
     _intRect = sf::IntRect(0, 0, sprite_format, sprite_format);
-    _sprite.setTextureRect(_intRect);
+   // _sprite.setTextureRect(_intRect);
 
     _name = name;
     _itemLevel = level;
@@ -50,31 +50,31 @@ Item::Item(std::string file_path, int sprite_format, std::string name, int level
     _maxItemExperience = max_exp;
 }
 // Setters and Getters
-std::string Item::getName() {
+std::string Item::getName() const{
     return _name;
 }
-int Item::getItemLevel() {
+int Item::getItemLevel() const {
     return _itemLevel;
 }
-int Item::getHealth() {
+int Item::getHealth() const {
     return _health;
 }
-int Item::getMana() {
+int Item::getMana() const {
     return _mana;
 }
-int Item::getDamage() {
+int Item::getDamage() const {
     return _damage;
 }
-float Item::getMovementSpeed() {
+float Item::getMovementSpeed() const {
     return _movementSpeed;
 }
-float Item::getArmor() {
+float Item::getArmor() const {
     return _armor;
 }
-float Item::getCurrentItemExperience() {
+float Item::getCurrentItemExperience() const {
     return _currentItemExperience;
 }
-float Item::getMaxItemExperience() {
+float Item::getMaxItemExperience() const {
     return _maxItemExperience;
 }
 void Item::setName(std::string name) {
@@ -132,7 +132,6 @@ void Item::loadItem(std::string file_path, int sprite_format, std::string name, 
 // Needed for other classes
 void Item::draw(sf::RenderTarget & target, sf::RenderStates states) const {
     states.transform *= getTransform();
-    states.texture = &_texture;
     target.draw(_sprite, states);
 }
 

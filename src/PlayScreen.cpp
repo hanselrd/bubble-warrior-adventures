@@ -9,20 +9,19 @@
 #include "TitleScreen.hpp"
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
-    : _map("castle_interior_polygon_walls.tmx"),
-      _player("regular_hero_male.png", "Jaime", 64) {
+    : _map("castle_interior_polygon_walls.tmx")
+    , _player("regular_hero_male.png", "Jaime", 64)
+    , a("BubbleItem.png", 32, "HAHAHA", 1, 10, 10, 10, 1.0f, 1.0f, 0.0f, 10.0f) {
     _gui.setWindow(window);
 
     auto settings = Locator<Settings>::get();
 
-    Script testConfig("test_config.py");
-    testConfig("main");
-    Script testTmx("test_tmx.py");
-    testTmx("main", std::ref(_map));
+    //Script testConfig("test_config.py");
+    //testConfig("main");
+    //Script testTmx("test_tmx.py");
+    //testTmx("main", std::ref(_map));
 
     initializeOverlay(window);
-
-    Item a("BubbleItem.png", 32, "HAHAHA", 1, 10, 10, 10, 1.0f, 1.0f, 0.0f, 10.0f);
     a.setPosition(1446, 1500);
 
     _player.setPosition(1446, 1400);
@@ -72,9 +71,9 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
-    window.draw(a);
     window.draw(_player);
     window.draw(_map.getLayers().at(3));
+    window.draw(a);
     _gui.draw();
 }
 
