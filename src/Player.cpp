@@ -70,33 +70,33 @@ bool Player::isAttacking() {
 }
 
 void Player::handleEvent(sf::Event &e) {
-	if (isAttacking() && _currentFrame == 0) {
+	if (isAttacking() && !isPlaying()) {
 		_isAttacking = false;
 	}
 
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
         _isLooped = true;
         _noKeyWasPressed = false;
         _currentAnimation = &_walkingLeft;
         _facing = LEFT;
         play(*_currentAnimation);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
         _isLooped = true;
         _noKeyWasPressed = false;
         _currentAnimation = &_walkingRight;
         _facing = RIGHT;
         play(*_currentAnimation);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
         _isLooped = true;
         _noKeyWasPressed = false;
         _currentAnimation = &_walkingUp;
         _facing = UP;
         play(*_currentAnimation);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
         _isLooped = true;
         _noKeyWasPressed = false;
         _currentAnimation = &_walkingDown;
