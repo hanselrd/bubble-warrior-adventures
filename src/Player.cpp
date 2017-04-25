@@ -10,6 +10,7 @@ Player::Player(std::string file_path, std::string player_name, int sprite_format
     _attackDamage = 1;
     _experience = 0;
     _noKeyWasPressed = true;
+	_isAttacking = false;
     _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f);
 
     Player::loadAttackAnimations();
@@ -69,6 +70,11 @@ bool Player::isAttacking() {
 }
 
 void Player::handleEvent(sf::Event &e) {
+	if (isAttacking() && _currentFrame == 0) {
+		_isAttacking = false;
+	}
+
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         _isLooped = true;
         _noKeyWasPressed = false;
@@ -113,9 +119,10 @@ void Player::handleEvent(sf::Event &e) {
             std::cout << "You died. Health: " << _health << std::endl;
         }
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
+		_isAttacking = true;
         // Error handling for the different animation lengths
-        if (_currentFrame != 0) {
+        if (_currentFrame != 0 && !isAttacking()) {
             _currentFrame = 0;
         }
         _isLooped = true;
@@ -136,11 +143,14 @@ void Player::handleEvent(sf::Event &e) {
     }
     else {    
         // if no key was pressed stop the animation
-        if (_noKeyWasPressed)
+        if (_noKeyWasPressed && !isAttacking())
         {
             _currentFrame = 0;
             stop();
         }
+		else {
+
+		}
         _noKeyWasPressed = true;
         _isLooped = false;
     }

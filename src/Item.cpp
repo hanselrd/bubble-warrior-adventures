@@ -106,9 +106,9 @@ void Item::setMaxItemExperience(float max_exp) {
 }
 void Item::shatter() {
     _itemLevel += 1;
-    _health =  std::ceil(_health * 1.5f);
-    _mana = std::ceil(_mana * 1.5f);
-    _damage = std::ceil(_damage * 1.5f);
+    _health =  (int)std::ceil(_health * 1.5f);
+    _mana = (int)std::ceil(_mana * 1.5f);
+    _damage = (int)std::ceil(_damage * 1.5f);
     _movementSpeed = _movementSpeed * 1.3f;
     _armor = _armor * 1.5f;
 }
