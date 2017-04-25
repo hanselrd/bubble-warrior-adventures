@@ -9,12 +9,12 @@ public:
     Player(std::string file_path, std::string player_name, int sprite_format);
     void handleEvent(sf::Event &e);
 
-    unsigned getMaxMana();
-    unsigned getMaxHealth();
-    float getMaxExperience();
     unsigned getMana();
     unsigned getHealth();
+    unsigned getMaxMana();
+    unsigned getMaxHealth();
     float getExperience();
+    float getMaxExperience();
     bool isAttacking();
     std::string getName();
 private:
