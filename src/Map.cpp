@@ -235,10 +235,10 @@ Map::Tile::Tile(const Map& map, unsigned gid)
             _vertices[2].position = sf::Vector2f(tileset.getTileWidth(), tileset.getTileHeight());
             _vertices[3].position = sf::Vector2f(0, tileset.getTileHeight());
 
-            _vertices[0].texCoords = sf::Vector2f(x, y);
-            _vertices[1].texCoords = sf::Vector2f(x + tileset.getTileWidth(), y);
-            _vertices[2].texCoords = sf::Vector2f(x + tileset.getTileWidth(), y + tileset.getTileHeight());
-            _vertices[3].texCoords = sf::Vector2f(x, y + tileset.getTileHeight());
+            _vertices[0].texCoords = sf::Vector2f(x + 0.5f, y + 0.5f);
+            _vertices[1].texCoords = sf::Vector2f(x + tileset.getTileWidth() - 0.5f, y + 0.5f);
+            _vertices[2].texCoords = sf::Vector2f(x + tileset.getTileWidth() - 0.5f, y + tileset.getTileHeight() - 0.5f);
+            _vertices[3].texCoords = sf::Vector2f(x + 0.5f, y + tileset.getTileHeight() - 0.5f);
 
             // diag first followed by hori and vert flips
             sf::Vector2f tmp;

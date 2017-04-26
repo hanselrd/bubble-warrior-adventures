@@ -12,6 +12,6 @@ private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 protected:
-    sf::CircleShape _body;
+    sf::CircleShape _circle;
     unsigned _health, _mana;
 };

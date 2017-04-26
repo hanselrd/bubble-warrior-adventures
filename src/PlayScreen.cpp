@@ -7,10 +7,15 @@
 #include "StateHandler.hpp"
 #include "TitleScreen.hpp"
 
+sf::RectangleShape bounds;
+
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _camera(window, _player)
     , _map("world.tmx") {
     _gui.setWindow(window);
+
+    bounds.setOutlineColor(sf::Color::Black);
+    bounds.setOutlineThickness(0.3f);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
@@ -18,11 +23,11 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     _mapHandler = std::make_shared<MapHandler>();
     Locator<MapHandler>::provide(_mapHandler);
 
-    Script testConfig("test_config.py");
-    testConfig("main");
+    //Script testConfig("test_config.py");
+    //testConfig("main");
 
-    Script testTmx("test_tmx.py");
-    testTmx("main", std::ref(_map));
+    //Script testTmx("test_tmx.py");
+    //testTmx("main", std::ref(_map));
 
     auto windowWidth = tgui::bindWidth(_gui);
     auto windowHeight = tgui::bindHeight(_gui);
@@ -130,7 +135,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
-    _player.setPosition(100, 100);
+    _player.setPosition(300, 100);
     _camera.setMap(&_map);
 }
 
@@ -139,9 +144,11 @@ void PlayScreen::handleEvent(sf::Event& e) {
 }
 
 void PlayScreen::update(float delta) {
+    auto playerPosOld = _player.getPosition();
     _player.update(delta);
     _camera.update(delta);
 
+    auto playerPosNew = _player.getPosition();
     auto playerPos = _player.getPosition();
 
     auto lblCoords = _gui.get<tgui::Label>("lblCoords");
@@ -153,7 +160,22 @@ void PlayScreen::update(float delta) {
                 sf::FloatRect intersection;
                 if (Object::checkCollision(_player, object, intersection)) {
                     lblCoords->setText(lblCoords->getText() + " Collision!");
-                    //_player.move(intersection.width, 0);
+
+                    auto playerBounds = _player.getGlobalBounds();
+                    bounds.setSize(sf::Vector2f(intersection.width, intersection.height));
+                    bounds.setPosition(intersection.left, intersection.top);
+                    if (intersection.width > intersection.height) { // y-axis
+                        if (_player.getPosition().y < intersection.top) // top
+                            _player.move(0, -intersection.height);
+                        else if (_player.getPosition().y == intersection.top)
+                            _player.move(0, intersection.height);
+                    }
+                    if (intersection.width < intersection.height) { // x-axis
+                        if (_player.getPosition().x < intersection.left) // top
+                            ;//_player.move(-intersection.width, 0);
+                        else if (_player.getPosition().x == intersection.left)
+                            _player.move(intersection.width, 0);
+                    }
                 }
             }
         }
@@ -166,5 +188,6 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
     window.draw(_map.getLayers().at(3));
+    window.draw(bounds);
     _gui.draw();
 }
