@@ -76,7 +76,7 @@ void Player::update(float delta) {
         _direction = Direction::Left;
         play(*_currentAnimation);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
         move(0, _velocity.y * delta);
         _isLooped = true;
         _noKeyWasPressed = false;
@@ -84,7 +84,7 @@ void Player::update(float delta) {
         _direction = Direction::Down;
         play(*_currentAnimation);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
         move(_velocity.x * delta, 0);
         _isLooped = true;
         _noKeyWasPressed = false;
@@ -92,14 +92,29 @@ void Player::update(float delta) {
         _direction = Direction::Right;
         play(*_currentAnimation);
     }
-    else {
-        if (_noKeyWasPressed && !isAttacking()) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
+		_isAttacking = true;
+        // Error handling for the different animation lengths
+        if (_currentFrame != 0 && !isAttacking())
             _currentFrame = 0;
-            stop();
-        }
-        _noKeyWasPressed = true;
-        _isLooped = false;
+        _isLooped = true;
+        _noKeyWasPressed = false;
+        if (_direction == Direction::Up)
+            _currentAnimation = &_attackUp;
+        else if (_direction == Direction::Left)
+            _currentAnimation = &_attackLeft;
+        else if (_direction == Direction::Down)
+            _currentAnimation = &_attackDown;
+        else if (_direction == Direction::Right)
+            _currentAnimation = &_attackRight;
+        play(*_currentAnimation);
     }
+    if (_noKeyWasPressed && !isAttacking()) {
+        _currentFrame = 0;
+        stop();
+    }
+    _noKeyWasPressed = true;
+    _isLooped = false;
 }
 
 unsigned Player::getMana() const {
