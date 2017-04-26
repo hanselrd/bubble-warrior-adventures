@@ -64,17 +64,33 @@ void Player::update(float delta) {
         move(0, -_velocity.y * delta);
         _isLooped = true;
         _noKeyWasPressed = false;
+        _currentAnimation = &_walkingUp;
         _direction = Direction::Up;
         play(*_currentAnimation);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
-        move(-70 * delta, 0);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
+        move(-_velocity.x * delta, 0);
+        _isLooped = true;
+        _noKeyWasPressed = false;
+        _currentAnimation = &_walkingLeft;
+        _direction = Direction::Left;
+        play(*_currentAnimation);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
-        move(0, 70 * delta);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
+        move(0, _velocity.y * delta);
+        _isLooped = true;
+        _noKeyWasPressed = false;
+        _currentAnimation = &_walkingDown;
+        _direction = Direction::Down;
+        play(*_currentAnimation);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
-        move(70 * delta, 0);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
+        move(_velocity.x * delta, 0);
+        _isLooped = true;
+        _noKeyWasPressed = false;
+        _currentAnimation = &_walkingRight;
+        _direction = Direction::Right;
+        play(*_currentAnimation);
     }
     else {
         if (_noKeyWasPressed && !isAttacking()) {
