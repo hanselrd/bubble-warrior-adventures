@@ -32,7 +32,7 @@ and who doesn't love a good storyline?
 
 ## Development Environment
 
-We are using [CMake](https://cmake.org/) as our build system, which means, you can use
+We are using [CMake](https://cmake.org) as our build system, which means, you can use
 any environment of your choosing as long as you resolve the dependencies.
 The only dependencies you need to find yourself are [SFML](http://www.sfml-dev.org/index.php)
 and [TGUI](https://tgui.eu). We also require a local installation of [Python](https://www.python.org) 3.0+
@@ -46,7 +46,35 @@ to run our game scripts.
 
 ## Installation
 
-Coming soon...
+We assume you know how to build projects using [CMake](https://cmake.org). If not, please take the time now to read
+up on how it works.
+
+The following depedencies must be either downloaded/installed using your favorite package manager/browser or compiled
+from source.
+
+- [SFML](http://www.sfml-dev.org/index.php)
+- [TGUI](https://tgui.eu) (needs to be compiled with the same version of [SFML](http://www.sfml-dev.org/index.php) that is going to used to build the game)
+- [Python](https://www.python.org) (development)
+- [Boost](https://boost.org/) (headers only)
+
+Once those are resolved open up your favorite terminal and clone the repository
+
+```sh
+$ git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
+```
+
+We make use of some open-source libraries which are included as submodules so the `--recursive` fetches them all at once.
+To build the game on Linux/Mac do the following:
+
+```sh
+$ cd bubble-warrior-adventures
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+
+On Windows you can use the [CMake](https://cmake.org) GUI which saves you the trouble of messing with the command line.
 
 ## Contributing
 
