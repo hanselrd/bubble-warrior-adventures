@@ -9,7 +9,8 @@
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _camera(window, _player)
-    , _map("world.tmx") {
+    , _map("castle_interior_polygon_walls.tmx")
+    , _player("regular_hero_male.png", "Jaime", 64) {
     _gui.setWindow(window);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
@@ -130,7 +131,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
-    _player.setPosition(300, 100);
+    _player.setPosition(1446, 1400);
     _camera.setMap(&_map);
 }
 
