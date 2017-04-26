@@ -43,6 +43,8 @@
 *.jpg   binary
 *.png   binary
 *.ttf   binary
+*.pptx  binary
+*.docx  binary
 
 ###############################################################################
 # diff behavior for common document formats

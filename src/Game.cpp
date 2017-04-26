@@ -59,7 +59,7 @@ Game::Game() {
     _window.setVerticalSyncEnabled(true);
     _gui.setWindow(_window);
 
-    _resourceHandler->emplace<tgui::Theme>("default", THEMES_DIR + _settings->getTheme());
+    _resourceHandler->emplace<tgui::Theme>(THEME_DEFAULT, THEMES_DIR + _settings->getTheme());
 
     _stateHandler->change<TitleScreen>(std::ref(_window));
 }
@@ -73,7 +73,7 @@ void Game::run() {
     float lastTime = 0.f, currentTime, delta;
 
     if (_settings->getShowFpsCounter()) {
-        auto theme = _resourceHandler->get<tgui::Theme>("default");
+        auto theme = _resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
         tgui::Label::Ptr lblFps = theme->load("Label");
         lblFps->setTextColor(sf::Color::Yellow);
         lblFps->setTextSize(30);

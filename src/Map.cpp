@@ -7,6 +7,10 @@
 #include <stdexcept>
 #include "Config.hpp"
 
+constexpr unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+constexpr unsigned FLIPPED_VERTICALLY_FLAG = 0x40000000;
+constexpr unsigned FLIPPED_DIAGONALLY_FLAG = 0x20000000;
+
 Map::Map(const std::string& filename) {
     auto success = _doc.load_file((MAPS_DIR + filename).c_str());
 
@@ -49,6 +53,10 @@ unsigned Map::getTileHeight() const {
     return _tileHeight;
 }
 
+sf::Vector2u Map::getSize() const {
+    return sf::Vector2u(getWidth() * getTileWidth(), getHeight() * getTileHeight());
+}
+
 const std::vector<Map::Tileset>& Map::getTilesets() const {
     return _tilesets;
 }
@@ -70,7 +78,8 @@ Map::Tileset::Tileset(const Map& map, const pugi::xml_node& tilesetNode) {
     auto imageNode = tilesetNode.child("image");
     if (!imageNode.empty()) {
         std::string source = imageNode.attribute("source").as_string();
-        _texture.loadFromFile(ASSETS_DIR + source.substr(3));
+        _texture = std::make_shared<sf::Texture>();
+        _texture->loadFromFile(ASSETS_DIR + source.substr(3));
     }
 }
 
@@ -106,7 +115,7 @@ unsigned Map::Tileset::getColumns() const {
     return _columns;
 }
 
-const sf::Texture& Map::Tileset::getTexture() const {
+std::shared_ptr<sf::Texture> Map::Tileset::getTexture() const {
     return _texture;
 }
 
@@ -142,6 +151,7 @@ Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
                 if (gid > 0) {
                     _tiles.push_back(Tile(map, gid));
                     _tiles.back().setPosition(x, y);
+                    _tiles.back().update();
                 }
 
                 x += map.getTileWidth();
@@ -185,7 +195,7 @@ void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (_visible) {
         if (_type == Type::Tile) {
             for (const auto& tile : _tiles)
-                if (viewRect.intersects(tile.getGlobalBounds()))
+                if (viewRect.intersects(tile.getBounds()))
                     target.draw(tile, states);
         }
         else if (_type == Type::Object) {
@@ -197,27 +207,82 @@ void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 Map::Tile::Tile(const Map& map, unsigned gid)
-    : _gid(gid) {
+    : _gid(gid)
+    , _vertices(sf::Quads, 4) {
+    bool flippedHorizontally = _gid & FLIPPED_HORIZONTALLY_FLAG;
+    bool flippedVertically = _gid & FLIPPED_VERTICALLY_FLAG;
+    bool flippedDiagonally = _gid & FLIPPED_DIAGONALLY_FLAG;
+
+    _gid &= ~(FLIPPED_HORIZONTALLY_FLAG |
+        FLIPPED_VERTICALLY_FLAG |
+        FLIPPED_DIAGONALLY_FLAG);
+
     for (const auto& tileset : map.getTilesets()) {
-        if (gid > tileset.getFirstGid() &&
-            gid < tileset.getFirstGid() + tileset.getTileCount()) {
+        if (_gid > tileset.getFirstGid() &&
+            _gid < tileset.getFirstGid() + tileset.getTileCount()) {
             const auto& texture = tileset.getTexture();
-            setTexture(texture);
-            auto tid = gid - tileset.getFirstGid();
+            _texture = texture;
+            auto tid = _gid - tileset.getFirstGid();
             auto columns = (tileset.getColumns() > 0) ? tileset.getColumns() :
-                texture.getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
+                texture->getSize().x / (tileset.getTileWidth() + tileset.getSpacing()) + tileset.getSpacing();
             auto x = tileset.getMargin() + ((tid % columns) * tileset.getTileWidth())
                 + (tileset.getSpacing() * (tid % columns));
             auto y = tileset.getMargin() + ((tid / columns) * tileset.getTileHeight())
                 + (tileset.getSpacing() * (tid / columns));
-            setTextureRect(sf::IntRect(x, y, tileset.getTileWidth(), tileset.getTileHeight()));
-            break;
+
+            _vertices[0].position = sf::Vector2f(0, 0);
+            _vertices[1].position = sf::Vector2f(tileset.getTileWidth(), 0);
+            _vertices[2].position = sf::Vector2f(tileset.getTileWidth(), tileset.getTileHeight());
+            _vertices[3].position = sf::Vector2f(0, tileset.getTileHeight());
+
+            _vertices[0].texCoords = sf::Vector2f(x + 0.5f, y + 0.5f);
+            _vertices[1].texCoords = sf::Vector2f(x + tileset.getTileWidth() - 0.5f, y + 0.5f);
+            _vertices[2].texCoords = sf::Vector2f(x + tileset.getTileWidth() - 0.5f, y + tileset.getTileHeight() - 0.5f);
+            _vertices[3].texCoords = sf::Vector2f(x + 0.5f, y + tileset.getTileHeight() - 0.5f);
+
+            // diag first followed by hori and vert flips
+            sf::Vector2f tmp;
+
+            if (flippedVertically) {
+                tmp = _vertices[0].texCoords;
+                _vertices[0].texCoords.y = _vertices[2].texCoords.y;
+                _vertices[1].texCoords.y = _vertices[2].texCoords.y;
+                _vertices[2].texCoords.y = tmp.y;
+                _vertices[3].texCoords.y = _vertices[2].texCoords.y;
+            }
+
+            if (flippedHorizontally) {
+                tmp = _vertices[0].texCoords;
+                _vertices[0].texCoords.x = _vertices[1].texCoords.x;
+                _vertices[1].texCoords.x = tmp.x;
+                _vertices[2].texCoords.x = _vertices[1].texCoords.x;
+                _vertices[3].texCoords.x = _vertices[0].texCoords.x;
+            }
+
+            if (flippedDiagonally) {
+                tmp = _vertices[1].texCoords;
+                _vertices[1].texCoords = _vertices[3].texCoords;
+                _vertices[3].texCoords = tmp;
+            }
         }
     }
 }
 
 unsigned Map::Tile::getGid() const {
     return _gid;
+}
+
+sf::FloatRect Map::Tile::getBounds() const {
+    return _vertices.getBounds();
+}
+
+void Map::Tile::update() {
+    for (std::size_t i = 0; i < _vertices.getVertexCount(); ++i)
+        _vertices[i].position = getTransform().transformPoint(_vertices[i].position);
+}
+
+void Map::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    target.draw(_vertices, _texture.get());
 }
 
 Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
@@ -233,6 +298,8 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         // Workaround for Tiled object tile bug
         _rect.top -= _rect.width;
         _tile = std::make_shared<Tile>(std::ref(map), gid);
+        _tile->setPosition(_rect.left, _rect.top);
+        _tile->update();
     }
 
     setPosition(_rect.left, _rect.top);
@@ -287,7 +354,7 @@ void initMap(py::module& m) {
         .value("Image", Map::Layer::Type::Image)
         .export_values();
 
-    py::class_<Map::Tile, sf::Transformable>(m_tmx, "Tile")
+    py::class_<Map::Tile>(m_tmx, "Tile")
         .def(py::init<const Map&, unsigned>())
         .def_property_readonly("gid", &Map::Tile::getGid);
 

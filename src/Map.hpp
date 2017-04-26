@@ -14,10 +14,11 @@ public:
     class Tileset;
 
     explicit Map(const std::string& filename);
-    unsigned getWidth() const;
-    unsigned getHeight() const;
-    unsigned getTileWidth() const;
-    unsigned getTileHeight() const;
+    unsigned getWidth() const; // tiles
+    unsigned getHeight() const; // tiles
+    unsigned getTileWidth() const; // pxls
+    unsigned getTileHeight() const; // pxls
+    sf::Vector2u getSize() const; // pxls
     const std::vector<Tileset>& getTilesets() const;
     const std::vector<Layer>& getLayers() const;
 
@@ -40,14 +41,14 @@ public:
         unsigned getMargin() const;
         unsigned getTileCount() const;
         unsigned getColumns() const;
-        const sf::Texture& getTexture() const;
+        std::shared_ptr<sf::Texture> getTexture() const;
 
     private:
         unsigned _firstGid;
         std::string _name;
         unsigned _tileWidth, _tileHeight, _spacing,
             _margin, _tileCount, _columns;
-        sf::Texture _texture;
+        std::shared_ptr<sf::Texture> _texture;
     };
 
     class Tile;
@@ -78,13 +79,19 @@ public:
         std::vector<Object> _objects;
     };
 
-    class Tile final : public sf::Sprite {
+    class Tile final : public sf::Drawable, public sf::Transformable {
     public:
         explicit Tile(const Map& map, unsigned gid);
         unsigned getGid() const;
+        sf::FloatRect getBounds() const;
+        void update();
 
     private:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
         unsigned _gid;
+        sf::VertexArray _vertices;
+        std::shared_ptr<sf::Texture> _texture;
     };
 
     class Object final : public ::Object {

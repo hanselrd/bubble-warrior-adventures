@@ -1,5 +1,6 @@
 #include "TitleScreen.hpp"
 #include "Config.hpp"
+#include "CreditsScreen.hpp"
 #include "Locator.hpp"
 #include "PlayScreen.hpp"
 #include "ResourceHandler.hpp"
@@ -17,15 +18,15 @@ TitleScreen::TitleScreen(sf::RenderWindow& window) {
     auto windowHeight = tgui::bindHeight(_gui);
 
     // Gets the default theme from the ResourceCache
-    auto theme = resourceHandler->get<tgui::Theme>("default");
+    auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
 
     // Background image
-    auto background = std::make_shared<tgui::Picture>();
+    auto background = tgui::Picture::create();
     background->setTexture(BACKGROUNDS_DIR + settings->getBackground());
     _gui.add(background);
 
     // Loads the font for the title
-    auto titleFont = resourceHandler->emplace<sf::Font>("titleFont");
+    auto titleFont = resourceHandler->emplace<sf::Font>(TITLE_FONT);
     titleFont->loadFromFile(FONTS_DIR + settings->getFont());
 
     // "Bubble Warrior" text component
@@ -82,6 +83,9 @@ TitleScreen::TitleScreen(sf::RenderWindow& window) {
     btnCredits->setPosition(BUTTON_PADDING,
         windowHeight * 3 / 5 + BUTTON_HEIGHT + BUTTON_PADDING);
     btnCredits->setText("Credits");
+    btnCredits->connect("pressed", [&] {
+        Locator<StateHandler>::get()->push<CreditsScreen>(std::ref(window));
+    });
     _gui.add(btnCredits);
 
     // Exit confirmation
@@ -136,8 +140,7 @@ void TitleScreen::handleEvent(sf::Event& e) {
     _gui.handleEvent(e);
 }
 
-void TitleScreen::update(float delta) {
-}
+void TitleScreen::update(float delta) {}
 
 void TitleScreen::draw(sf::RenderWindow& window) {
     _gui.draw();

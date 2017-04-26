@@ -1,6 +1,5 @@
 #pragma once
 
-#define WINDOW_TITLE "Bubble Warrior Adventures!"
 #define ASSETS_DIR "assets/"
 #define BACKGROUNDS_DIR ASSETS_DIR "backgrounds/"
 #define FONTS_DIR ASSETS_DIR "fonts/"
@@ -9,3 +8,7 @@
 #define SPRITES_DIR ASSETS_DIR "sprites/"
 #define THEMES_DIR ASSETS_DIR "themes/"
 #define TILESETS_DIR ASSETS_DIR "tilesets/"
+
+#define WINDOW_TITLE "Bubble Warrior Adventures!"
+#define THEME_DEFAULT "__themeDefault"
+#define TITLE_FONT "__titleFont"
