@@ -7,15 +7,10 @@
 #include "StateHandler.hpp"
 #include "TitleScreen.hpp"
 
-sf::RectangleShape bounds;
-
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _camera(window, _player)
     , _map("world.tmx") {
     _gui.setWindow(window);
-
-    bounds.setOutlineColor(sf::Color::Black);
-    bounds.setOutlineThickness(0.3f);
 
     auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
@@ -161,21 +156,7 @@ void PlayScreen::update(float delta) {
                 if (Object::checkCollision(_player, object, intersection)) {
                     lblCoords->setText(lblCoords->getText() + " Collision!");
 
-                    auto playerBounds = _player.getGlobalBounds();
-                    bounds.setSize(sf::Vector2f(intersection.width, intersection.height));
-                    bounds.setPosition(intersection.left, intersection.top);
-                    if (intersection.width > intersection.height) { // y-axis
-                        if (_player.getPosition().y < intersection.top) // top
-                            _player.move(0, -intersection.height);
-                        else if (_player.getPosition().y == intersection.top)
-                            _player.move(0, intersection.height);
-                    }
-                    if (intersection.width < intersection.height) { // x-axis
-                        if (_player.getPosition().x < intersection.left) // top
-                            ;//_player.move(-intersection.width, 0);
-                        else if (_player.getPosition().x == intersection.left)
-                            _player.move(intersection.width, 0);
-                    }
+                    _player.move(playerPosOld - playerPosNew); // if collision, move player back, choppy but works
                 }
             }
         }
@@ -188,6 +169,5 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
     window.draw(_map.getLayers().at(3));
-    window.draw(bounds);
     _gui.draw();
 }
