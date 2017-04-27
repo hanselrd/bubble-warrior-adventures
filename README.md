@@ -59,14 +59,14 @@ from source.
 
 Once those are resolved open up your favorite terminal and clone the repository
 
-```sh
+```
 $ git clone https://github.com/hanselrd/bubble-warrior-adventures.git --recursive
 ```
 
 We make use of some open-source libraries which are included as submodules so the `--recursive` fetches them all at once.
 To build the game on Linux/Mac do the following:
 
-```sh
+```
 $ cd bubble-warrior-adventures
 $ mkdir build
 $ cd build

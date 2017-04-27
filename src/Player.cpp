@@ -55,7 +55,6 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
 void Player::handleEvent(sf::Event& e) {}
 
 void Player::update(float delta) {
-    Entity::update(delta);
 
     if (isAttacking() && !isPlaying())
         _isAttacking = false;
@@ -92,14 +91,34 @@ void Player::update(float delta) {
         _direction = Direction::Right;
         play(*_currentAnimation);
     }
-    else {
-        if (_noKeyWasPressed && !isAttacking()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
+		_isAttacking = true;
+        // Error handling for the different animation lengths
+        if (_currentFrame != 0 && !isAttacking()) {
             _currentFrame = 0;
-            stop();
         }
-        _noKeyWasPressed = true;
-        _isLooped = false;
+        if (_currentFrame >= _currentAnimation->getSize()) {
+            _currentFrame = 0;
+        }
+        _isLooped = true;
+        _noKeyWasPressed = false;
+        if (_direction == Direction::Up)
+            _currentAnimation = &_attackUp;
+        else if (_direction == Direction::Left)
+            _currentAnimation = &_attackLeft;
+        else if (_direction == Direction::Down)
+            _currentAnimation = &_attackDown;
+        else if (_direction == Direction::Right)
+            _currentAnimation = &_attackRight;
+        play(*_currentAnimation);
     }
+    Entity::update(delta);
+    if (_noKeyWasPressed && !isAttacking()) {
+        _currentFrame = 0;
+        stop();
+    }
+    _noKeyWasPressed = true;
+    _isLooped = false;
 }
 
 unsigned Player::getMana() const {
