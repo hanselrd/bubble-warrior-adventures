@@ -102,7 +102,7 @@ void Entity::update(float delta) {
 				_frameDelay = 0;
             }
         }
-
+        
         // set the current frame, not reseting the time
         setFrame(_currentFrame);
         _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
@@ -170,6 +170,9 @@ bool Entity::isPlaying() const {
 
 void Entity::setFrame(std::size_t n) {
     if (_animation) {
+        if (n >= _animation->getSize()) {
+            n = 0;
+        }
         sf::IntRect rect = _animation->getFrame(n);
         _intRect = rect;
         _sprite.setTextureRect(rect);

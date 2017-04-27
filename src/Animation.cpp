@@ -17,5 +17,12 @@ std::size_t Animation::getSize() const {
 }
 
 sf::IntRect Animation::getFrame(std::size_t n) const {
-    return _frames[n];
+    sf::IntRect temp;
+    try {
+        temp = _frames[n];
+    }
+    catch (const std::exception& e) {
+        temp =_frames[0];
+    }
+    return temp;
 }
