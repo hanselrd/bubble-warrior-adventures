@@ -33,11 +33,11 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     // Offsets
     constexpr unsigned STATS_OFFSET = 170;
 
-    auto lblCoords = tgui::Label::create();
-    lblCoords->setTextColor(sf::Color::Cyan);
-    lblCoords->setTextSize(30);
-    lblCoords->setPosition(0, 30);
-    _gui.add(lblCoords, "lblCoords");
+    //auto lblCoords = tgui::Label::create();
+    //lblCoords->setTextColor(sf::Color::Cyan);
+    //lblCoords->setTextSize(30);
+    //lblCoords->setPosition(0, 30);
+    //_gui.add(lblCoords, "lblCoords");
 
     auto btnMainMenu = tgui::Button::create();
     btnMainMenu->setPosition(0, 60);
@@ -148,15 +148,15 @@ void PlayScreen::update(float delta) {
     auto playerPosNew = _player.getPosition();
     auto playerPos = _player.getPosition();
 
-    auto lblCoords = _gui.get<tgui::Label>("lblCoords");
-    lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
+    //auto lblCoords = _gui.get<tgui::Label>("lblCoords");
+    //lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
 
     for (const auto& layer : _map.getLayers()) {
         if (layer.getType() == Map::Layer::Type::Object) {
             for (const auto& object : layer.getObjects()) {
                 sf::FloatRect intersection;
                 if (Object::checkCollision(_player, object, intersection)) {
-                    lblCoords->setText(lblCoords->getText() + " Collision!");
+                    //lblCoords->setText(lblCoords->getText() + " Collision!");
 
                     _player.move(playerPosOld - playerPosNew); // if collision, move player back, choppy but works
                 }
