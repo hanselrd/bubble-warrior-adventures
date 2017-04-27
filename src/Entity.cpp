@@ -71,8 +71,8 @@ Entity::~Entity() {}
 sf::FloatRect Entity::getLocalBounds() const {
     if (_spriteFormat > 0) {
         auto temp = _sprite.getLocalBounds();
-        temp.width /= 32;
-        temp.height /= 8;
+        temp.width /= 15;
+        temp.height /= 2;
         return temp;
     }
     else
