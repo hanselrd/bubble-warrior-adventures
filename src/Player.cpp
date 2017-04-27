@@ -112,6 +112,39 @@ void Player::update(float delta) {
             _currentAnimation = &_attackRight;
         play(*_currentAnimation);
     }
+    /*
+    *   "Cheat codes" for testing
+    */
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+        levelUp();
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+        if (_health >= 5) {
+            _health -= 5;
+        }
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
+        _isAttacking = true;
+        // Error handling for the different animation lengths
+        if (_currentFrame != 0 && !isAttacking()) {
+            _currentFrame = 0;
+        }
+        _isLooped = true;
+        _noKeyWasPressed = false;
+        if (_direction == Direction::Up) {
+            _currentAnimation = &_attackUp;
+        }
+        else if (_direction == Direction::Left) {
+            _currentAnimation = &_attackLeft;
+        }
+        else if (_direction == Direction::Down) {
+            _currentAnimation = &_attackDown;
+        }
+        else if (_direction == Direction::Right) {
+            _currentAnimation = &_attackRight;
+        }
+        play(*_currentAnimation);
+    }
     Entity::update(delta);
     if (_noKeyWasPressed && !isAttacking()) {
         _currentFrame = 0;
