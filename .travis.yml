@@ -1,9 +1,22 @@
 language: cpp
 sudo: required
+matrix:
+    include:
+        os: linux
+        addons:
+            apt:
+                sources:
+                    ubuntu-toolchain-r-test
+                packages:
+                    - g++-5
+                    - cmake
+                    - libboost-dev
+                    - libsfml-dev
+        env:
+            - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+before_install:
+    eval: "${MATRIX_EVAL}"
 install:
-    - sudo apt install cmake -y
-    - sudo apt install libboost-dev -y
-    - sudo apt install libsfml-dev -y
     - git clone -b 0.7 --single-branch https://github.com/texus/TGUI.git tgui
     - cd tgui
     - mkdir build
