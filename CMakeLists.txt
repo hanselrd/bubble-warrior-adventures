@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 2.6)
 
 # define a macro that helps defining an option
 macro(game_set_option var default type docstring)
@@ -28,7 +28,7 @@ set(MAJOR_VERSION 0)
 set(MAJOR_VERSION 1)
 
 # C++14
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
