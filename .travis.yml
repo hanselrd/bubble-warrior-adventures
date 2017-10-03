@@ -1,0 +1,25 @@
+language: cpp
+dist: trusty
+sudo: required
+matrix:
+    include:
+        os: linux
+        addons:
+            apt:
+                packages:
+                    - cmake
+                    - libboost-dev
+                    - libsfml-dev
+install:
+  - git clone -b 0.7 --single-branch https://github.com/texus/TGUI.git tgui
+  - cd tgui
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - sudo make install
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make

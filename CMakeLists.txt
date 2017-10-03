@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 # define a macro that helps defining an option
 macro(game_set_option var default type docstring)
@@ -27,6 +27,9 @@ project(game)
 set(MAJOR_VERSION 0)
 set(MAJOR_VERSION 1)
 
+# C++14
+set(CMAKE_CXX_STANDARD 14)
+
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
@@ -47,7 +50,7 @@ find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
 find_package(TGUI REQUIRED)
 set(Python_ADDITIONAL_VERSIONS 3.4)
 find_package(PythonLibs 3 REQUIRED)
-find_package(Boost 1.61.0 REQUIRED)
+find_package(Boost REQUIRED)
 
 # FindSFML couldn't find SFML
 if (NOT SFML_FOUND)
