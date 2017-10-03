@@ -14,7 +14,7 @@ matrix:
                     - libsfml-dev
         env: MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
 before_install:
-    - eval "${MATRIX_EVAL}"
+    - eval ${MATRIX_EVAL}
 install:
     - git clone -b 0.7 --single-branch https://github.com/texus/TGUI.git tgui
     - cd tgui
