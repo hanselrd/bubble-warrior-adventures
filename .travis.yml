@@ -3,7 +3,7 @@ sudo: required
 install:
     - sudo apt install cmake -y
     - sudo apt install libboost-dev -y
-    - sudo apt libsfml-dev -y
+    - sudo apt install libsfml-dev -y
     - git clone -b 0.7 --single-branch https://github.com/texus/TGUI.git tgui
     - cd tgui
     - mkdir build
