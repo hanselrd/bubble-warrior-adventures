@@ -1,6 +1,6 @@
 #include "Entity.hpp"
 
-Entity::Entity(const std::string& filePath, unsigned spriteFormat) {
+Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
     _sprite.setTexture(_texture);
     _intRect = sf::IntRect(0, (spriteFormat * 10), spriteFormat, spriteFormat);
@@ -61,11 +61,9 @@ Entity::Entity(const std::string& filePath, unsigned spriteFormat) {
     _currentAnimation = &_standing;
 }
 
-Entity::Entity(float radius, const sf::Color& color) {
-    _circle.setRadius(radius);
-    _circle.setFillColor(color);
+Entity::Entity() {
+    Entity("golden_hero_male_no_shield", 64);
 }
-
 Entity::~Entity() {}
 
 sf::FloatRect Entity::getLocalBounds() const {
@@ -206,3 +204,9 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     else
         target.draw(_circle, states);
 }
+
+Entity::Direction Entity::getDirection()
+{
+    return _direction;
+}
+

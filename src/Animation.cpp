@@ -21,7 +21,7 @@ sf::IntRect Animation::getFrame(std::size_t n) const {
     try {
         temp = _frames[n];
     }
-    catch (const std::exception& e) {
+    catch (const std::exception&) {
         temp =_frames[0];
     }
     return temp;

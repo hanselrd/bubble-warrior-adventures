@@ -1,3 +1,4 @@
+#include "Enemy.hpp"
 #include "Map.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <pybind11/stl.h>
@@ -150,7 +151,7 @@ Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
 
                 if (gid > 0) {
                     _tiles.push_back(Tile(map, gid));
-                    _tiles.back().setPosition(x, y);
+                    _tiles.back().setPosition((float)x, (float)y);
                     _tiles.back().update();
                 }
 
@@ -230,15 +231,15 @@ Map::Tile::Tile(const Map& map, unsigned gid)
             auto y = tileset.getMargin() + ((tid / columns) * tileset.getTileHeight())
                 + (tileset.getSpacing() * (tid / columns));
 
-            _vertices[0].position = sf::Vector2f(0, 0);
-            _vertices[1].position = sf::Vector2f(tileset.getTileWidth(), 0);
-            _vertices[2].position = sf::Vector2f(tileset.getTileWidth(), tileset.getTileHeight());
-            _vertices[3].position = sf::Vector2f(0, tileset.getTileHeight());
+            _vertices[0].position = sf::Vector2f(0.0f, 0.0f);
+            _vertices[1].position = sf::Vector2f((float)tileset.getTileWidth(), 0.0f);
+            _vertices[2].position = sf::Vector2f((float)tileset.getTileWidth(), (float)tileset.getTileHeight());
+            _vertices[3].position = sf::Vector2f(0.0f, (float)tileset.getTileHeight());
 
             _vertices[0].texCoords = sf::Vector2f(x + 0.5f, y + 0.5f);
-            _vertices[1].texCoords = sf::Vector2f(x + tileset.getTileWidth() - 0.5f, y + 0.5f);
-            _vertices[2].texCoords = sf::Vector2f(x + tileset.getTileWidth() - 0.5f, y + tileset.getTileHeight() - 0.5f);
-            _vertices[3].texCoords = sf::Vector2f(x + 0.5f, y + tileset.getTileHeight() - 0.5f);
+            _vertices[1].texCoords = sf::Vector2f(x + (float)tileset.getTileWidth() - 0.5f, y + 0.5f);
+            _vertices[2].texCoords = sf::Vector2f(x + (float)tileset.getTileWidth() - 0.5f, y + (float)tileset.getTileHeight() - 0.5f);
+            _vertices[3].texCoords = sf::Vector2f(x + 0.5f, y + (float)tileset.getTileHeight() - 0.5f);
 
             // diag first followed by hori and vert flips
             sf::Vector2f tmp;
@@ -298,11 +299,11 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         // Workaround for Tiled object tile bug
         _rect.top -= _rect.width;
         _tile = std::make_shared<Tile>(std::ref(map), gid);
-        _tile->setPosition(_rect.left, _rect.top);
+        _tile->setPosition((float)_rect.left,(float) _rect.top);
         _tile->update();
     }
 
-    setPosition(_rect.left, _rect.top);
+    setPosition((float)_rect.left,(float)_rect.top);
 }
 
 const std::string& Map::Object::getName() const {
@@ -318,7 +319,7 @@ const sf::IntRect& Map::Object::getRect() const {
 }
 
 sf::FloatRect Map::Object::getLocalBounds() const {
-    return sf::FloatRect(0.f, 0.f, _rect.width, _rect.height);
+    return sf::FloatRect(0.f, 0.f, (float)_rect.width, (float)_rect.height);
 }
 
 void Map::Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {

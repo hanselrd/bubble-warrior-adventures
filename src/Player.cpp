@@ -15,9 +15,9 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _intRect = sf::IntRect(0, spriteFormat * 8, spriteFormat, spriteFormat);
     _name = playerName;
     _attackDamage = 1;
-    _noKeyWasPressed = true;
+    _noKeyPressed = true;
 	_isAttacking = false;
-    _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f);
+    _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f); // The magic that makes collision work between attack/standing
 
     _attackUp.setSpriteSheet(_texture);
     _attackUp.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 22), (64 * 3), (64 * 1)));
@@ -56,9 +56,58 @@ void Player::handleEvent(sf::Event& e) {}
 
 void Player::update(float delta) {
 
-    if (isAttacking() && !isPlaying())
+    // If you are not attacking or game is paused, set attacking to false
+    if (!isPlaying()) {
+        _isLooped = false;
         _isAttacking = false;
+    }
+    //**************************************************
+    //*ANIMATE**ANIMATE*ANIMATE*ANIMATE*ANIMATE*ANIMATE*
+    //**************************************************
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
+        _currentAnimation = &_walkingUp;
+        _direction = Direction::Up;
+        _isLooped = true;
+        _noKeyPressed = false;
+        play(*_currentAnimation);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
+        _currentAnimation = &_walkingLeft;
+        _direction = Direction::Left;
+        _isLooped = true;
+        _noKeyPressed = false;
+        play(*_currentAnimation);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
+        _currentAnimation = &_walkingDown;
+        _direction = Direction::Down;
+        _isLooped = true;
+        _noKeyPressed = false;
+        play(*_currentAnimation);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
+        _currentAnimation = &_walkingRight;
+        _direction = Direction::Right;
+        _isLooped = true;
+        _noKeyPressed = false;
+        play(*_currentAnimation);
+    }
+    // Move up with 'W' key
+    if (_direction == Direction::Up && !_noKeyPressed) {
+        move(0, -_velocity.y * delta);
+    }
+    // Move left with 'A' key
+    if (_direction == Direction::Left && !_noKeyPressed) {
+        move(-_velocity.x * delta, 0);
+    }
+    if (_direction == Direction::Down && !_noKeyPressed) {
+        move(0, _velocity.y * delta);
+    }
+    if (_direction == Direction::Right && !_noKeyPressed) {
+        move(_velocity.x * delta, 0);
+    }
 
+/*
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
         move(0, -_velocity.y * delta);
         _isLooped = true;
@@ -90,7 +139,7 @@ void Player::update(float delta) {
         _currentAnimation = &_walkingRight;
         _direction = Direction::Right;
         play(*_currentAnimation);
-    }
+    }*/
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
 		_isAttacking = true;
         // Error handling for the different animation lengths
@@ -101,7 +150,7 @@ void Player::update(float delta) {
             _currentFrame = 0;
         }
         _isLooped = true;
-        _noKeyWasPressed = false;
+        _noKeyPressed = false;
         if (_direction == Direction::Up)
             _currentAnimation = &_attackUp;
         else if (_direction == Direction::Left)
@@ -130,7 +179,7 @@ void Player::update(float delta) {
             _currentFrame = 0;
         }
         _isLooped = true;
-        _noKeyWasPressed = false;
+        _noKeyPressed = false;
         if (_direction == Direction::Up) {
             _currentAnimation = &_attackUp;
         }
@@ -146,11 +195,11 @@ void Player::update(float delta) {
         play(*_currentAnimation);
     }
     Entity::update(delta);
-    if (_noKeyWasPressed && !isAttacking()) {
+    if (_noKeyPressed && !isAttacking()) {
         _currentFrame = 0;
         stop();
     }
-    _noKeyWasPressed = true;
+    _noKeyPressed = true;
     _isLooped = false;
 }
 

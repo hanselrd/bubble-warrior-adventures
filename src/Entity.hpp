@@ -5,10 +5,30 @@
 #include "Object.hpp"
 
 class Entity : public Object {
+protected:
+    sf::CircleShape _circle;
+    unsigned _level;
+    unsigned _health;
+    unsigned _spriteFormat;
+    sf::Vector2f _velocity;
+    sf::Texture _texture;
+    sf::Sprite _sprite;
+    const Animation* _animation;
+    const sf::Texture* _tempTexture;
+    float _frameDelay;
+    sf::IntRect _intRect;
+    std::size_t _currentFrame;
+    bool _isPaused, _isLooped;
+    Animation _walkingUp, _walkingLeft, _walkingDown, _walkingRight, _standing;
+    Animation* _currentAnimation;
+
 public:
-    explicit Entity(const std::string& filePath, unsigned spriteFormat);
-    explicit Entity(float radius, const sf::Color& color);
-    virtual ~Entity();
+    enum class Direction { Up, Left, Down, Right } _direction;
+    Entity::Direction getDirection();
+
+    Entity(const std::string& filePath, int spriteFormat);
+    Entity();
+    ~Entity();
     sf::FloatRect getLocalBounds() const override;
     void update(float delta);
     void setAnimation(const Animation& animation);
@@ -25,25 +45,6 @@ public:
     sf::Vector2f getVelocity() const;
     void setHealth(unsigned val);
     void setLevel(unsigned val);
-
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-protected:
-    enum class Direction { Up, Left, Down, Right } _direction;
-    sf::CircleShape _circle;
-    unsigned _level;
-    unsigned _health;
-    unsigned _spriteFormat;
-    sf::Vector2f _velocity;
-    sf::Texture _texture;
-    sf::Sprite _sprite;
-    const Animation* _animation;
-    const sf::Texture* _tempTexture;
-    float _frameDelay;
-    sf::IntRect _intRect;
-    std::size_t _currentFrame;
-    bool _isPaused, _isLooped;
-    Animation _walkingUp, _walkingLeft, _walkingDown, _walkingRight, _standing;
-    Animation* _currentAnimation;
 };

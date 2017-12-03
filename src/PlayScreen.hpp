@@ -1,8 +1,10 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include "Camera.hpp"
 #include "MapHandler.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "State.hpp"
 
 class PlayScreen final : public State {
@@ -17,6 +19,7 @@ private:
     Camera _camera;
     Map _map; // Testing (should use a MapHandler)
     Player _player;
+    std::vector<Enemy> _enemies; 
     sf::Clock _overlayUpdate;
     std::shared_ptr<MapHandler> _mapHandler;
 };
