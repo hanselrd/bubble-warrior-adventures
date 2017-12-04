@@ -17,7 +17,7 @@ public:
     void levelUp();
 
 private:
-    unsigned _mana, _maxMana, _maxHealth;
+    unsigned _mana, _maxMana, _maxHealth, _maxLevel;
     unsigned _attackDamage;
     float _exp, _maxExp;
     float _armor;

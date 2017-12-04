@@ -148,7 +148,6 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
 void PlayScreen::handleEvent(sf::Event& e) {
     _gui.handleEvent(e);
-    updateOverlay();
 }
 
 void PlayScreen::update(float delta) {
@@ -156,7 +155,7 @@ void PlayScreen::update(float delta) {
     _player.update(delta);
     _camera.update(delta);
 
-
+    updateOverlay();
     auto playerPosNew = _player.getPosition();
     auto playerPos = _player.getPosition();
 
@@ -184,6 +183,7 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_enemies[0]);
     window.draw(_player);
     window.draw(_map.getLayers().at(3));
+    updateOverlay();
     _gui.draw();
 }
 

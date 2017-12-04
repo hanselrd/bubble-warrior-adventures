@@ -1,9 +1,12 @@
 #include "Player.hpp"
+#include <iostream>
 #include <cmath>
 
+#define MOVEMENT_SPEED_LEVEL_UP_FACTOR = 0.15f
 Player::Player(std::string filePath, std::string playerName, unsigned spriteFormat)
     : Entity(filePath, spriteFormat) {
     _level = 1;
+    _maxLevel = 1000;
     _exp = 0;
     _maxExp = 20;
     _health = 10;
@@ -64,102 +67,92 @@ void Player::update(float delta) {
     //**************************************************
     //*ANIMATE**ANIMATE*ANIMATE*ANIMATE*ANIMATE*ANIMATE*
     //**************************************************
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
-        _currentAnimation = &_walkingUp;
-        _direction = Direction::Up;
-        _isLooped = true;
-        _noKeyPressed = false;
-        play(*_currentAnimation);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
-        _currentAnimation = &_walkingLeft;
-        _direction = Direction::Left;
-        _isLooped = true;
-        _noKeyPressed = false;
-        play(*_currentAnimation);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
-        _currentAnimation = &_walkingDown;
-        _direction = Direction::Down;
-        _isLooped = true;
-        _noKeyPressed = false;
-        play(*_currentAnimation);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
-        _currentAnimation = &_walkingRight;
-        _direction = Direction::Right;
-        _isLooped = true;
-        _noKeyPressed = false;
-        play(*_currentAnimation);
-    }
-    // Move up with 'W' key
-    if (_direction == Direction::Up && !_noKeyPressed) {
-        move(0, -_velocity.y * delta);
-    }
-    // Move left with 'A' key
-    if (_direction == Direction::Left && !_noKeyPressed) {
-        move(-_velocity.x * delta, 0);
-    }
-    if (_direction == Direction::Down && !_noKeyPressed) {
-        move(0, _velocity.y * delta);
-    }
-    if (_direction == Direction::Right && !_noKeyPressed) {
-        move(_velocity.x * delta, 0);
-    }
+    {
+        // Update animation
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
+            _currentAnimation = &_walkingUp;
+            _direction = Direction::Up;
+            _isLooped = true;
+            _noKeyPressed = false;
+            play(*_currentAnimation);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
+            _currentAnimation = &_walkingLeft;
+            _direction = Direction::Left;
+            _isLooped = true;
+            _noKeyPressed = false;
+            play(*_currentAnimation);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
+            _currentAnimation = &_walkingDown;
+            _direction = Direction::Down;
+            _isLooped = true;
+            _noKeyPressed = false;
+            play(*_currentAnimation);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
+            _currentAnimation = &_walkingRight;
+            _direction = Direction::Right;
+            _isLooped = true;
+            _noKeyPressed = false;
+            play(*_currentAnimation);
+        }
 
-/*
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
-        move(0, -_velocity.y * delta);
-        _isLooped = true;
-        _noKeyWasPressed = false;
-        _currentAnimation = &_walkingUp;
-        _direction = Direction::Up;
-        play(*_currentAnimation);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
-        move(-_velocity.x * delta, 0);
-        _isLooped = true;
-        _noKeyWasPressed = false;
-        _currentAnimation = &_walkingLeft;
-        _direction = Direction::Left;
-        play(*_currentAnimation);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
-        move(0, _velocity.y * delta);
-        _isLooped = true;
-        _noKeyWasPressed = false;
-        _currentAnimation = &_walkingDown;
-        _direction = Direction::Down;
-        play(*_currentAnimation);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
-        move(_velocity.x * delta, 0);
-        _isLooped = true;
-        _noKeyWasPressed = false;
-        _currentAnimation = &_walkingRight;
-        _direction = Direction::Right;
-        play(*_currentAnimation);
-    }*/
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
-		_isAttacking = true;
-        // Error handling for the different animation lengths
-        if (_currentFrame != 0 && !isAttacking()) {
-            _currentFrame = 0;
+        // Change character movement and include sprinting with Left Shift
+
+        int run_multiplier = 2.0f;
+
+        // If LShift is not pressed, 'run' is off
+        if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
+            run_multiplier = 1.0f;
         }
-        if (_currentFrame >= _currentAnimation->getSize()) {
-            _currentFrame = 0;
+        // Move up with 'W' key
+        if (_direction == Direction::Up && !_noKeyPressed) {
+            move(0, -_velocity.y * delta * run_multiplier);
         }
-        _isLooped = true;
-        _noKeyPressed = false;
-        if (_direction == Direction::Up)
-            _currentAnimation = &_attackUp;
-        else if (_direction == Direction::Left)
-            _currentAnimation = &_attackLeft;
-        else if (_direction == Direction::Down)
-            _currentAnimation = &_attackDown;
-        else if (_direction == Direction::Right)
-            _currentAnimation = &_attackRight;
-        play(*_currentAnimation);
+        // Move left with 'A' key
+        if (_direction == Direction::Left && !_noKeyPressed) {
+            move(-_velocity.x * delta * run_multiplier, 0);
+        }
+        // Move down with 'S' key
+        if (_direction == Direction::Down && !_noKeyPressed) {
+            move(0, _velocity.y * delta* run_multiplier);
+        }
+        // Move right with 'D' key
+        if (_direction == Direction::Right && !_noKeyPressed) {
+            move(_velocity.x * delta * run_multiplier, 0);
+        }
+    }
+    // End Animate
+
+
+    //**************************************************
+    //*ATTACKING**ATTACKING**ATTACKING*ATTACKING********
+    //**************************************************
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
+            // Error handling for the different animation lengths
+            if (_currentFrame != 0 && !isAttacking()) {
+                _currentFrame = 0;
+                _isAttacking = true;
+            }
+            // Check the current frame with the animation queue size.
+            // Resets current frame to start of queue.
+            if (_currentFrame >= _currentAnimation->getSize()) {
+                _currentFrame = 0;
+            }
+            _isLooped = true;
+            _noKeyPressed = false;
+            if (_direction == Direction::Up)
+                _currentAnimation = &_attackUp;
+            else if (_direction == Direction::Left)
+                _currentAnimation = &_attackLeft;
+            else if (_direction == Direction::Down)
+                _currentAnimation = &_attackDown;
+            else if (_direction == Direction::Right)
+                _currentAnimation = &_attackRight;
+            play(*_currentAnimation);
+        }
     }
     /*
     *   "Cheat codes" for testing
@@ -233,17 +226,24 @@ const std::string& Player::getName() const {
 
 void Player::levelUp() {
     // Increase the experience cap and reset current exp to 0;
-    _maxExp = std::ceil(_maxExp * 1.1f);
     _exp = 0.0f;
+
     _level += 1;
+    // EXP calculation
+    _maxExp = floor(10 * (_level * 1.10));
 
-    if (_level % 5 == 0) {
-        _velocity.x += 0.05f;
-        _velocity.y += 0.05f;
-    }
-    _maxMana += 10;
-    _mana += 10;
+    // End EXP calculation
+    //if (_level % 3 == 0) {
+    //    _velocity = sf::Vector2f(_velocity.x + 0.15f, _velocity.y + 0.15f);
+    //}
+    _maxMana += 1;
+    _mana += 1;
 
-    _maxHealth += 10;
-    _health += 10;
+    _maxHealth += 1;
+    _health += 1;
+
+    //*********************INSERT GUI BELOW FOR LEVEL UP INFO AND PAUSE GAME
+    //***********
+    //***********
+    //***********************************************************************
 }
