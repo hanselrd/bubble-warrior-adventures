@@ -129,8 +129,8 @@ void Player::update(float delta) {
         levelUp();
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
-        if (_health >= 5) {
-            _health -= 5;
+        if (_health >= 1) {
+            _health -= 1;
         }
     }
     //else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {

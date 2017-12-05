@@ -105,8 +105,8 @@ void Game::run() {
         }
 
         _window.clear();
-        _gui.draw();
         _stateHandler->draw(_window);
+        _gui.draw();
         _window.display();
     }
 }
