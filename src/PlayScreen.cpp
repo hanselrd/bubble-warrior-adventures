@@ -33,8 +33,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
     // NPC drawing/initialization
     // Edit this section with script code ******************************************************************
-    _enemies.push_back(Enemy::Enemy("regular_hero_female.png", "enemy0", 64));
-    
+    _enemies.push_back(std::make_shared<Enemy>("regular_hero_female.png", "enemy0", 64));
+
     /************************************************************
     *GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*
     *************************************************************/
@@ -141,7 +141,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
-    _enemies.front().setPosition(1446, 1300);
+    _enemies.front()->setPosition(1446, 1300);
     _player.setPosition(1446, 1320);
     _camera.setMap(&_map);
 }
@@ -154,7 +154,7 @@ void PlayScreen::update(float delta) {
     auto playerPosOld = _player.getPosition();
     _player.update(delta);
     for (int i = 0; i < _enemies.size(); i++) {
-        _enemies[i].update(delta);
+        _enemies[i]->update(delta);
     }
     _camera.update(delta);
 
@@ -184,7 +184,7 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    window.draw(_enemies.at(0));
+    window.draw(*_enemies.at(0));
     window.draw(_map.getLayers().at(3));
     updateOverlay();
     _gui.draw();

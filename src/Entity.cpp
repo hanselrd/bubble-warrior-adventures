@@ -17,7 +17,7 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
 }
 
 Entity::Entity() {
-    Entity("golden_hero_male_no_shield", 64);
+    Entity("golden_hero_male_no_shield.png", 64);
 }
 Entity::~Entity() {}
 
@@ -56,7 +56,7 @@ void Entity::update(float delta) {
 				_frameDelay = 0;
             }
         }
-        
+
         // set the current frame, not reseting the time
         setFrame(_currentFrame);
         _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);

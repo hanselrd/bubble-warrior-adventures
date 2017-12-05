@@ -27,6 +27,9 @@ project(game)
 set(MAJOR_VERSION 0)
 set(MAJOR_VERSION 1)
 
+# Require c++14
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+
 # Disable deprecated warnings from SFML
 add_definitions(-DSFML_NO_DEPRECATED_WARNINGS)
 
@@ -47,7 +50,7 @@ find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
 find_package(TGUI REQUIRED)
 set(Python_ADDITIONAL_VERSIONS 3.4)
 find_package(PythonLibs 3 REQUIRED)
-find_package(Boost 1.61.0 REQUIRED)
+find_package(Boost 1.50 REQUIRED)
 
 # FindSFML couldn't find SFML
 if (NOT SFML_FOUND)
