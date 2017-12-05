@@ -33,7 +33,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
     // NPC drawing/initialization
     // Edit this section with script code ******************************************************************
-    _enemies.push_back(Enemy::Enemy("regular_hero_male.png", "enemy0", 64));
+    _enemies.push_back(Enemy::Enemy("regular_hero_female.png", "enemy0", 64));
     
     /************************************************************
     *GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*
@@ -141,8 +141,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
-    _enemies.at(0).setPosition(1446, 1300);
-    _player.setPosition(1446, 1400);
+    _enemies.front().setPosition(1446, 1300);
+    _player.setPosition(1446, 1320);
     _camera.setMap(&_map);
 }
 
@@ -153,6 +153,9 @@ void PlayScreen::handleEvent(sf::Event& e) {
 void PlayScreen::update(float delta) {
     auto playerPosOld = _player.getPosition();
     _player.update(delta);
+    for (int i = 0; i < _enemies.size(); i++) {
+        _enemies[i].update(delta);
+    }
     _camera.update(delta);
 
     updateOverlay();
@@ -180,8 +183,8 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
-    window.draw(_enemies[0]);
     window.draw(_player);
+    window.draw(_enemies.at(0));
     window.draw(_map.getLayers().at(3));
     updateOverlay();
     _gui.draw();
@@ -189,7 +192,7 @@ void PlayScreen::draw(sf::RenderWindow& window) {
 
 void PlayScreen::updateOverlay()
 {
-    if (_overlayUpdate.getElapsedTime().asSeconds() >= 0.01f) {
+    if (_overlayUpdate.getElapsedTime().asSeconds() >= 0.04f) {
         tgui::Label::Ptr lvl = _gui.get<tgui::Label>("lblLevel", true);
         lvl->setText("Lv. " + std::to_string(_player.getLevel()));
 

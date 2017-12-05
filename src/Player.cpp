@@ -2,7 +2,6 @@
 #include <iostream>
 #include <cmath>
 
-#define MOVEMENT_SPEED_LEVEL_UP_FACTOR = 0.15f
 Player::Player(std::string filePath, std::string playerName, unsigned spriteFormat)
     : Entity(filePath, spriteFormat) {
     _level = 1;
@@ -15,44 +14,13 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _maxMana = 10;
     _velocity = sf::Vector2f(70.0f, 70.0f);
     _armor = 0.0f;
-    _intRect = sf::IntRect(0, spriteFormat * 8, spriteFormat, spriteFormat);
     _name = playerName;
     _attackDamage = 1;
     _noKeyPressed = true;
 	_isAttacking = false;
     _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f); // The magic that makes collision work between attack/standing
 
-    _attackUp.setSpriteSheet(_texture);
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 22), (64 * 3), (64 * 1)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 22), (64 * 3), (64 * 1)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 22), (64 * 3), (64 * 1)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 22), (64 * 3), (64 * 1)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 22), (64 * 3), (64 * 1)));
-    _attackUp.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 22), (64 * 3), (64 * 1)));
-
-    _attackLeft.setSpriteSheet(_texture);
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 25), 64 * 3, 64 * 1));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 25), 64 * 3, 64 * 1));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 25), 64 * 3, 64 * 1));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 25), 64 * 3, 64 * 1));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 25), 64 * 3, 64 * 1));
-    _attackLeft.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 25), 64 * 3, 64 * 1));
-
-    _attackDown.setSpriteSheet(_texture);
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 28), 64 * 3, 64 * 1));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 28), 64 * 3, 64 * 1));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 28), 64 * 3, 64 * 1));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 28), 64 * 3, 64 * 1));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 28), 64 * 3, 64 * 1));
-    _attackDown.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 28), 64 * 3, 64 * 1));
-
-    _attackRight.setSpriteSheet(_texture);
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 0), (64 * 31), 64 * 3, 64 * 1));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 1), (64 * 31), 64 * 3, 64 * 1));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 2), (64 * 31), 64 * 3, 64 * 1));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 3), (64 * 31), 64 * 3, 64 * 1));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 4), (64 * 31), 64 * 3, 64 * 1));
-    _attackRight.addFrame(sf::IntRect(((64 * 3) * 5), (64 * 31), 64 * 3, 64 * 1));
+    generateAttackAnimations(spriteFormat);
 }
 
 void Player::handleEvent(sf::Event& e) {}
@@ -165,35 +133,35 @@ void Player::update(float delta) {
             _health -= 5;
         }
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
-        _isAttacking = true;
-        // Error handling for the different animation lengths
-        if (_currentFrame != 0 && !isAttacking()) {
-            _currentFrame = 0;
-        }
-        _isLooped = true;
-        _noKeyPressed = false;
-        if (_direction == Direction::Up) {
-            _currentAnimation = &_attackUp;
-        }
-        else if (_direction == Direction::Left) {
-            _currentAnimation = &_attackLeft;
-        }
-        else if (_direction == Direction::Down) {
-            _currentAnimation = &_attackDown;
-        }
-        else if (_direction == Direction::Right) {
-            _currentAnimation = &_attackRight;
-        }
-        play(*_currentAnimation);
-    }
+    //else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && !isAttacking()) {
+    //    _isAttacking = true;
+    //    // Error handling for the different animation lengths
+    //    if (_currentFrame != 0 && !isAttacking()) {
+    //        _currentFrame = 0;
+    //    }
+    //    _isLooped = true;
+    //    _noKeyPressed = false;
+    //    if (_direction == Direction::Up) {
+    //        _currentAnimation = &_attackUp;
+    //    }
+    //    else if (_direction == Direction::Left) {
+    //        _currentAnimation = &_attackLeft;
+    //    }
+    //    else if (_direction == Direction::Down) {
+    //        _currentAnimation = &_attackDown;
+    //    }
+    //    else if (_direction == Direction::Right) {
+    //        _currentAnimation = &_attackRight;
+    //    }
+    //    play(*_currentAnimation);
+    //}
+    _isLooped = false;
     Entity::update(delta);
     if (_noKeyPressed && !isAttacking()) {
-        _currentFrame = 0;
+        // Current frame set to correct standing position
         stop();
     }
     _noKeyPressed = true;
-    _isLooped = false;
 }
 
 unsigned Player::getMana() const {

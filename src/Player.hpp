@@ -24,9 +24,4 @@ private:
     std::string _name;
 
     bool _isAttacking, _noKeyPressed;
-
-    Animation _attackUp;
-    Animation _attackLeft;
-    Animation _attackDown;
-    Animation _attackRight;
 };

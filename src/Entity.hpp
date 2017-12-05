@@ -13,7 +13,15 @@ protected:
     sf::Vector2f _velocity;
     sf::Texture _texture;
     sf::Sprite _sprite;
+
     const Animation* _animation;
+    Animation _attackUp;
+    Animation _attackLeft;
+    Animation _attackDown;
+    Animation _attackRight;
+    void generateWalkAnimations(int spriteFormat);
+    void generateAttackAnimations(int spriteFormat);
+
     const sf::Texture* _tempTexture;
     float _frameDelay;
     sf::IntRect _intRect;
@@ -25,6 +33,7 @@ protected:
 public:
     enum class Direction { Up, Left, Down, Right } _direction;
     Entity::Direction getDirection();
+
 
     Entity(const std::string& filePath, int spriteFormat);
     Entity();

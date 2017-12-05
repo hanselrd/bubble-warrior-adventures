@@ -4,7 +4,9 @@
 
 class Enemy : public Entity {
 public:
-    explicit Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat);
+    Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat);
+
+    void update(float delta);
 
 private:
     int _expDropped;

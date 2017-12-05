@@ -3,7 +3,7 @@
 Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
     _sprite.setTexture(_texture);
-    _intRect = sf::IntRect(0, (spriteFormat * 10), spriteFormat, spriteFormat);
+    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
     _sprite.setTextureRect(_intRect);
     _spriteFormat = spriteFormat;
     _level = 1;
@@ -12,53 +12,8 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _frameDelay = 0.02f;
     _currentFrame = 0;
 
-    _walkingUp.setSpriteSheet(_texture);
-    _walkingUp.addFrame(sf::IntRect((64 * 1), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 2), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 3), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 4), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 5), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 6), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 7), (64 * 8), 64, 64));
-    _walkingUp.addFrame(sf::IntRect((64 * 8), (64 * 8), 64, 64));
-
-    _walkingLeft.setSpriteSheet(_texture);
-    _walkingLeft.addFrame(sf::IntRect((64 * 1), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 2), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 3), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 4), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 5), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 6), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 7), (64 * 9), 64, 64));
-    _walkingLeft.addFrame(sf::IntRect((64 * 8), (64 * 9), 64, 64));
-
-    _walkingDown.setSpriteSheet(_texture);
-    _walkingDown.addFrame(sf::IntRect((64 * 1), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 2), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 3), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 4), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 5), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 6), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 7), (64 * 10), 64, 64));
-    _walkingDown.addFrame(sf::IntRect((64 * 8), (64 * 10), 64, 64));
-
-    _walkingRight.setSpriteSheet(_texture);
-    _walkingRight.addFrame(sf::IntRect((64 * 1), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 2), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 3), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 4), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 5), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 6), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 7), (64 * 11), 64, 64));
-    _walkingRight.addFrame(sf::IntRect((64 * 8), (64 * 11), 64, 64));
-
-    _standing.setSpriteSheet(_texture);
-    _standing.addFrame(sf::IntRect(0, (64 * 8), 64, 64));  // Up
-    _standing.addFrame(sf::IntRect(0, (64 * 9), 64, 64));  // Left
-    _standing.addFrame(sf::IntRect(0, (64 * 10), 64, 64)); // Down
-    _standing.addFrame(sf::IntRect(0, (64 * 11), 64, 64)); // Right
-
-    _currentAnimation = &_standing;
+    generateWalkAnimations(spriteFormat);
+    generateAttackAnimations(spriteFormat);
 }
 
 Entity::Entity() {
@@ -96,6 +51,7 @@ void Entity::update(float delta) {
                     temp.left = 0;
                     _intRect = temp;
                     _isPaused = true;
+                    _isLooped = false;
                 }
 				_frameDelay = 0;
             }
@@ -210,3 +166,86 @@ Entity::Direction Entity::getDirection()
     return _direction;
 }
 
+void Entity::generateWalkAnimations(int spriteFormat) {
+    _walkingUp.setSpriteSheet(_texture);
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 2), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 3), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 4), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 5), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 6), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 7), (spriteFormat * 8), spriteFormat, spriteFormat));
+    _walkingUp.addFrame(sf::IntRect((spriteFormat * 8), (spriteFormat * 8), spriteFormat, spriteFormat));
+
+    _walkingLeft.setSpriteSheet(_texture);
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 2), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 3), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 4), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 5), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 6), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 7), (spriteFormat * 9), spriteFormat, spriteFormat));
+    _walkingLeft.addFrame(sf::IntRect((spriteFormat * 8), (spriteFormat * 9), spriteFormat, spriteFormat));
+
+    _walkingDown.setSpriteSheet(_texture);
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 2), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 3), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 4), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 5), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 6), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 7), (spriteFormat * 10), spriteFormat, spriteFormat));
+    _walkingDown.addFrame(sf::IntRect((spriteFormat * 8), (spriteFormat * 10), spriteFormat, spriteFormat));
+
+    _walkingRight.setSpriteSheet(_texture);
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 2), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 3), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 4), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 5), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 6), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 7), (spriteFormat * 11), spriteFormat, spriteFormat));
+    _walkingRight.addFrame(sf::IntRect((spriteFormat * 8), (spriteFormat * 11), spriteFormat, spriteFormat));
+
+    _standing.setSpriteSheet(_texture);
+    _standing.addFrame(sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat));  // Up
+    _standing.addFrame(sf::IntRect(0, (spriteFormat * 9), spriteFormat, spriteFormat));  // Left
+    _standing.addFrame(sf::IntRect(0, (spriteFormat * 10), spriteFormat, spriteFormat)); // Down
+    _standing.addFrame(sf::IntRect(0, (spriteFormat * 11), spriteFormat, spriteFormat)); // Right
+
+    _currentAnimation = &_standing;
+}
+void Entity::generateAttackAnimations(int spriteFormat)
+{
+    _attackUp.setSpriteSheet(_texture);
+    _attackUp.addFrame(sf::IntRect(((spriteFormat * 3) * 0), (spriteFormat * 22), (spriteFormat * 3), (spriteFormat * 1)));
+    _attackUp.addFrame(sf::IntRect(((spriteFormat * 3) * 1), (spriteFormat * 22), (spriteFormat * 3), (spriteFormat * 1)));
+    _attackUp.addFrame(sf::IntRect(((spriteFormat * 3) * 2), (spriteFormat * 22), (spriteFormat * 3), (spriteFormat * 1)));
+    _attackUp.addFrame(sf::IntRect(((spriteFormat * 3) * 3), (spriteFormat * 22), (spriteFormat * 3), (spriteFormat * 1)));
+    _attackUp.addFrame(sf::IntRect(((spriteFormat * 3) * 4), (spriteFormat * 22), (spriteFormat * 3), (spriteFormat * 1)));
+    _attackUp.addFrame(sf::IntRect(((spriteFormat * 3) * 5), (spriteFormat * 22), (spriteFormat * 3), (spriteFormat * 1)));
+
+    _attackLeft.setSpriteSheet(_texture);
+    _attackLeft.addFrame(sf::IntRect(((spriteFormat * 3) * 0), (spriteFormat * 25), spriteFormat * 3, spriteFormat * 1));
+    _attackLeft.addFrame(sf::IntRect(((spriteFormat * 3) * 1), (spriteFormat * 25), spriteFormat * 3, spriteFormat * 1));
+    _attackLeft.addFrame(sf::IntRect(((spriteFormat * 3) * 2), (spriteFormat * 25), spriteFormat * 3, spriteFormat * 1));
+    _attackLeft.addFrame(sf::IntRect(((spriteFormat * 3) * 3), (spriteFormat * 25), spriteFormat * 3, spriteFormat * 1));
+    _attackLeft.addFrame(sf::IntRect(((spriteFormat * 3) * 4), (spriteFormat * 25), spriteFormat * 3, spriteFormat * 1));
+    _attackLeft.addFrame(sf::IntRect(((spriteFormat * 3) * 5), (spriteFormat * 25), spriteFormat * 3, spriteFormat * 1));
+
+    _attackDown.setSpriteSheet(_texture);
+    _attackDown.addFrame(sf::IntRect(((spriteFormat * 3) * 0), (spriteFormat * 28), spriteFormat * 3, spriteFormat * 1));
+    _attackDown.addFrame(sf::IntRect(((spriteFormat * 3) * 1), (spriteFormat * 28), spriteFormat * 3, spriteFormat * 1));
+    _attackDown.addFrame(sf::IntRect(((spriteFormat * 3) * 2), (spriteFormat * 28), spriteFormat * 3, spriteFormat * 1));
+    _attackDown.addFrame(sf::IntRect(((spriteFormat * 3) * 3), (spriteFormat * 28), spriteFormat * 3, spriteFormat * 1));
+    _attackDown.addFrame(sf::IntRect(((spriteFormat * 3) * 4), (spriteFormat * 28), spriteFormat * 3, spriteFormat * 1));
+    _attackDown.addFrame(sf::IntRect(((spriteFormat * 3) * 5), (spriteFormat * 28), spriteFormat * 3, spriteFormat * 1));
+
+    _attackRight.setSpriteSheet(_texture);
+    _attackRight.addFrame(sf::IntRect(((spriteFormat * 3) * 0), (spriteFormat * 31), spriteFormat * 3, spriteFormat * 1));
+    _attackRight.addFrame(sf::IntRect(((spriteFormat * 3) * 1), (spriteFormat * 31), spriteFormat * 3, spriteFormat * 1));
+    _attackRight.addFrame(sf::IntRect(((spriteFormat * 3) * 2), (spriteFormat * 31), spriteFormat * 3, spriteFormat * 1));
+    _attackRight.addFrame(sf::IntRect(((spriteFormat * 3) * 3), (spriteFormat * 31), spriteFormat * 3, spriteFormat * 1));
+    _attackRight.addFrame(sf::IntRect(((spriteFormat * 3) * 4), (spriteFormat * 31), spriteFormat * 3, spriteFormat * 1));
+    _attackRight.addFrame(sf::IntRect(((spriteFormat * 3) * 5), (spriteFormat * 31), spriteFormat * 3, spriteFormat * 1));
+}
