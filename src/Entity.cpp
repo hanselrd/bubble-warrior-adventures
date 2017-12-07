@@ -1,8 +1,11 @@
 #include "Entity.hpp"
+#include <cereal/archives/json.hpp>
+#include <fstream>
 
 Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
     _sprite.setTexture(_texture);
+    _fileName = filePath;
     _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
     _sprite.setTextureRect(_intRect);
     _spriteFormat = spriteFormat;
@@ -11,13 +14,13 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _direction = Direction::Down;
     _frameDelay = 0.02f;
     _currentFrame = 0;
-
+    _entityType = EntityType::Object;
     generateWalkAnimations(spriteFormat);
     generateAttackAnimations(spriteFormat);
 }
 
 Entity::Entity() {
-    Entity("golden_hero_male_no_shield.png", 64);
+    //Entity("golden_hero_male_no_shield.png", 64);
 }
 Entity::~Entity() {}
 
@@ -56,7 +59,6 @@ void Entity::update(float delta) {
 				_frameDelay = 0;
             }
         }
-
         // set the current frame, not reseting the time
         setFrame(_currentFrame);
         _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
@@ -167,6 +169,12 @@ Entity::Direction Entity::getDirection()
 }
 
 void Entity::generateWalkAnimations(int spriteFormat) {
+    //std::ifstream is(_fileName);
+    //if (is.is_open()) {
+    //    cereal::JSONInputArchive ar(is);
+    //    ar(*this);
+    //}
+
     _walkingUp.setSpriteSheet(_texture);
     _walkingUp.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 8), spriteFormat, spriteFormat));
     _walkingUp.addFrame(sf::IntRect((spriteFormat * 2), (spriteFormat * 8), spriteFormat, spriteFormat));
@@ -214,6 +222,7 @@ void Entity::generateWalkAnimations(int spriteFormat) {
     _standing.addFrame(sf::IntRect(0, (spriteFormat * 11), spriteFormat, spriteFormat)); // Right
 
     _currentAnimation = &_standing;
+    
 }
 void Entity::generateAttackAnimations(int spriteFormat)
 {

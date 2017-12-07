@@ -23,5 +23,5 @@ private:
     float _armor;
     std::string _name;
 
-    bool _isAttacking, _noKeyPressed;
+    bool _noKeyPressed;
 };

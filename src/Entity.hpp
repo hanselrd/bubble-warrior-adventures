@@ -1,4 +1,5 @@
 #pragma once
+#include <cereal/cereal.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Animation.hpp"
@@ -21,14 +22,25 @@ protected:
     Animation _attackRight;
     void generateWalkAnimations(int spriteFormat);
     void generateAttackAnimations(int spriteFormat);
+    
+    // Loading animation parsing   
+    friend class cereal::access;
+    template <class Archive>
+    void save(Archive& ar) const;
+    template <class Archive>
+    void load(Archive& ar);
 
     const sf::Texture* _tempTexture;
     float _frameDelay;
     sf::IntRect _intRect;
     std::size_t _currentFrame;
-    bool _isPaused, _isLooped;
+    std::string _fileName;
+    bool _isPaused, _isLooped, _isAttacking;
     Animation _walkingUp, _walkingLeft, _walkingDown, _walkingRight, _standing;
     Animation* _currentAnimation;
+
+    enum class EntityType { Object, Item, Player, Enemy, NPC };
+    EntityType _entityType;
 
 public:
     enum class Direction { Up, Left, Down, Right } _direction;

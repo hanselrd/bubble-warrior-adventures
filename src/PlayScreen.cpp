@@ -33,7 +33,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
     // NPC drawing/initialization
     // Edit this section with script code ******************************************************************
-    _enemies.push_back(std::make_shared<Enemy>("regular_hero_female.png", "enemy0", 64));
+    _enemies.push_back(std::make_shared<Enemy>("golden_hero_male_no_shield.png", "enemy0", 64));
+    _enemies.push_back(std::make_shared<Enemy>("golden_hero_female_no_shield_no_hat.png", "enemy1", 64));
 
     /************************************************************
     *GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*
@@ -141,7 +142,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
-    _enemies.front()->setPosition(1446, 1300);
+    _enemies.at(0)->setPosition(1446, 1300);
+    _enemies.at(1)->setPosition(1446, 1400);
     _player.setPosition(1446, 1320);
     _camera.setMap(&_map);
 }
@@ -164,19 +166,26 @@ void PlayScreen::update(float delta) {
 
     auto lblCoords = _gui.get<tgui::Label>("lblCoords");
     lblCoords->setText('(' + std::to_string(playerPos.x) + ',' + std::to_string(playerPos.y) + ')');
+    
+    //*******************************************************
+    //*COLLISION**COLLISION**COLLISION**COLLISION**COLLISION*
+    //*******************************************************
+    {
+        for (const auto& layer : _map.getLayers()) {
+            if (layer.getType() == Map::Layer::Type::Object) {
+                for (const auto& object : layer.getObjects()) {
+                    sf::FloatRect intersection;
 
-    for (const auto& layer : _map.getLayers()) {
-        if (layer.getType() == Map::Layer::Type::Object) {
-            for (const auto& object : layer.getObjects()) {
-                sf::FloatRect intersection;
-                if (Object::checkCollision(_player, object, intersection)) {
-                    lblCoords->setText(lblCoords->getText() + " Collision!");
 
-                     _player.move(playerPosOld - playerPosNew); // if collision, move player back, choppy but works
+                    if (Object::checkCollision(_player, object, intersection)) {
+                        lblCoords->setText(lblCoords->getText() + " Collision!");
+
+                        _player.move(playerPosOld - playerPosNew); // if collision, move player back, choppy but works
+                    }
                 }
             }
         }
-    }
+    } //End Collision
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
@@ -184,7 +193,10 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(2));
     window.draw(_player);
-    window.draw(*_enemies.at(0));
+    // Draws all the enemies in the vector
+    for (int i = 0; i < _enemies.size(); i++) {
+        window.draw(*_enemies.at(i));
+    }
     window.draw(_map.getLayers().at(3));
     updateOverlay();
     _gui.draw();

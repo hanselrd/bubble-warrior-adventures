@@ -19,7 +19,7 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _noKeyPressed = true;
 	_isAttacking = false;
     _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f); // The magic that makes collision work between attack/standing
-
+    _entityType = EntityType::Player;
     generateAttackAnimations(spriteFormat);
 }
 
@@ -68,26 +68,26 @@ void Player::update(float delta) {
 
         // Change character movement and include sprinting with Left Shift
 
-        int run_multiplier = 2.0f;
+        int run_multiplier = 2.0;
 
         // If LShift is not pressed, 'run' is off
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
-            run_multiplier = 1.0f;
+            run_multiplier = 1.0;
         }
         // Move up with 'W' key
-        if (_direction == Direction::Up && !_noKeyPressed) {
+        if (_direction == Direction::Up && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             move(0, -_velocity.y * delta * run_multiplier);
         }
         // Move left with 'A' key
-        if (_direction == Direction::Left && !_noKeyPressed) {
+        if (_direction == Direction::Left && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             move(-_velocity.x * delta * run_multiplier, 0);
         }
         // Move down with 'S' key
-        if (_direction == Direction::Down && !_noKeyPressed) {
+        if (_direction == Direction::Down && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             move(0, _velocity.y * delta* run_multiplier);
         }
         // Move right with 'D' key
-        if (_direction == Direction::Right && !_noKeyPressed) {
+        if (_direction == Direction::Right && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             move(_velocity.x * delta * run_multiplier, 0);
         }
     }
@@ -198,7 +198,7 @@ void Player::levelUp() {
 
     _level += 1;
     // EXP calculation
-    _maxExp = floor(10 * (_level * 1.10));
+    _maxExp = (double)floor(10 * (_level * 1.10));
 
     // End EXP calculation
     //if (_level % 3 == 0) {
@@ -210,7 +210,7 @@ void Player::levelUp() {
     _maxHealth += 1;
     _health += 1;
 
-    //*********************INSERT GUI BELOW FOR LEVEL UP INFO AND PAUSE GAME
+    //*********************INSERT GUI BELOW FOR LEVEL UP INFO
     //***********
     //***********
     //***********************************************************************
