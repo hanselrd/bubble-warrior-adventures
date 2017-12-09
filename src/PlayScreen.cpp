@@ -194,6 +194,7 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
     window.draw(_map.getLayers().at(3));
+    _player.setOrigin(sf::Vector2f(0.0f, _player.getLocalBounds().height / 2));
     window.draw(_player);
     // Draws all the enemies in the vector
     for (int i = 0; i < _enemies.size(); i++) {

@@ -6,7 +6,7 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
     _sprite.setTexture(_texture);
     _fileName = filePath;
-    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
+    //_intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
     _sprite.setTextureRect(_intRect);
     _circle.setTextureRect(_intRect);
     _spriteFormat = spriteFormat;
@@ -28,9 +28,9 @@ Entity::~Entity() {}
 sf::FloatRect Entity::getLocalBounds() const {
     if (_spriteFormat > 0) {
         auto temp = _sprite.getLocalBounds();
-        temp.width = 64;
         temp.height /= 2;
         return temp;
+
     }
     else
         return _circle.getLocalBounds();
