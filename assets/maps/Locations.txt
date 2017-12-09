@@ -1,7 +1,13 @@
 Teleport and NPC locations:
 Castle exterior:
-Enemy spawn  (768, 1760), (800, 1760), (832, 1760)
-Boss spawn (768, 544)
-Teleport to castle (768, 1920) to (864, 1920)
-Teleport to world map  (32, 0) to (32, 544)
+Enemy spawn  (768, 480), (800, 480), (832, 480)
+Boss spawn (768, 1696)
+Teleport to castle interior (768, 320) to (864, 320)
+Teleport to world map  (32, 2240) to (32, 1696)
 
+Castle interior:  
+Teleport to NW tower  
+Teleport to NE tower  
+Teleport to SE tower  
+Teleport to SW tower  
+Teleport to castle exterior  
