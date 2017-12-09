@@ -11,7 +11,7 @@
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _camera(window, _player)
-    , _map("castle_interior_polygon_walls.tmx")
+    , _map("castle_interior_3d.tmx")
     , _player("regular_hero_male.png", "Jaime", 64) {
     _gui.setWindow(window);
 

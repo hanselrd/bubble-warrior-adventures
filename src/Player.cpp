@@ -75,19 +75,19 @@ void Player::update(float delta) {
             run_multiplier = 1.0;
         }
         // Move up with 'W' key
-        if (_direction == Direction::Up && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        if (_direction == Direction::Up && sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
             move(0, -_velocity.y * delta * run_multiplier);
         }
         // Move left with 'A' key
-        if (_direction == Direction::Left && sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        if (_direction == Direction::Left && sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
             move(-_velocity.x * delta * run_multiplier, 0);
         }
         // Move down with 'S' key
-        if (_direction == Direction::Down && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        if (_direction == Direction::Down && sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
             move(0, _velocity.y * delta* run_multiplier);
         }
         // Move right with 'D' key
-        if (_direction == Direction::Right && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        if (_direction == Direction::Right && sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
             move(_velocity.x * delta * run_multiplier, 0);
         }
     }

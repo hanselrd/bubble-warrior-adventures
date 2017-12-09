@@ -20,7 +20,7 @@ Settings::Settings(const std::string& filename)
 Settings::~Settings() {
     std::ofstream os(_filename);
     cereal::JSONOutputArchive ar(os);
-    //ar(cereal::make_nvp("_settings", *this));
+    ar(cereal::make_nvp("_settings", *this));
 }
 
 bool Settings::getFullscreen() const {
