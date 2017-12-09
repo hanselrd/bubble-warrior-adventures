@@ -144,7 +144,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setPosition(1446, 316);
     _enemies.at(0)->setPosition(1446, 1300);
     _enemies.at(1)->setPosition(1346, 1400);
-    _player.setPosition(768, 300);
+    _player.setPosition(768, 500);
+    _player.move(768, 500);
     _camera.setMap(&_map);
 }
 
