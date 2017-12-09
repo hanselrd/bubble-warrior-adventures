@@ -1,0 +1,15 @@
+Teleport and NPC locations:  
+Castle exterior:
+Enemy spawn  (768, 448), (800, 448), (832, 448) Three 32 pixel squares
+Boss spawn (768, 1600) 96x96 pixel square
+Teleport to castle interior if X is between 768-864 and Y is less than 268  
+Teleport to world map  (0, 2240) to (0, 1696) 32 x 544 rectangle, lower left screen
+
+Castle interior:  
+Teleport to NW tower  (512, 448) 32 pixel square
+Teleport to NE tower  (2368, 448) 32 pixel square
+Teleport to SE tower  (2368, 2112) 32 pixel square
+Teleport to SW tower  (512, 2112) 32 pixel square
+Teleport to castle exterior  (1344, 2304) (1568, 2112)  224 x 32 pixel rectangle
+Player spawn (1248, 224)
+Sword spawn (1344, 224)
