@@ -23,6 +23,10 @@ protected:
     void generateWalkAnimations(int spriteFormat);
     void generateAttackAnimations(int spriteFormat);
     
+    // Damage/healing
+    void modifyHealth(int delta, bool healing);
+    static bool checkCollision(Entity& first, Entity& second, sf::FloatRect& intersection);
+
     // Loading animation parsing   
     friend class cereal::access;
     template <class Archive>
@@ -39,13 +43,9 @@ protected:
     Animation _walkingUp, _walkingLeft, _walkingDown, _walkingRight, _standing;
     Animation* _currentAnimation;
 
-    enum class EntityType { Object, Item, Player, Enemy, NPC };
-    EntityType _entityType;
-
 public:
     enum class Direction { Up, Left, Down, Right } _direction;
     Entity::Direction getDirection();
-
 
     Entity(const std::string& filePath, int spriteFormat);
     Entity();
@@ -63,6 +63,7 @@ public:
     void setFrame(std::size_t n);
     unsigned getLevel() const;
     unsigned getHealth() const;
+    bool isAttacking() const;
     sf::Vector2f getVelocity() const;
     void setHealth(unsigned val);
     void setLevel(unsigned val);

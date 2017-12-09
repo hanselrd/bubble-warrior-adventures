@@ -6,7 +6,7 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
     _sprite.setTexture(_texture);
     _fileName = filePath;
-    //_intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
+    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
     _sprite.setTextureRect(_intRect);
     _circle.setTextureRect(_intRect);
     _spriteFormat = spriteFormat;
@@ -35,13 +35,44 @@ sf::FloatRect Entity::getLocalBounds() const {
     else
         return _circle.getLocalBounds();
 }
+bool Entity::checkCollision(Entity& first, Entity& second, sf::FloatRect& intersection) {
+    if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection)) {
+        switch (first._entityType) {
+        case EntityType::Enemy:
+            if (first.isAttacking()) {
 
+            }
+
+
+        default:
+            break;
+        } // End switch
+    }
+
+    else {
+        return false;
+    }
+}
+void Entity::modifyHealth(int delta, bool healing) {
+    // delta means amount of hp to change
+    // healing = truefi means the target is healing 'delta' amount of hp
+    // healing = false means the target is removing 'delta' amount of hp from self
+
+    // if the target is healing
+    if (healing) {
+        _health += delta;
+    }
+    // if the target is taking damage
+    else {
+        _health -= delta;
+    }
+}
 void Entity::update(float delta) {
     if (!_isPaused && _animation) {
         _frameDelay += delta;
 
         if (_frameDelay > 0.10f) {
-            // get next Frame index
+            // Gwet next Frame index
             if (_currentFrame + 1 < _animation->getSize()) {
                 _currentFrame++;
                 _frameDelay = 0; // reset to start
@@ -60,9 +91,11 @@ void Entity::update(float delta) {
 				_frameDelay = 0;
             }
         }
-        // set the current frame, not reseting the time
+        // Set the current frame, not reseting the time
         setFrame(_currentFrame);
-        _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
+
+        // Necessary to prevent sprite from "jumping" locations when attacking
+        _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f); 
     }
 	// If it is paused, reset to standing
 	else {
@@ -80,6 +113,10 @@ void Entity::update(float delta) {
 		_sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
 		setAnimation(_standing);
 	}
+}
+
+bool Entity::isAttacking() const {
+    return _isAttacking;
 }
 
 void Entity::setAnimation(const Animation& animation) {

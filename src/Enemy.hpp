@@ -11,5 +11,4 @@ public:
 private:
     int _expDropped;
     float _attackStrength;
-    bool _attack; //true = is attacking
 };

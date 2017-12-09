@@ -11,7 +11,7 @@
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _camera(window, _player)
-    , _map("castle_exterior.tmx")
+    , _map("castle_interior_polygon_walls.tmx")
     , _player("regular_hero_male.png", "Jaime", 64) {
     _gui.setWindow(window);
 
@@ -144,9 +144,8 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setPosition(1446, 316);
     _enemies.at(0)->setPosition(1446, 1300);
     _enemies.at(1)->setPosition(1346, 1400);
-    _player.setPosition(768, 500);
+    _player.setPosition(1446, 1300);
     
-    _player.move(768, 500);
     _camera.setMap(&_map);
 }
 
@@ -177,8 +176,6 @@ void PlayScreen::update(float delta) {
             if (layer.getType() == Map::Layer::Type::Object) {
                 for (const auto& object : layer.getObjects()) {
                     sf::FloatRect intersection;
-
-
                     if (Object::checkCollision(_player, object, intersection)) {
                         lblCoords->setText(lblCoords->getText() + " Collision!");
 
@@ -191,9 +188,14 @@ void PlayScreen::update(float delta) {
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
-    window.draw(_map.getLayers().at(0));
-    window.draw(_map.getLayers().at(1));
-    window.draw(_map.getLayers().at(3));
+    window.draw(_map.getLayers().at(0)); // Background
+    window.draw(_map.getLayers().at(1)); //Object
+ //   if (_map.getLayers().size() == 3) {
+        window.draw(_map.getLayers().at(2)); //Foreground (not always necessary)
+  //  }
+    if (_map.getLayers().size() == 4) {
+        window.draw(_map.getLayers().at(3));
+    }
     _player.setOrigin(sf::Vector2f(0.0f, _player.getLocalBounds().height / 2));
     window.draw(_player);
     // Draws all the enemies in the vector
