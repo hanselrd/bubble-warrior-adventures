@@ -11,7 +11,7 @@
 
 PlayScreen::PlayScreen(sf::RenderWindow& window)
     : _camera(window, _player)
-    , _map("castle_interior_3d.tmx")
+    , _map("castle_interior_polygon_walls.tmx")
     , _player("regular_hero_male.png", "Jaime", 64) {
     _gui.setWindow(window);
 
@@ -143,7 +143,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
     //_player.setPosition(1446, 316);
     _enemies.at(0)->setPosition(1446, 1300);
-    _enemies.at(1)->setPosition(1446, 1400);
+    _enemies.at(1)->setPosition(1346, 1400);
     _player.setPosition(1446, 1320);
     _camera.setMap(&_map);
 }
