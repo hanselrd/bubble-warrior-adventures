@@ -145,6 +145,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     _enemies.at(0)->setPosition(1446, 1300);
     _enemies.at(1)->setPosition(1346, 1400);
     _player.setPosition(768, 500);
+    
     _player.move(768, 500);
     _camera.setMap(&_map);
 }
@@ -192,15 +193,13 @@ void PlayScreen::update(float delta) {
 void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(0));
     window.draw(_map.getLayers().at(1));
-    window.draw(_map.getLayers().at(2));
+    window.draw(_map.getLayers().at(3));
     window.draw(_player);
     // Draws all the enemies in the vector
     for (int i = 0; i < _enemies.size(); i++) {
         window.draw(*_enemies.at(i));
     }
-    for (int i = 3; i < _map.getLayers().size(); i++) {
-        window.draw(_map.getLayers().at(i));
-    }
+    window.draw(_map.getLayers().at(2));
     updateOverlay();
     _gui.draw();
 }

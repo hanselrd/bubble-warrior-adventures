@@ -12,13 +12,13 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _maxHealth = 10;
     _mana = 10;
     _maxMana = 10;
-    _velocity = sf::Vector2f(70.0f, 70.0f);
+    _velocity = sf::Vector2f(60.0f, 60.0f);
     _armor = 0.0f;
     _name = playerName;
     _attackDamage = 1;
     _noKeyPressed = true;
 	_isAttacking = false;
-    _sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f); // The magic that makes collision work between attack/standing
+    //_sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f); // The magic that makes collision work between attack/standing
     _entityType = EntityType::Player;
     generateAttackAnimations(spriteFormat);
 }
@@ -68,11 +68,11 @@ void Player::update(float delta) {
 
         // Change character movement and include sprinting with Left Shift
 
-        int run_multiplier = 2.0;
+        int run_multiplier = 2;
 
         // If LShift is not pressed, 'run' is off
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
-            run_multiplier = 1.0;
+            run_multiplier = 1;
         }
         // Move up with 'W' key
         if (_direction == Direction::Up && sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
@@ -198,7 +198,7 @@ void Player::levelUp() {
 
     _level += 1;
     // EXP calculation
-    _maxExp = (double)floor(10 * (_level * 1.10));
+    _maxExp = (float)floor(10 * (_level * 1.10));
 
     // End EXP calculation
     //if (_level % 3 == 0) {

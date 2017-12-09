@@ -6,8 +6,9 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
     _sprite.setTexture(_texture);
     _fileName = filePath;
-    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
+    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
     _sprite.setTextureRect(_intRect);
+    _circle.setTextureRect(_intRect);
     _spriteFormat = spriteFormat;
     _level = 1;
     _health = 10;
