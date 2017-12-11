@@ -194,6 +194,11 @@ const std::vector<Map::Object>& Map::Layer::getObjects() const {
     return _objects;
 }
 
+const std::vector<Object>& Map::Layer::getEnemies() const
+{
+    return _enemies;
+}
+
 void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     auto view = target.getView();
     sf::FloatRect viewRect(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2, view.getSize().x, view.getSize().y);

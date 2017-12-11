@@ -1,6 +1,5 @@
 #pragma once
 #include <pugixml.hpp>
-#include "Enemy.hpp"
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
 #include <SFML/Graphics.hpp>
@@ -27,7 +26,6 @@ private:
     pugi::xml_document _doc;
     unsigned _width, _height,
         _tileWidth, _tileHeight;
-    int _health;
     std::vector<Tileset> _tilesets;
     std::vector<Layer> _layers;
 
@@ -70,7 +68,7 @@ public:
         bool isVisible() const;
         const std::vector<Tile>& getTiles() const;
         const std::vector<Object>& getObjects() const;
-        const std::vector<Enemy>& getEnemies() const;
+        const std::vector<Object>& getEnemies() const;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -80,7 +78,7 @@ public:
         bool _visible;
         std::vector<Tile> _tiles;
         std::vector<Object> _objects;
-        std::vector<Enemy> _enemies;
+        
     };
 
     class Tile final : public sf::Drawable, public sf::Transformable {
@@ -98,33 +96,20 @@ public:
         std::shared_ptr<sf::Texture> _texture;
     };
 
-    class Object : public ::Object {
+    class Object final : public ::Object {
     public:
         explicit Object(const Map& map, const pugi::xml_node& objectNode);
         const std::string& getName() const;
-        const EntityType getType() const;
+        const std::string& getType() const;
         const sf::IntRect& getRect() const;
-
         sf::FloatRect getLocalBounds() const override;
 
-    protected:
+    private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-        std::string _type;
+        std::string _name, _type;
         std::shared_ptr<Tile> _tile;
         sf::IntRect _rect;
-    };
-
-    class Enemy final : public ::Object, Object {
-    public:
-        Enemy(const Map& map, const pugi::xml_node& objectNode);
-        const std::string& getName() const;
-        const EntityType getType() const;
-        const int gethealth() const;
-        void modifyHealth(int health, bool healing);
-
-    private:
-        
     };
 };
 
