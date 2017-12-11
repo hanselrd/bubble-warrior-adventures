@@ -1,5 +1,6 @@
 #include "PlayScreen.hpp"
 #include "Enemy.hpp"
+#include "Entity.hpp"
 #include "Config.hpp"
 #include "Locator.hpp"
 #include "ResourceHandler.hpp"
@@ -177,9 +178,21 @@ void PlayScreen::update(float delta) {
                 for (const auto& object : layer.getObjects()) {
                     sf::FloatRect intersection;
                     if (Object::checkCollision(_player, object, intersection)) {
-                        lblCoords->setText(lblCoords->getText() + " Collision!");
 
-                        _player.move(playerPosOld - playerPosNew); // if collision, move player back, choppy but works
+                        //Exclude Entity::EntityType::Object from Entity::checkCollision()
+                        if (object.getType() == Object::EntityType::Enemy) {
+                            Entity::checkCollision(_player, object, intersection);
+                        }
+                        if (object.getType() == Object::EntityType::NPC) {
+                            Entity::checkCollision(_player, object, intersection);
+                        }                        
+                        if (object.getType() == Object::EntityType::Item) {
+                            Entity::checkCollision(_player, object, intersection);
+                        }
+
+
+                        lblCoords->setText(lblCoords->getText() + " Collision!");
+                        _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
                     }
                 }
             }
@@ -188,16 +201,19 @@ void PlayScreen::update(float delta) {
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
-    window.draw(_map.getLayers().at(0)); // Background
-    window.draw(_map.getLayers().at(1)); //Object
- //   if (_map.getLayers().size() == 3) {
-        window.draw(_map.getLayers().at(2)); //Foreground (not always necessary)
-  //  }
+    window.draw(_map.getLayers().at(0)); 
+    window.draw(_map.getLayers().at(1)); 
+    window.draw(_map.getLayers().at(2)); 
+
     if (_map.getLayers().size() == 4) {
         window.draw(_map.getLayers().at(3));
     }
-    _player.setOrigin(sf::Vector2f(0.0f, _player.getLocalBounds().height / 2));
+
+    //_player.setOrigin(sf::Vector2f(0.0f, _player.getLocalBounds().height / 2));
+
+    //********************* Draw Player*******************
     window.draw(_player);
+
     // Draws all the enemies in the vector
     for (int i = 0; i < _enemies.size(); i++) {
         window.draw(*_enemies.at(i));

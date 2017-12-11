@@ -18,9 +18,9 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _attackDamage = 1;
     _noKeyPressed = true;
 	_isAttacking = false;
-    //_sprite.setOrigin(0- (float)_intRect.width / 2.0f, 0- (float)_intRect.height / 2.0f); // The magic that makes collision work between attack/standing
     _entityType = EntityType::Player;
     generateAttackAnimations(spriteFormat);
+    _name = "Jaime";
 }
 
 void Player::handleEvent(sf::Event& e) {}

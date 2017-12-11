@@ -9,7 +9,14 @@ Enemy::Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat)
     _expDropped = 1;
     _attackStrength = 1;
     _entityType = EntityType::Enemy;
-    _isAttacking = true;
+    _isAttacking = true;    
+    
+    //Green Slime Initializations
+    for (int i = 1; i < 30; i++) {
+        if (_name == "GreenSlime" + i) {
+            _name = "GreenSlime" + i;
+        }
+    }
 }
 
 void Enemy::update(float delta) {

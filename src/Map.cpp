@@ -1,4 +1,5 @@
 #include "Enemy.hpp"
+#include "Entity.hpp"
 #include "Map.hpp"
 #include <cppcodec/base64_default_rfc4648.hpp>
 #include <pybind11/stl.h>
@@ -24,6 +25,7 @@ Map::Map(const std::string& filename) {
         _height = mapNode.attribute("height").as_uint();
         _tileWidth = mapNode.attribute("tilewidth").as_uint();
         _tileHeight = mapNode.attribute("tileheight").as_uint();
+        _health = mapNode.find_attribute("health").as_int();
 
         for (const auto& node : mapNode) {
             std::string name = node.name();
@@ -123,6 +125,7 @@ std::shared_ptr<sf::Texture> Map::Tileset::getTexture() const {
 Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
     _name = layerNode.attribute("name").as_string();
     _visible = layerNode.attribute("visible").as_bool(true);
+    std::string _tempType = layerNode.attribute("type").as_string();
 
     std::string type = layerNode.name();
     if (type == "layer") {
@@ -161,8 +164,10 @@ Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
     }
     else if (type == "objectgroup") {
         _type = Type::Object;
-
         for (const auto& node : layerNode)
+            if (_name == "Object Layer 2") {
+                _enemies.push_back(Enemy(map, node))
+            }
             _objects.push_back(Object(map, node));
     }
     else if (type == "imagelayer")
@@ -288,7 +293,23 @@ void Map::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     _name = objectNode.attribute("name").as_string();
-    _type = objectNode.attribute("type").as_string();
+     _type = objectNode.attribute("type").as_string();
+
+    if (_type == "Enemy") {
+        _entityType = EntityType::Enemy;
+    }
+    else if (_type == "Item") {
+        _entityType = EntityType::Item;
+    }
+    else if (_type == "Player") {
+        _entityType = EntityType::Player;
+    }
+    else if (_type == "NPC") {
+        _entityType = EntityType::NPC;
+    }
+    else {
+        _entityType = EntityType::Object;
+    }
     _rect.left = objectNode.attribute("x").as_uint();
     _rect.top = objectNode.attribute("y").as_uint();
     _rect.width = objectNode.attribute("width").as_uint();
@@ -310,8 +331,25 @@ const std::string& Map::Object::getName() const {
     return _name;
 }
 
-const std::string& Map::Object::getType() const {
-    return _type;
+const Object::EntityType Map::Object::getType() const {
+    Object::EntityType temp = Object::EntityType::Object;
+
+    if (_entityType == EntityType::Enemy) {
+        temp = Object::EntityType::Enemy;
+    }    
+    else if (_entityType == EntityType::NPC) {
+        temp = Object::EntityType::NPC;
+    }
+    else if (_entityType == EntityType::Item) {
+        temp = Object::EntityType::Item;
+    }
+    else if (_entityType == EntityType::Player) {
+        temp = Object::EntityType::Player;
+    }
+    else {
+        temp = Object::EntityType::Object;
+    }
+    return temp;
 }
 
 const sf::IntRect& Map::Object::getRect() const {
@@ -319,7 +357,7 @@ const sf::IntRect& Map::Object::getRect() const {
 }
 
 sf::FloatRect Map::Object::getLocalBounds() const {
-    return sf::FloatRect(0.f, 0.f, (float)_rect.width, (float)_rect.height);
+    return sf::FloatRect(0.0f, 0.0f, (float)_rect.width, (float)_rect.height);
 }
 
 void Map::Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -364,4 +402,41 @@ void initMap(py::module& m) {
         .def_property_readonly("name", &Map::Object::getName)
         .def_property_readonly("type", &Map::Object::getType)
         .def_property_readonly("rect", &Map::Object::getRect);
+}
+
+Map::Enemy::Enemy(const Map& map, const pugi::xml_node& objectNode) :
+    Map::Object(map, objectNode) {
+    _name = objectNode.attribute("name").as_string();
+    _type = objectNode.attribute("type").as_string();
+
+    if (_type == "Enemy") {
+        _entityType = EntityType::Enemy;
+    }
+    else if (_type == "Item") {
+        _entityType = EntityType::Item;
+    }
+    else if (_type == "Player") {
+        _entityType = EntityType::Player;
+    }
+    else if (_type == "NPC") {
+        _entityType = EntityType::NPC;
+    }
+    else {
+        _entityType = EntityType::Object;
+    }
+    _rect.left = objectNode.attribute("x").as_uint();
+    _rect.top = objectNode.attribute("y").as_uint();
+    _rect.width = objectNode.attribute("width").as_uint();
+    _rect.height = objectNode.attribute("height").as_uint();
+
+    auto gid = objectNode.attribute("gid").as_uint();
+    if (gid > 0) {
+        // Workaround for Tiled object tile bug
+        _rect.top -= _rect.width;
+        _tile = std::make_shared<Tile>(std::ref(map), gid);
+        _tile->setPosition((float)_rect.left, (float)_rect.top);
+        _tile->update();
+    }
+
+    setPosition((float)_rect.left, (float)_rect.top);
 }

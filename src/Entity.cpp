@@ -1,15 +1,15 @@
 #include "Entity.hpp"
+#include "Map.hpp"
 #include <cereal/archives/json.hpp>
 #include <fstream>
 
 Entity::Entity(const std::string& filePath, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + filePath);
+    _spriteFormat = spriteFormat;
     _sprite.setTexture(_texture);
     _fileName = filePath;
-    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
+    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
     _sprite.setTextureRect(_intRect);
-    _circle.setTextureRect(_intRect);
-    _spriteFormat = spriteFormat;
     _level = 1;
     _health = 10;
     _direction = Direction::Down;
@@ -18,6 +18,7 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _entityType = EntityType::Object;
     generateWalkAnimations(spriteFormat);
     generateAttackAnimations(spriteFormat);
+
 }
 
 Entity::Entity() {
@@ -28,22 +29,22 @@ Entity::~Entity() {}
 sf::FloatRect Entity::getLocalBounds() const {
     if (_spriteFormat > 0) {
         auto temp = _sprite.getLocalBounds();
-        temp.height /= 2;
+        //temp.height = temp.height/2.0f;
         return temp;
-
     }
     else
         return _circle.getLocalBounds();
 }
-bool Entity::checkCollision(Entity& first, Entity& second, sf::FloatRect& intersection) {
+
+bool Entity::checkCollision(const Entity& first,const Map::Object& second, sf::FloatRect& intersection) {
     if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection)) {
-        switch (first._entityType) {
+        switch (second._entityType) {
         case EntityType::Enemy:
             if (first.isAttacking()) {
-
+                //first.
             }
 
-
+            break;
         default:
             break;
         } // End switch
@@ -115,8 +116,12 @@ void Entity::update(float delta) {
 	}
 }
 
-bool Entity::isAttacking() const {
-    return _isAttacking;
+void Entity::setName(std::string string) {
+    _name = string;
+}
+
+void Entity::setAttacking(bool b) {
+    _isAttacking = b;
 }
 
 void Entity::setAnimation(const Animation& animation) {
@@ -195,8 +200,9 @@ void Entity::setLevel(unsigned val) {
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
-    if (_spriteFormat > 0)
+    if (_spriteFormat > 0) {
         target.draw(_sprite, states);
+    }
     else
         target.draw(_circle, states);
 }
