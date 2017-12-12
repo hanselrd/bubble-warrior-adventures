@@ -17,6 +17,10 @@ sf::FloatRect Object::getGlobalBounds() const {
     return getTransform().transformRect(getLocalBounds());
 }
 
+const Object::EntityType Object::getEntityType() const {
+    return _entityType;
+}
+
 bool Object::checkCollision(const Object& first,const Object& second, sf::FloatRect& intersection) {
     if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection))
     {

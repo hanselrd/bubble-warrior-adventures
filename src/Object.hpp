@@ -11,6 +11,8 @@ public:
     enum class EntityType { Object, Item, Player, Enemy, NPC };
     EntityType _entityType;
 
+    const EntityType getEntityType() const;
+
     std::string _name;
 protected:
 

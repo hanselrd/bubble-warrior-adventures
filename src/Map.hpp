@@ -54,11 +54,16 @@ public:
     class Tile;
     class Object;
 
-    class Layer final : public sf::Drawable {
+    class Layer : public sf::Drawable {
     public:
         enum class Type {
             Tile,
             Object,
+            NPC,
+            Enemy,
+            Item,
+            Spawn,
+            Portal,
             Image
         };
 
@@ -68,16 +73,15 @@ public:
         bool isVisible() const;
         const std::vector<Tile>& getTiles() const;
         const std::vector<Object>& getObjects() const;
-        const std::vector<Object>& getEnemies() const;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-        std::string _name;
+        std::string _layerName;
         Type _type;
         bool _visible;
         std::vector<Tile> _tiles;
-        std::vector<Object*> _objects;
+        std::vector<Object> _objects;
         
     };
 
@@ -100,14 +104,20 @@ public:
     public:
         explicit Object(const Map& map, const pugi::xml_node& objectNode);
         const std::string& getName() const;
-        const std::string& getType() const;
+        const Object::EntityType& getType() const;
         const sf::IntRect& getRect() const;
         sf::FloatRect getLocalBounds() const override;
+
+        //const std::vector<Entity>& getNPCs() const;
+        //const std::vector<Entity>& getItems() const;
+        //const std::vector<Entity>& getEnemies() const;
+        //const std::vector<Entity>& getSpawn() const;
+        //const std::vector<Entity>& getPortal() const;
 
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-        std::string _name, _type;
+        std::string _tempName, _tempType;
         std::shared_ptr<Tile> _tile;
         sf::IntRect _rect;
     };

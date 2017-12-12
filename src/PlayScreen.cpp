@@ -34,9 +34,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
     // NPC drawing/initialization
     // Edit this section with script code ******************************************************************
-    _enemies.push_back(std::make_shared<Enemy>("golden_hero_male_no_shield.png", "enemy0", 64));
-    _enemies.push_back(std::make_shared<Enemy>("golden_hero_female_no_shield_no_hat.png", "enemy1", 64));
-
+ /*   _entities.push_back(std::make_shared<Enemy>("golden_hero_male_no_shield.png", "enemy0", 64));
+    _entities.push_back(std::make_shared<Enemy>("golden_hero_female_no_shield_no_hat.png", "enemy1", 64));
+*/
     /************************************************************
     *GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*
     *************************************************************/
@@ -142,9 +142,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     //_player.setFillColor(sf::Color::Cyan);
     //auto playerSpawn = _map.getLayers()[2].getObjs()[0].getRect();
     //_player.setPosition(playerSpawn.left, playerSpawn.top);
-    //_player.setPosition(1446, 316);
-    _enemies.at(0)->setPosition(1446, 1300);
-    _enemies.at(1)->setPosition(1346, 1400);
+    ////_player.setPosition(1446, 316);
+    //_enemies.at(0)->setPosition(1446, 1300);
+    //_enemies.at(1)->setPosition(1346, 1400);
     _player.setPosition(1446, 1300);
     
     _camera.setMap(&_map);
@@ -157,8 +157,8 @@ void PlayScreen::handleEvent(sf::Event& e) {
 void PlayScreen::update(float delta) {
     auto playerPosOld = _player.getPosition();
     _player.update(delta);
-    for (int i = 0; i < _enemies.size(); i++) {
-        _enemies[i]->update(delta);
+    for (int i = 0; i < _entities.size(); i++) {
+        _entities[i]->update(delta);
     }
     _camera.update(delta);
 
@@ -178,19 +178,11 @@ void PlayScreen::update(float delta) {
                 for (const auto& object : layer.getObjects()) {
                     sf::FloatRect intersection;
                     if (Object::checkCollision(_player, object, intersection)) {
-
-                        //Exclude Entity::EntityType::Object from Entity::checkCollision()
-                        if (object.getType() == Object::EntityType::Enemy) {
-                            Entity::checkCollision(_player, object, intersection);
+                        if (layer.getName() == "NPCs") {
+                            for (const auto& object : layer.getObjects()) {
+                                _entities.push_back(std::make_shared<Entity>(object.getRect()));
+                            }
                         }
-                        if (object.getType() == Object::EntityType::NPC) {
-                            Entity::checkCollision(_player, object, intersection);
-                        }                        
-                        if (object.getType() == Object::EntityType::Item) {
-                            Entity::checkCollision(_player, object, intersection);
-                        }
-
-
                         lblCoords->setText(lblCoords->getText() + " Collision!");
                         _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
                     }
@@ -215,8 +207,8 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_player);
 
     // Draws all the enemies in the vector
-    for (int i = 0; i < _enemies.size(); i++) {
-        window.draw(*_enemies.at(i));
+    for (int i = 0; i < _entities.size(); i++) {
+        window.draw(*_entities.at(i));
     }
     window.draw(_map.getLayers().at(2));
     updateOverlay();
@@ -246,4 +238,15 @@ void PlayScreen::updateOverlay()
 
         _overlayUpdate.restart();
     }
+}
+
+const std::vector<Entity>& PlayScreen::getNPCs() const
+{
+    std::vector<Entity> npcs(_entities.size());
+    for (int i = 0; i < npcs.size(); i++) {
+        if (_entities.at(i)->getEntityType() == Object::EntityType::NPC) {
+            npcs.push_back(*_entities.at(i));
+        }
+    }
+    return npcs;
 }

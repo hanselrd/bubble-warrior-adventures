@@ -18,6 +18,10 @@ Enemy::Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat)
         }
     }
 }
+Enemy::Enemy(sf::IntRect)
+    :Entity() {
+
+}
 Enemy::Enemy()
     : Entity()
 {

@@ -11,5 +11,5 @@ Teleport to NE tower  (2368, 448) 32 pixel square
 Teleport to SE tower  (2368, 2112) 32 pixel square
 Teleport to SW tower  (512, 2112) 32 pixel square
 Teleport to castle exterior  (1344, 2304) (1568, 2112)  224 x 32 pixel rectangle
-Player spawn (1248, 224)
+Player spawn (1248, 256)
 Sword spawn (1344, 224)

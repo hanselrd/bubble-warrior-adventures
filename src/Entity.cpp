@@ -21,9 +21,11 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _name = filePath;
 
 }
-
+Entity::Entity(sf::IntRect):
+Entity(){
+}
 Entity::Entity() {
-    _texture.loadFromFile("assets/sprites/golden_hero_male");
+    _texture.loadFromFile("assets/sprites/golden_hero_male.png");
     _spriteFormat = 64;
     _sprite.setTexture(_texture);
     _fileName = "assets/sprites/golden_hero_male";
@@ -50,18 +52,17 @@ sf::FloatRect Entity::getLocalBounds() const {
         return _circle.getLocalBounds();
 }
 
-bool Entity::checkCollision(const Entity& first,const Map::Object& second, sf::FloatRect& intersection) {
+bool Entity::checkCollision(const Entity& first,const Entity& second, sf::FloatRect& intersection) {
     if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection)) {
         switch (second._entityType) {
-        case EntityType::Enemy:
-            if (first.isAttacking()) {
-                //first.
-            }
+        case EntityType::NPC:
+            std::cout << "hi";
 
             break;
         default:
             break;
         } // End switch
+        return true;
     }
 
     else {

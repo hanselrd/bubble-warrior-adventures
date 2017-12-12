@@ -44,12 +44,13 @@ protected:
     Animation* _currentAnimation;
     
 public:
-    static bool checkCollision(const Entity& first, const Map::Object& second, sf::FloatRect& intersection);
+    static bool checkCollision(const Entity& first, const Entity& second, sf::FloatRect& intersection);
 
     enum class Direction { Up, Left, Down, Right } _direction;
     Entity::Direction getDirection();
 
-    Entity(const std::string& filePath, int spriteFormat);
+    Entity(const std::string& filePath, int spriteFormat); 
+    Entity::Entity(sf::IntRect);
     Entity();
     ~Entity();
     sf::FloatRect getLocalBounds() const override;

@@ -5,6 +5,7 @@
 class Enemy : public Entity {
 public:
     Enemy();
+    Enemy(sf::IntRect);
     Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat);
 
     void update(float delta);
