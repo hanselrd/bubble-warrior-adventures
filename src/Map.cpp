@@ -322,6 +322,10 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     }
     else if (_tempType == "Item") {
         _entityType = EntityType::Item;
+        _rect.left = objectNode.attribute("x").as_uint();
+        _rect.top = objectNode.attribute("y").as_uint();
+        _rect.width = objectNode.attribute("width").as_uint();
+        _rect.height = objectNode.attribute("height").as_uint();
     }
     else if (_tempType == "Player") {
         _entityType = EntityType::Player;
@@ -380,7 +384,6 @@ const sf::IntRect& Map::Object::getRect() const {
 sf::FloatRect Map::Object::getLocalBounds() const {
     return sf::FloatRect(0.0f, 0.0f, (float)_rect.width, (float)_rect.height);
 }
-
 
 void Map::Object::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     if (_tile) {

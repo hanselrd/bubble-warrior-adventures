@@ -108,12 +108,6 @@ public:
         const sf::IntRect& getRect() const;
         sf::FloatRect getLocalBounds() const override;
 
-        //const std::vector<Entity>& getNPCs() const;
-        //const std::vector<Entity>& getItems() const;
-        //const std::vector<Entity>& getEnemies() const;
-        //const std::vector<Entity>& getSpawn() const;
-        //const std::vector<Entity>& getPortal() const;
-
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
