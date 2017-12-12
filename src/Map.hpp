@@ -77,7 +77,7 @@ public:
         Type _type;
         bool _visible;
         std::vector<Tile> _tiles;
-        std::vector<Object> _objects;
+        std::vector<Object*> _objects;
         
     };
 

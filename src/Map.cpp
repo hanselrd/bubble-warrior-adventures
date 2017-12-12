@@ -166,9 +166,9 @@ Map::Layer::Layer(const Map& map, const pugi::xml_node& layerNode) {
         _type = Type::Object;
         for (const auto& node : layerNode)
             if (_name == "Object Layer 2") {
-                _enemies.push_back(Enemy(map, node))
+                _objects.push_back(Enemy()*);
             }
-            _objects.push_back(Object(map, node));
+           // _objects.push_back(Object(map, node)*);
     }
     else if (type == "imagelayer")
         _type = Type::Image;

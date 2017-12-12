@@ -60,12 +60,13 @@ public:
     void play(const Animation& animation);
     void pause();
     void stop();
-    const Animation* getAnimation() const;
     bool isPlaying() const;
     void setFrame(std::size_t n);
+
     unsigned getLevel() const;
     unsigned getHealth() const;
     sf::Vector2f getVelocity() const;
+    const Animation* getAnimation() const;
     void setHealth(unsigned val);
     void setLevel(unsigned val);
     void setAttacking(bool b);

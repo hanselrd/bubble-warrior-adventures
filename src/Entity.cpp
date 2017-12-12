@@ -18,11 +18,25 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _entityType = EntityType::Object;
     generateWalkAnimations(spriteFormat);
     generateAttackAnimations(spriteFormat);
+    _name = filePath;
 
 }
 
 Entity::Entity() {
-    //Entity("golden_hero_male_no_shield.png", 64);
+    _texture.loadFromFile("assets/sprites/golden_hero_male");
+    _spriteFormat = 64;
+    _sprite.setTexture(_texture);
+    _fileName = "assets/sprites/golden_hero_male";
+    _intRect = sf::IntRect(0, (64 * 8), 64, 64);
+    _sprite.setTextureRect(_intRect);
+    _level = 1;
+    _health = 10;
+    _direction = Direction::Down;
+    _frameDelay = 0.02f;
+    _currentFrame = 0;
+    _entityType = EntityType::Object;
+    generateWalkAnimations(64);
+    generateAttackAnimations(64);
 }
 Entity::~Entity() {}
 
