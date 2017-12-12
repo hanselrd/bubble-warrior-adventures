@@ -5,6 +5,7 @@
 #include "MapHandler.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include 
 #include "State.hpp"
 
 class PlayScreen final : public State {
@@ -22,6 +23,9 @@ private:
     Map _map; // Testing (should use a MapHandler)
     Player _player;
     std::vector<std::shared_ptr<Entity>> _entities;
+    std::vector<std::shared_ptr<Object>> _objects;
+    std::vector<std::shared_ptr<Items>> _items;
+    std::vector<std::shared_ptr<NPC>> _npcs;
     sf::Clock _overlayUpdate;
     std::shared_ptr<MapHandler> _mapHandler;
 };

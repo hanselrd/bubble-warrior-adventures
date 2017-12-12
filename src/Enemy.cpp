@@ -1,5 +1,4 @@
 #include "Enemy.hpp"
-#include "Entity.hpp"
 
 Enemy::Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat)
     : Entity(filePath, spriteFormat)
@@ -11,12 +10,12 @@ Enemy::Enemy(std::string filePath, std::string enemyName, unsigned spriteFormat)
     _entityType = EntityType::Enemy;
     _isAttacking = true;
 
-    //Green Slime Initializations
-    for (int i = 1; i < 30; i++) {
-        if (_name == "GreenSlime" + i) {
-            _name = "GreenSlime" + i;
-        }
-    }
+    ////Green Slime Initializations
+    //for (int i = 1; i < 30; i++) {
+    //    if (_name == "GreenSlime" + i) {
+    //        _name = "GreenSlime" + i;
+    //    }
+    //}
 }
 Enemy::Enemy(sf::IntRect)
     :Entity() {

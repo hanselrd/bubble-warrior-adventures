@@ -173,23 +173,64 @@ void PlayScreen::update(float delta) {
     //*COLLISION**COLLISION**COLLISION**COLLISION**COLLISION*
     //*******************************************************
     {
+        // How to handle object collision
         for (const auto& layer : _map.getLayers()) {
             if (layer.getType() == Map::Layer::Type::Object) {
                 for (const auto& object : layer.getObjects()) {
                     sf::FloatRect intersection;
+                    // Cleck if collision occurs
                     if (Object::checkCollision(_player, object, intersection)) {
-                        if (layer.getName() == "NPCs") {
-                            for (const auto& object : layer.getObjects()) {
-                                _entities.push_back(std::make_shared<Entity>(object.getRect()));
-                            }
-                        }
+                        lblCoords->setText(lblCoords->getText() + " Collision!");
+                        _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
+                    }
+                }
+            }
+            //How to handle enemy collision
+            else if (layer.getType() == Map::Layer::Type::Enemy) {
+                for (const auto& object : layer.getObjects()) {
+                    sf::FloatRect intersection;
+                    // Cleck if collision occurs
+                    if (Object::checkCollision(_player, object, intersection)) {
+                        lblCoords->setText(lblCoords->getText() + " Collision!");
+                        _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
+                    }
+                }
+            }
+            // How to handle NPC collision
+            else if (layer.getType() == Map::Layer::Type::NPC) {
+                for (const auto& object : layer.getObjects()) {
+                    sf::FloatRect intersection;
+                    // Cleck if collision occurs
+                    if (Object::checkCollision(_player, object, intersection)) {
+                        lblCoords->setText(lblCoords->getText() + " Collision!");
+                        _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
+                    }
+                }
+            }
+            // How to handle Item collision
+            else if (layer.getType() == Map::Layer::Type::Item) {
+                for (const auto& object : layer.getObjects()) {
+                    sf::FloatRect intersection;
+                    // Cleck if collision occurs
+                    if (Object::checkCollision(_player, object, intersection)) {
+                        lblCoords->setText(lblCoords->getText() + " Collision!");
+                        _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
+                    }
+                }
+            }
+            // How to handle Portal collision
+            else if (layer.getType() == Map::Layer::Type::NPC) {
+                for (const auto& object : layer.getObjects()) {
+                    sf::FloatRect intersection;
+                    // Cleck if collision occurs
+                    if (Object::checkCollision(_player, object, intersection)) {
                         lblCoords->setText(lblCoords->getText() + " Collision!");
                         _player.setPosition(playerPosOld); // if collision, move player back, choppy but works
                     }
                 }
             }
         }
-    } //End Collision
+    }//End Collision
 }
 
 void PlayScreen::draw(sf::RenderWindow& window) {
@@ -197,8 +238,8 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_map.getLayers().at(1)); 
     window.draw(_map.getLayers().at(2)); 
 
-    if (_map.getLayers().size() == 4) {
-        window.draw(_map.getLayers().at(3));
+    for (int i = 3; i < _map.getLayers().size(); i++) {
+        window.draw(_map.getLayers().at(i));
     }
 
     //_player.setOrigin(sf::Vector2f(0.0f, _player.getLocalBounds().height / 2));

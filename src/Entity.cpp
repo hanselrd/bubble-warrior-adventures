@@ -4,9 +4,11 @@
 #include <fstream>
 
 Entity::Entity(const std::string& fileName, int spriteFormat) {
+    //  Error prevention by the input if missing .png
     if (fileName.find(".png")) {
         _filePath = fileName;
-        _name = fileName.substr(0, fileName.size - 4);
+        _name = fileName.substr(0, fileName.size() - 4);
+        _fileName = fileName;
     }
     else {
         _name = fileName;
@@ -15,15 +17,17 @@ Entity::Entity(const std::string& fileName, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + fileName);
     _spriteFormat = spriteFormat;
     _sprite.setTexture(_texture);
-    _fileName = fileName;
     _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
     _sprite.setTextureRect(_intRect);
+
     _level = 1;
     _health = 10;
-    _direction = Direction::Down;
     _frameDelay = 0.02f;
     _currentFrame = 0;
+
+    _direction = Direction::Down;
     _entityType = EntityType::Object;
+
     generateWalkAnimations(spriteFormat);
     generateAttackAnimations(spriteFormat);
 
@@ -94,6 +98,10 @@ void Entity::update(float delta) {
     if (!_isPaused && _animation) {
         _frameDelay += delta;
 
+        if (!isAttacking()) {
+            _sprite.setTextureRect(sf::IntRect(0, 0, 64, 64));
+        }
+
         if (_frameDelay > 0.10f) {
             // Gwet next Frame index
             if (_currentFrame + 1 < _animation->getSize()) {
@@ -117,7 +125,7 @@ void Entity::update(float delta) {
         // Set the current frame, not reseting the time
         setFrame(_currentFrame);
 
-        // Necessary to prevent sprite from "jumping" locations when attacking
+        //// Necessary to prevent sprite from "jumping" locations when attacking
         _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f); 
     }
 	// If it is paused, reset to standing
@@ -132,7 +140,8 @@ void Entity::update(float delta) {
             _currentFrame = 3;
 		_intRect.width = _spriteFormat;
 		_intRect.height = _spriteFormat;
-		_sprite.setTextureRect(_intRect);
+		//_sprite.setTextureRect(_intRect);
+        // Prevents the sprite from jumping when going back to standing
 		_sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
 		setAnimation(_standing);
 	}
