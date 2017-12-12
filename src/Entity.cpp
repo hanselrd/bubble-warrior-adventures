@@ -3,17 +3,19 @@
 #include <cereal/archives/json.hpp>
 #include <fstream>
 
-Entity::Entity(const std::string& filePath, int spriteFormat) {
-    if (filePath.find(".png")) {
-        _fileName = filePath;
+Entity::Entity(const std::string& fileName, int spriteFormat) {
+    if (fileName.find(".png")) {
+        _filePath = fileName;
+        _name = fileName.substr(0, fileName.size - 4);
     }
     else {
-        _fileName = filePath + ".png";
+        _name = fileName;
+        _fileName = fileName + ".png";
     }
-    _texture.loadFromFile("assets/sprites/" + filePath);
+    _texture.loadFromFile("assets/sprites/" + fileName);
     _spriteFormat = spriteFormat;
     _sprite.setTexture(_texture);
-    _fileName = filePath;
+    _fileName = fileName;
     _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
     _sprite.setTextureRect(_intRect);
     _level = 1;
@@ -24,7 +26,6 @@ Entity::Entity(const std::string& filePath, int spriteFormat) {
     _entityType = EntityType::Object;
     generateWalkAnimations(spriteFormat);
     generateAttackAnimations(spriteFormat);
-    _name = filePath;
 
 }
 Entity::Entity(sf::IntRect):
