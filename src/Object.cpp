@@ -4,6 +4,7 @@ Object::Object() {
     //setting defaults
     //_name = "default";
     _isAttacking = false;
+    _filePath = "";
     if (_entityType != EntityType::Enemy ||
         _entityType != EntityType::Item ||
         _entityType != EntityType::NPC ||

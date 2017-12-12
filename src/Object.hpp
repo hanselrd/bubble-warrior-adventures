@@ -13,7 +13,7 @@ public:
 
     const EntityType getEntityType() const;
 
-    std::string _name;
+    std::string _name, _filePath;
 protected:
 
     bool _isAttacking;

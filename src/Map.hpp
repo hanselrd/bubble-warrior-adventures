@@ -111,7 +111,7 @@ public:
     private:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-        std::string _tempName, _tempType;
+        std::string _tempName;
         std::shared_ptr<Tile> _tile;
         sf::IntRect _rect;
     };

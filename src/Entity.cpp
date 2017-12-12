@@ -4,6 +4,12 @@
 #include <fstream>
 
 Entity::Entity(const std::string& filePath, int spriteFormat) {
+    if (filePath.find(".png")) {
+        _fileName = filePath;
+    }
+    else {
+        _fileName = filePath + ".png";
+    }
     _texture.loadFromFile("assets/sprites/" + filePath);
     _spriteFormat = spriteFormat;
     _sprite.setTexture(_texture);

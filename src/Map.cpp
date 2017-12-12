@@ -220,7 +220,11 @@ void Map::Layer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
                 if (viewRect.intersects(tile.getBounds()))
                     target.draw(tile, states);
         }
-        else if (_type == Type::Object) {
+        else if (_type == Type::Object ||
+            _type == Type::Enemy ||
+            _type == Type::Item ||
+            _type == Type::NPC ||
+            _type == Type::Portal) {
             for (const auto& object : _objects)
                 if (viewRect.intersects(object.getGlobalBounds()))
                     target.draw(object, states);
@@ -310,7 +314,7 @@ void Map::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
     _tempName = objectNode.attribute("name").as_string();
     _name = _tempName;
-     _tempType = objectNode.attribute("type").as_string();
+     std::string _tempType = objectNode.attribute("type").as_string();
 
      // Reading entitytype from map
     if (_tempType == "Enemy") {
@@ -340,6 +344,7 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         _rect.top = objectNode.attribute("y").as_uint();
         _rect.width = objectNode.attribute("width").as_uint();
         _rect.height = objectNode.attribute("height").as_uint()*2;
+        
     }
     else {
         _entityType = EntityType::Object;
