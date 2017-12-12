@@ -250,6 +250,15 @@ void Entity::setLevel(unsigned val) {
     _level = val;
 }
 
+bool Entity::isDead() {
+    if (_health <= 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
     if (_spriteFormat > 0) {
@@ -315,6 +324,7 @@ void Entity::generateWalkAnimations(int spriteFormat) {
     _currentAnimation = &_standing;
     
 }
+
 void Entity::generateAttackAnimations(int spriteFormat)
 {
     _attackUp.setSpriteSheet(_texture);

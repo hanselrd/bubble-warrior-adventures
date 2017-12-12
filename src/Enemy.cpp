@@ -96,9 +96,11 @@ void Enemy::update(float delta) {
         setAnimation(_standing);
     }
 }
+
 int Enemy::getExpDropped() {
     return _expDropped;
 }
+
 float Enemy::getAttackStrength() {
     return _attackStrength;
 }

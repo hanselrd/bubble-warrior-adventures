@@ -73,6 +73,7 @@ public:
     void setLevel(unsigned val);
     void setAttacking(bool b);
     void setName(std::string string);
+    bool isDead();
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
