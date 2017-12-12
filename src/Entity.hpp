@@ -51,6 +51,7 @@ public:
 
     Entity(const std::string& filePath, int spriteFormat); 
     Entity::Entity(sf::IntRect);
+    Entity::Entity(Map::Object mapObject);
     Entity();
     ~Entity();
     sf::FloatRect getLocalBounds() const override;

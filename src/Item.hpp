@@ -1,7 +1,8 @@
 #pragma once
 #include "Object.hpp"
+#include "Entity.hpp"
 
-class Item final : public Object {
+class Item final : public Entity {
 public:
     Item();
     Item(std::string file_path, int sprite_format);

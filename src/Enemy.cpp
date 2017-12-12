@@ -21,6 +21,13 @@ Enemy::Enemy(sf::IntRect)
     :Entity() {
 
 }
+Enemy::Enemy(Map::Object mapObject) 
+    : Entity(mapObject) {
+    _isAttacking = true;
+    _expDropped = 1;
+    _attackStrength = 1;
+
+}
 Enemy::Enemy()
     : Entity()
 {

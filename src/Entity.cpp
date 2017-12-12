@@ -32,16 +32,36 @@ Entity::Entity(const std::string& fileName, int spriteFormat) {
     generateAttackAnimations(spriteFormat);
 
 }
-Entity::Entity(sf::IntRect):
-Entity(){
+Entity::Entity(sf::IntRect) :
+    Entity() {
+}
+Entity::Entity(Map::Object mapObject){
+    _spriteFormat = 64;
+    _texture.loadFromFile(mapObject.getName() + ".png");
+    _sprite.setTexture(_texture);
+    _intRect = sf::IntRect(0, (64 * 8), 64, 64);
+    _name = mapObject.getName();
+    _fileName = "assets/sprites/" + mapObject.getName();
+
+    _sprite.move(-64, -32);
+    _level = 1;
+    _health = 10;
+    _frameDelay = 0.02f;
+    _currentFrame = 0;
+    _direction = Direction::Down;
+    _entityType = EntityType::Object;
+    generateWalkAnimations(64);
+    generateAttackAnimations(64);
 }
 Entity::Entity() {
     _texture.loadFromFile("assets/sprites/golden_hero_male.png");
     _spriteFormat = 64;
+    _name = "null";
     _sprite.setTexture(_texture);
     _fileName = "assets/sprites/golden_hero_male";
     _intRect = sf::IntRect(0, (64 * 8), 64, 64);
     _sprite.setTextureRect(_intRect);
+
     _level = 1;
     _health = 10;
     _direction = Direction::Down;
@@ -67,7 +87,6 @@ bool Entity::checkCollision(const Entity& first,const Entity& second, sf::FloatR
     if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection)) {
         switch (second._entityType) {
         case EntityType::NPC:
-            std::cout << "hi";
 
             break;
         default:
@@ -100,6 +119,7 @@ void Entity::update(float delta) {
 
         if (!isAttacking()) {
             _sprite.setTextureRect(sf::IntRect(0, 0, 64, 64));
+            //(_sprite.getGlobalBounds().left, _sprite.getGlobalBounds().top);
         }
 
         if (_frameDelay > 0.10f) {
@@ -126,7 +146,7 @@ void Entity::update(float delta) {
         setFrame(_currentFrame);
 
         //// Necessary to prevent sprite from "jumping" locations when attacking
-        _sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f); 
+        _sprite.setOrigin(_intRect.width /2, _intRect.height /2); 
     }
 	// If it is paused, reset to standing
 	else {
@@ -143,6 +163,7 @@ void Entity::update(float delta) {
 		//_sprite.setTextureRect(_intRect);
         // Prevents the sprite from jumping when going back to standing
 		_sprite.setOrigin(_intRect.width / 2.0f, _intRect.height / 2.0f);
+        //_sprite.setPosition(_sprite.getPosition().x + 64, _sprite.getPosition().y);
 		setAnimation(_standing);
 	}
 }
@@ -179,7 +200,7 @@ void Entity::pause() {
 }
 
 void Entity::stop() {
-    _isPaused = true;
+    pause();
     if (_direction == Direction::Up)
         _currentFrame = 0;
     else if (_direction == Direction::Left)
@@ -244,11 +265,6 @@ Entity::Direction Entity::getDirection()
 }
 
 void Entity::generateWalkAnimations(int spriteFormat) {
-    //std::ifstream is(_fileName);
-    //if (is.is_open()) {
-    //    cereal::JSONInputArchive ar(is);
-    //    ar(*this);
-    //}
 
     _walkingUp.setSpriteSheet(_texture);
     _walkingUp.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 8), spriteFormat, spriteFormat));
@@ -259,7 +275,7 @@ void Entity::generateWalkAnimations(int spriteFormat) {
     _walkingUp.addFrame(sf::IntRect((spriteFormat * 6), (spriteFormat * 8), spriteFormat, spriteFormat));
     _walkingUp.addFrame(sf::IntRect((spriteFormat * 7), (spriteFormat * 8), spriteFormat, spriteFormat));
     _walkingUp.addFrame(sf::IntRect((spriteFormat * 8), (spriteFormat * 8), spriteFormat, spriteFormat));
-
+    
     _walkingLeft.setSpriteSheet(_texture);
     _walkingLeft.addFrame(sf::IntRect((spriteFormat * 1), (spriteFormat * 9), spriteFormat, spriteFormat));
     _walkingLeft.addFrame(sf::IntRect((spriteFormat * 2), (spriteFormat * 9), spriteFormat, spriteFormat));

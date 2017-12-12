@@ -18,6 +18,7 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _attackDamage = 1;
     _noKeyPressed = true;
 	_isAttacking = false;
+    _sprite.move(_spriteFormat/2, 0);
     _entityType = EntityType::Player;
     generateAttackAnimations(spriteFormat);
     _name = "Jaime";

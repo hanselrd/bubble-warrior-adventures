@@ -156,11 +156,20 @@ void PlayScreen::handleEvent(sf::Event& e) {
 
 void PlayScreen::update(float delta) {
     auto playerPosOld = _player.getPosition();
+
+    // Calling all entity/camera update functions
     _player.update(delta);
-    for (int i = 0; i < _entities.size(); i++) {
-        _entities[i]->update(delta);
+    for (int i = 0; i < _enemies.size(); i++) {
+        _enemies[i]->update(delta);
+    }
+    for (int i = 0; i < _items.size(); i++) {
+        _items[i]->update(delta);
+    }
+    for (int i = 0; i < _npcs.size(); i++) {
+        _npcs[i]->update(delta);
     }
     _camera.update(delta);
+    // End update functions
 
     updateOverlay();
     auto playerPosNew = _player.getPosition();
@@ -248,12 +257,34 @@ void PlayScreen::draw(sf::RenderWindow& window) {
     window.draw(_player);
 
     // Draws all the enemies in the vector
-    for (int i = 0; i < _entities.size(); i++) {
-        window.draw(*_entities.at(i));
+    for (int i = 0; i < _enemies.size(); i++) {
+        window.draw(*_enemies.at(i));
     }
     window.draw(_map.getLayers().at(2));
     updateOverlay();
     _gui.draw();
+}
+
+void PlayScreen::reloadObjects(Entity::EntityType type)
+{ 
+    //Grabbing all layers to process out the entity types
+    for (const auto& layer : _map.getLayers()) {
+
+        // Check the Map::Object::Type variable 
+        auto layer_type = layer.getType();
+        Entity::EntityType conversion;
+
+        if (layer.getType() == Map::Layer::Type::Enemy) {
+            for (const auto& object : layer.getObjects()) {
+                _enemies.push_back(std::make_shared<Enemy>(Enemy(object)));
+            }
+        }        
+        if (layer.getType() == Map::Layer::Type::NPC) {
+            for (const auto& object : layer.getObjects()) {
+                _npcs.push_back(std::make_shared<NPC>(NPC(object)));
+            }
+        }
+    }
 }
 
 void PlayScreen::updateOverlay()
@@ -263,31 +294,37 @@ void PlayScreen::updateOverlay()
         lvl->setText("Lv. " + std::to_string(_player.getLevel()));
 
         tgui::ProgressBar::Ptr hpbar = _gui.get<tgui::ProgressBar>("prgbarHealth", true);
-        hpbar->setValue(_player.getHealth());
         hpbar->setMaximum(_player.getMaxHealth());
+        hpbar->setValue(_player.getHealth());
         hpbar->setText(std::to_string(_player.getHealth()) + "/" + std::to_string(_player.getMaxHealth()));
 
         tgui::ProgressBar::Ptr mpbar = _gui.get<tgui::ProgressBar>("prgbarMana", true);
-        mpbar->setValue(_player.getMana());
         mpbar->setMaximum(_player.getMaxMana());
+        mpbar->setValue(_player.getMana());
         mpbar->setText(std::to_string(_player.getMana()) + "/" + std::to_string(_player.getMaxMana()));
 
         tgui::ProgressBar::Ptr expbar = _gui.get<tgui::ProgressBar>("prgbarExperience", true);
-        expbar->setValue((unsigned)_player.getExp());
         expbar->setMaximum((unsigned)_player.getMaxExp());
+        expbar->setValue((unsigned)_player.getExp());
         expbar->setText(std::to_string((int)_player.getExp()) + "/" + std::to_string((int)_player.getMaxExp()));
 
         _overlayUpdate.restart();
     }
 }
 
-const std::vector<Entity>& PlayScreen::getNPCs() const
+std::vector<std::shared_ptr<NPC>>& PlayScreen::getNPCs()
 {
-    std::vector<Entity> npcs(_entities.size());
-    for (int i = 0; i < npcs.size(); i++) {
-        if (_entities.at(i)->getEntityType() == Object::EntityType::NPC) {
-            npcs.push_back(*_entities.at(i));
-        }
-    }
-    return npcs;
+    return _npcs;
+}
+
+std::vector<std::shared_ptr<Item>>& PlayScreen::getItems() {
+    return _items;
+}
+
+std::vector<std::shared_ptr<Object>>& PlayScreen::getObjects() {
+    return _objects;
+}
+
+std::vector<std::shared_ptr<Enemy>>& PlayScreen::getEnemies() {
+    return _enemies;
 }
