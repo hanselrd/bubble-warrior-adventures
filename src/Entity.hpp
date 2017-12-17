@@ -23,11 +23,11 @@ protected:
     Animation _attackRight;
     void generateWalkAnimations(int spriteFormat);
     void generateAttackAnimations(int spriteFormat);
-    
+
     // Damage/healing
     void modifyHealth(int delta, bool healing);
 
-    // Loading animation parsing   
+    // Loading animation parsing
     friend class cereal::access;
     template <class Archive>
     void save(Archive& ar) const;
@@ -42,16 +42,16 @@ protected:
     bool _isPaused, _isLooped, _isAttacking;
     Animation _walkingUp, _walkingLeft, _walkingDown, _walkingRight, _standing;
     Animation* _currentAnimation;
-    
+
 public:
     static bool checkCollision(const Entity& first, const Entity& second, sf::FloatRect& intersection);
 
     enum class Direction { Up, Left, Down, Right } _direction;
     Entity::Direction getDirection();
 
-    Entity(const std::string& filePath, int spriteFormat); 
-    Entity::Entity(sf::IntRect);
-    Entity::Entity(Map::Object mapObject);
+    Entity(const std::string& filePath, int spriteFormat);
+    Entity(sf::IntRect);
+    Entity(Map::Object mapObject);
     Entity();
     ~Entity();
     sf::FloatRect getLocalBounds() const override;
