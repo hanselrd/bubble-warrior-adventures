@@ -1,0 +1,39 @@
+Movement and Actions
+
+Magic Cast: 
+Forward 	(0,0,64,64) 		Loop from 0-6
+Left 		(0,(64*1),64,64)	
+Down		(0,(64*2),64,64)
+Right		(0,(64*3),64,64)
+
+Thrust:
+Forward 	(0,(64*4),64,64)	Loop from 0-7
+Left 		(0,(64*5),64,64)	
+Down		(0,(64*6),64,64)
+Right		(0,(64*7),64,64)
+
+Walk:
+Forward 	(0,(64*8),64,64)	Loop from 0-8
+Left 		(0,(64*9),64,64)	
+Down		(0,(64*10),64,64)
+Right		(0,(64*11),64,64)
+
+Slash, no weapon:
+Forward 	(0,(64*12),64,64)	Loop from 0-5
+Left 		(0,(64*13),64,64)	
+Down		(0,(64*14),64,64)
+Right		(0,(64*15),64,64)
+
+Shoot:
+Forward 	(0,(64*16),64,64)	Loop from 0-7
+Left 		(0,(64*17),64,64)	
+Down		(0,(64*18),64,64)
+Right		(0,(64*19),64,64)
+
+Death:		(0, (64*20),64,64)	Loop from 0-5
+
+Attack with weapon:			Loop from 0-5
+Forward 	(0,(64*22),(64*3),(64*3))	
+Left 		(0,(64*25),(64*3),(64*3))	
+Down		(0,(64*28),(64*3),(64*3))
+Right		(0,(64*31),(64*3),(64*3))
