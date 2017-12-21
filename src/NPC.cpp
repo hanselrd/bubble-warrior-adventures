@@ -2,7 +2,8 @@
 
 NPC::NPC()
     : Entity() {
-
+    _name = "castle_npc";
+    _filePath = _name + ".png";
     _isAttacking = false;
     _entityType = EntityType::NPC;
 }
@@ -14,6 +15,8 @@ NPC::NPC(sf::IntRect)
 }
 NPC::NPC(Map::Object mapObject)
     : Entity(mapObject) {
+    _name = mapObject.getName();
+    _filePath = _name + ".png";
     _isAttacking = false;
 }
 

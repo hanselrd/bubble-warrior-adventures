@@ -322,7 +322,7 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         _rect.left = objectNode.attribute("x").as_uint();
         _rect.top = objectNode.attribute("y").as_uint();
         _rect.width = objectNode.attribute("width").as_uint();
-        _rect.height = objectNode.attribute("height").as_uint()*2;
+        _rect.height = objectNode.attribute("height").as_uint();
     }
     else if (_tempType == "Item") {
         _entityType = EntityType::Item;
@@ -336,15 +336,31 @@ Map::Object::Object(const Map& map, const pugi::xml_node& objectNode) {
         _rect.left = objectNode.attribute("x").as_uint();
         _rect.top = objectNode.attribute("y").as_uint();
         _rect.width = objectNode.attribute("width").as_uint();
-        _rect.height = objectNode.attribute("height").as_uint()*2;
+        _rect.height = objectNode.attribute("height").as_uint();
     }
     else if (_tempType == "NPC") {
         _entityType = EntityType::NPC;
         _rect.left = objectNode.attribute("x").as_uint();
         _rect.top = objectNode.attribute("y").as_uint();
         _rect.width = objectNode.attribute("width").as_uint();
-        _rect.height = objectNode.attribute("height").as_uint()*2;
+        _rect.height = objectNode.attribute("height").as_uint();
         
+    }
+    else if (_tempType == "Spawn") {
+        _entityType = EntityType::Spawn;
+        _rect.left = objectNode.attribute("x").as_uint();
+        _rect.top = objectNode.attribute("y").as_uint();
+        _rect.width = objectNode.attribute("width").as_uint();
+        _rect.height = objectNode.attribute("height").as_uint() ;
+
+    }
+    else if (_tempType == "Portal") {
+        _entityType = EntityType::Portal;
+        _rect.left = objectNode.attribute("x").as_uint();
+        _rect.top = objectNode.attribute("y").as_uint();
+        _rect.width = objectNode.attribute("width").as_uint();
+        _rect.height = objectNode.attribute("height").as_uint() ;
+
     }
     else {
         _entityType = EntityType::Object;

@@ -17,7 +17,7 @@ Entity::Entity(const std::string& fileName, int spriteFormat) {
     _texture.loadFromFile("assets/sprites/" + fileName);
     _spriteFormat = spriteFormat;
     _sprite.setTexture(_texture);
-    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat, spriteFormat);
+    _intRect = sf::IntRect(0, (spriteFormat * 8), spriteFormat/2, spriteFormat);
     _sprite.setTextureRect(_intRect);
 
     _level = 1;
@@ -31,6 +31,7 @@ Entity::Entity(const std::string& fileName, int spriteFormat) {
     generateWalkAnimations(spriteFormat);
     generateAttackAnimations(spriteFormat);
 
+    _sprite.setOrigin(_spriteFormat / 2.0f, _spriteFormat / 2.0f);
 }
 Entity::Entity(sf::IntRect) :
     Entity() {
@@ -39,7 +40,7 @@ Entity::Entity(Map::Object mapObject){
     _spriteFormat = 64;
     _texture.loadFromFile(mapObject.getName() + ".png");
     _sprite.setTexture(_texture);
-    _intRect = sf::IntRect(0, (64 * 8), 64, 64);
+    _intRect = sf::IntRect(0, (_spriteFormat * 8), _spriteFormat, _spriteFormat);
     _name = mapObject.getName();
     _fileName = "assets/sprites/" + mapObject.getName();
 
@@ -52,6 +53,8 @@ Entity::Entity(Map::Object mapObject){
     _entityType = EntityType::Object;
     generateWalkAnimations(64);
     generateAttackAnimations(64);
+
+    _sprite.setOrigin(_spriteFormat / 2.0f, _spriteFormat / 2.0f);
 }
 Entity::Entity() {
     _texture.loadFromFile("assets/sprites/golden_hero_male.png");
@@ -59,7 +62,7 @@ Entity::Entity() {
     _name = "null";
     _sprite.setTexture(_texture);
     _fileName = "assets/sprites/golden_hero_male";
-    _intRect = sf::IntRect(0, (64 * 8), 64, 64);
+    _intRect = sf::IntRect(0, (_spriteFormat * 8), _spriteFormat, _spriteFormat);
     _sprite.setTextureRect(_intRect);
 
     _level = 1;
@@ -68,15 +71,18 @@ Entity::Entity() {
     _frameDelay = 0.02f;
     _currentFrame = 0;
     _entityType = EntityType::Object;
-    generateWalkAnimations(64);
-    generateAttackAnimations(64);
+    generateWalkAnimations(_spriteFormat);
+    generateAttackAnimations(_spriteFormat);
+
+    _sprite.setOrigin(_spriteFormat / 2.0f, _spriteFormat / 2.0f);
 }
 Entity::~Entity() {}
 
 sf::FloatRect Entity::getLocalBounds() const {
     if (_spriteFormat > 0) {
         auto temp = _sprite.getLocalBounds();
-        //temp.height = temp.height/2.0f;
+        //temp.width /= 15;
+        //temp.height /= 2;
         return temp;
     }
     else
@@ -118,7 +124,7 @@ void Entity::update(float delta) {
         _frameDelay += delta;
 
         if (!isAttacking()) {
-            _sprite.setTextureRect(sf::IntRect(0, 0, 64, 64));
+            _sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
             //(_sprite.getGlobalBounds().left, _sprite.getGlobalBounds().top);
         }
 
@@ -146,7 +152,7 @@ void Entity::update(float delta) {
         setFrame(_currentFrame);
 
         //// Necessary to prevent sprite from "jumping" locations when attacking
-        _sprite.setOrigin(_intRect.width /2, _intRect.height /2); 
+        _sprite.setOrigin(_intRect.width /2.0f, _intRect.height /2.0f); 
     }
 	// If it is paused, reset to standing
 	else {
@@ -238,8 +244,8 @@ unsigned Entity::getHealth() const {
     return _health;
 }
 
-sf::Vector2f Entity::getVelocity() const {
-    return _velocity;
+sf::Vector2f Entity::getBaseWalkSpeed() const {
+    return _walkSpeed;
 }
 
 void Entity::setHealth(unsigned val) {
@@ -259,10 +265,12 @@ bool Entity::isDead() {
     }
 }
 
-void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     states.transform *= getTransform();
     if (_spriteFormat > 0) {
-        target.draw(_sprite, states);
+        sf::Sprite temp(_sprite);
+        //temp.setOrigin(_spriteFormat / 2.0f, _spriteFormat / 2.0f);
+        target.draw(temp, states);
     }
     else
         target.draw(_circle, states);

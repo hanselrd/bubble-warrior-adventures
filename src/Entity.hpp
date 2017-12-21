@@ -12,7 +12,7 @@ protected:
     unsigned _level;
     unsigned _health;
     unsigned _spriteFormat;
-    sf::Vector2f _velocity;
+    sf::Vector2f _walkSpeed;
     sf::Texture _texture;
     sf::Sprite _sprite;
 
@@ -67,7 +67,7 @@ public:
 
     unsigned getLevel() const;
     unsigned getHealth() const;
-    sf::Vector2f getVelocity() const;
+    sf::Vector2f getBaseWalkSpeed() const;
     const Animation* getAnimation() const;
     void setHealth(unsigned val);
     void setLevel(unsigned val);
@@ -75,5 +75,5 @@ public:
     void setName(std::string string);
     bool isDead();
 private:
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
 };

@@ -21,9 +21,23 @@ public:
     std::vector<std::shared_ptr<Item>>& PlayScreen::getItems();
     std::vector<std::shared_ptr<Enemy>>& PlayScreen::getEnemies();
 
+    void updateEntitiesForCurrentMap();
     void reloadObjects(Entity::EntityType type);
     void updateOverlay();
 private:
+    // Gui
+    tgui::Label::Ptr lblCoords;
+    tgui::Button::Ptr btnMainMenu;
+    tgui::Panel::Ptr _panelPlayerStats;
+    tgui::Label::Ptr lblName;
+    tgui::Label::Ptr lblLevel;
+    tgui::Label::Ptr lblHealth;
+    tgui::ProgressBar::Ptr prgbarHealth;
+    tgui::Label::Ptr lblMana;
+    tgui::ProgressBar::Ptr prgbarMana;
+    tgui::Label::Ptr lblExperience;
+    tgui::ProgressBar::Ptr prgbarExperience;
+
     Camera _camera;
     Map _map; // Testing (should use a MapHandler)
     Player _player;

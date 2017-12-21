@@ -8,7 +8,7 @@ public:
     virtual sf::FloatRect getLocalBounds() const = 0;
     sf::FloatRect getGlobalBounds() const;
     static bool checkCollision(const Object& first,const Object& second, sf::FloatRect& intersection);
-    enum class EntityType { Object, Item, Player, Enemy, NPC };
+    enum class EntityType { Object, Item, Player, Enemy, NPC, Spawn, Portal };
     EntityType _entityType;
 
     const EntityType getEntityType() const;

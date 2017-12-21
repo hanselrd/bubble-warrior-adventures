@@ -12,13 +12,13 @@ Player::Player(std::string filePath, std::string playerName, unsigned spriteForm
     _maxHealth = 10;
     _mana = 10;
     _maxMana = 10;
-    _velocity = sf::Vector2f(60.0f, 60.0f);
+    _walkSpeed = sf::Vector2f(60.0f, 60.0f);
     _armor = 0.0f;
     _name = playerName;
     _attackDamage = 1;
     _noKeyPressed = true;
 	_isAttacking = false;
-    _sprite.move(_spriteFormat/2, 0);
+    //_sprite.move(_spriteFormat/4.0f, 0);
     _entityType = EntityType::Player;
     generateAttackAnimations(spriteFormat);
     _name = "Jaime";
@@ -77,19 +77,19 @@ void Player::update(float delta) {
         }
         // Move up with 'W' key
         if (_direction == Direction::Up && sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !isAttacking()) {
-            move(0, -_velocity.y * delta * run_multiplier);
+            move(0, -_walkSpeed.y * delta * run_multiplier);
         }
         // Move left with 'A' key
         if (_direction == Direction::Left && sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !isAttacking()) {
-            move(-_velocity.x * delta * run_multiplier, 0);
+            move(-_walkSpeed.x * delta * run_multiplier, 0);
         }
         // Move down with 'S' key
         if (_direction == Direction::Down && sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !isAttacking()) {
-            move(0, _velocity.y * delta* run_multiplier);
+            move(0, _walkSpeed.y * delta* run_multiplier);
         }
         // Move right with 'D' key
         if (_direction == Direction::Right && sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !isAttacking()) {
-            move(_velocity.x * delta * run_multiplier, 0);
+            move(_walkSpeed.x * delta * run_multiplier, 0);
         }
     }
     // End Animate

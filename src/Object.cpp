@@ -4,7 +4,7 @@ Object::Object() {
     //setting defaults
     //_name = "default";
     _isAttacking = false;
-    _filePath = "";
+    _filePath = "default";
     if (_entityType != EntityType::Enemy ||
         _entityType != EntityType::Item ||
         _entityType != EntityType::NPC ||
@@ -15,7 +15,7 @@ Object::Object() {
 Object::~Object() {}
 
 sf::FloatRect Object::getGlobalBounds() const {
-    return getTransform().transformRect(getLocalBounds());
+    return getTransform().transformRect(this->getLocalBounds());
 }
 
 const Object::EntityType Object::getEntityType() const {
@@ -23,9 +23,12 @@ const Object::EntityType Object::getEntityType() const {
 }
 
 bool Object::checkCollision(const Object& first,const Object& second, sf::FloatRect& intersection) {
-    if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection))
+    
+    if (first.getGlobalBounds().intersects(second.getGlobalBounds(), intersection)
+        && second.getEntityType() != EntityType::Spawn
+        && intersection.width > 10)
     {
-        return true;
+            return true;
     }
     else
         return false;
