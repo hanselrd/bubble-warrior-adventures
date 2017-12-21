@@ -8,11 +8,11 @@ Entity::Entity(const std::string& fileName, int spriteFormat) {
     if (fileName.find(".png")) {
         _filePath = fileName;
         _name = fileName.substr(0, fileName.size() - 4);
-        _fileName = fileName;
+        _filePath = fileName;
     }
     else {
         _name = fileName;
-        _fileName = fileName + ".png";
+        _filePath = fileName + ".png";
     }
     _texture.loadFromFile("assets/sprites/" + fileName);
     _spriteFormat = spriteFormat;
@@ -42,7 +42,7 @@ Entity::Entity(Map::Object mapObject){
     _sprite.setTexture(_texture);
     _intRect = sf::IntRect(0, (_spriteFormat * 8), _spriteFormat, _spriteFormat);
     _name = mapObject.getName();
-    _fileName = "assets/sprites/" + mapObject.getName();
+    _filePath = "assets/sprites/" + mapObject.getName();
 
     //_sprite.move(-64, -32);
     _level = 1;
@@ -61,7 +61,7 @@ Entity::Entity() {
     _spriteFormat = 64;
     _name = "null";
     _sprite.setTexture(_texture);
-    _fileName = "assets/sprites/golden_hero_male";
+    _filePath = "assets/sprites/golden_hero_male";
     _intRect = sf::IntRect(0, (_spriteFormat * 8), _spriteFormat, _spriteFormat);
     _sprite.setTextureRect(_intRect);
 

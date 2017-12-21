@@ -4,8 +4,8 @@
 
 class InvisibleBarrier final: public Object {
 public:
-    InvisibleBarrier();
     InvisibleBarrier(Map::Object mapObject);
+    //sf::FloatRect getLocalBounds() const;
 
 private:
 

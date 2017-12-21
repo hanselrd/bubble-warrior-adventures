@@ -34,7 +34,7 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     auto theme = resourceHandler->get<tgui::Theme>(THEME_DEFAULT);
 
     auto playerSpawn = _map.getLayers()[5].getObjects()[0].getRect();
-    _player.setPosition(playerSpawn.left, playerSpawn.top);
+    _player.setPosition((float)playerSpawn.left, (float)playerSpawn.top);
 
     // NPC drawing/initialization
     // Edit this section with script code ******************************************************************
@@ -293,8 +293,7 @@ void PlayScreen::reloadObjects(Entity::EntityType type)
     for (const auto& layer : _map.getLayers()) {
 
         // Check the Map::Object::Type variable 
-        auto layer_type = layer.getType();        
-        Entity::EntityType conversion;
+        auto layer_type = layer.getType();   
         //if (layer.getType() == Map::Layer::Type::Object) {
         //    for (const auto& object : layer.getObjects()) {
         //        _objects.push_back(std::make_shared<Object>(Object(object)));

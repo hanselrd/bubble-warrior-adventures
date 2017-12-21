@@ -29,16 +29,15 @@ protected:
 
     // Loading animation parsing
     friend class cereal::access;
-    template <class Archive>
-    void save(Archive& ar) const;
-    template <class Archive>
-    void load(Archive& ar);
+    //template <class Archive>
+    //void save(Archive& ar) const;
+    //template <class Archive>
+    //void load(Archive& ar);
 
     const sf::Texture* _tempTexture;
     float _frameDelay;
     sf::IntRect _intRect;
     std::size_t _currentFrame;
-    std::string _fileName;
     bool _isPaused, _isLooped, _isAttacking;
     Animation _walkingUp, _walkingLeft, _walkingDown, _walkingRight, _standing;
     Animation* _currentAnimation;
