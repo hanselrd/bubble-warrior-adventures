@@ -2,7 +2,9 @@
 
 [![Gitter](https://badges.gitter.im/bubble-warrior-adventures/Lobby.svg)](https://gitter.im/bubble-warrior-adventures/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-![ingame](assets/screenshots/ingame.png)
+<p align="center">
+  <img src="assets/screenshots/ingame.png" width="600" />
+</p>
 
 ## Contents
 
