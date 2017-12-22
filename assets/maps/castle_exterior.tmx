@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="70" tilewidth="32" tileheight="32" nextobjectid="73">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="70" tilewidth="32" tileheight="32" nextobjectid="81">
  <tileset firstgid="1" name="1" tilewidth="32" tileheight="32" tilecount="900" columns="30">
   <image source="../tilesets/hyptosis_tile-art-batch-1.png" width="960" height="960"/>
  </tileset>
@@ -101,13 +101,13 @@
   <object id="64" x="1504" y="672" width="64" height="32"/>
  </objectgroup>
  <objectgroup name="Enemies">
-  <object id="69" name="Boss spawn" type="Enemy" gid="3043" x="800" y="1664" width="32" height="32"/>
-  <object id="71" name="castle_guard1" type="Enemy" gid="3043" x="800" y="480" width="32" height="32"/>
+  <object id="77" name="castle_guard1" x="800" y="448" width="32" height="32"/>
+  <object id="78" name="boss_spawn" x="800" y="1632" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="NPCs"/>
  <objectgroup name="Portals">
-  <object id="66" name="Teleport to castle" type="Portal" gid="3050" x="768" y="320" width="96" height="96"/>
-  <object id="72" name="Teleport to world map" type="Portal" gid="3050" x="0" y="2240" width="32" height="544"/>
+  <object id="73" name="castle_interior" x="768" y="224" width="96" height="96"/>
+  <object id="80" name="world_map" x="0" y="1696" width="32" height="576"/>
  </objectgroup>
  <layer name="Foreground" width="50" height="70">
   <data encoding="base64">
