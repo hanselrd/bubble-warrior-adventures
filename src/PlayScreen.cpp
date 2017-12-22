@@ -2,6 +2,7 @@
 #include "Enemy.hpp"
 #include "Entity.hpp"
 #include "Config.hpp"
+#include "InvisibleBarrier.hpp"
 #include "Locator.hpp"
 #include "ResourceHandler.hpp"
 #include "Script.hpp"
@@ -18,6 +19,9 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
 
     auto resourceHandler = Locator<ResourceHandler>::get();
     auto settings = Locator<Settings>::get();
+
+    // Offsets for GUI
+    constexpr unsigned STATS_OFFSET = 170;
 
     _mapHandler = std::make_shared<MapHandler>();
     Locator<MapHandler>::provide(_mapHandler);
@@ -45,8 +49,6 @@ PlayScreen::PlayScreen(sf::RenderWindow& window)
     *GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*GUI*
     *************************************************************/
     {
-    // Offsets
-    constexpr unsigned STATS_OFFSET = 170;
         lblCoords = tgui::Label::create();
         lblCoords->setTextColor(sf::Color::Cyan);
         lblCoords->setTextSize(30);
@@ -157,7 +159,7 @@ void PlayScreen::handleEvent(sf::Event& e) {
 void PlayScreen::updateEntitiesForCurrentMap() {
     //*******************************************************
     //*COLLISION**COLLISION**COLLISION**COLLISION**COLLISION*
-    // All code below is 
+    // All code below is for collision handling
     //*******************************************************
     {
         auto playerPosOld = _player.getPosition();
@@ -234,7 +236,12 @@ void PlayScreen::updateEntitiesForCurrentMap() {
 }
 void PlayScreen::update(float delta) {
 
-    updateEntitiesForCurrentMap();
+    reloadObjects(Entity::EntityType::NPC);
+    reloadObjects(Entity::EntityType::Item);
+    reloadObjects(Entity::EntityType::Object);
+    reloadObjects(Entity::EntityType::Enemy);
+    reloadObjects(Entity::EntityType::Spawn);
+    reloadObjects(Entity::EntityType::Portal);
     // Calling all entity/camera update functions
     _player.update(delta);
     for (int i = 0; i < _enemies.size(); i++) {
@@ -299,11 +306,11 @@ void PlayScreen::reloadObjects(Entity::EntityType type)
         //        _objects.push_back(std::make_shared<Object>(Object(object)));
         //    }
         //}
-        //if (layer.getType() == Map::Layer::Type::Object) {
-        //    for (const auto& object : layer.getObjects()) {
-        //        _objects.push_back(std::make_shared<Object>(Object(object)));
-        //    }
-        //}
+        if (layer.getType() == Map::Layer::Type::Object) {
+            for (const auto& object : layer.getObjects()) {
+                _objects.push_back(std::make_shared<InvisibleBarrier>(InvisibleBarrier(object)));
+            }
+        }
         if (layer.getType() == Map::Layer::Type::Enemy) {
             for (const auto& object : layer.getObjects()) {
                 _enemies.push_back(std::make_shared<Enemy>(Enemy(object)));

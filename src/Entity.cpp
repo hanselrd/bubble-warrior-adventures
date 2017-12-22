@@ -44,6 +44,7 @@ Entity::Entity(Map::Object mapObject){
     _name = mapObject.getName();
     _filePath = "assets/sprites/" + mapObject.getName();
 
+    setPosition(mapObject.getPosition());
     //_sprite.move(-64, -32);
     _level = 1;
     _health = 10;
@@ -81,8 +82,8 @@ Entity::~Entity() {}
 sf::FloatRect Entity::getLocalBounds() const {
     if (_spriteFormat > 0) {
         auto temp = _sprite.getLocalBounds();
-        //temp.width /= 15;
-        //temp.height /= 2;
+        temp.width /= 15;
+        temp.height /= 2;
         return temp;
     }
     else
