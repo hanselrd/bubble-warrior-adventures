@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="44">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="52">
  <tileset firstgid="1" name="1" tilewidth="32" tileheight="32" tilecount="900" columns="30">
   <image source="../tilesets/hyptosis_tile-art-batch-1.png" width="960" height="960"/>
  </tileset>
@@ -67,17 +67,17 @@
   <object id="24" name="NorthWall" x="96" y="64" width="1088" height="32"/>
  </objectgroup>
  <objectgroup name="Enemies">
-  <object id="35" name="castle_guard1" gid="1093" x="1088" y="384" width="32" height="32"/>
-  <object id="36" name="castle_guard2" gid="1093" x="960" y="672" width="32" height="32"/>
-  <object id="37" name="castle_guard4" gid="1093" x="864" y="352" width="32" height="32"/>
-  <object id="38" name="castle_guard5" gid="1093" x="672" y="352" width="32" height="32"/>
-  <object id="39" name="castle_guard6" gid="1093" x="608" y="544" width="32" height="32"/>
-  <object id="40" name="castle_guard8" gid="1093" x="256" y="672" width="32" height="32"/>
-  <object id="41" name="castle_guard7" gid="1093" x="128" y="480" width="32" height="32"/>
-  <object id="42" name="castle_guard3" gid="1093" x="288" y="192" width="32" height="32"/>
+  <object id="44" name="castle_guard1" type="Enemy" x="1088" y="352" width="32" height="32"/>
+  <object id="45" name="castle_guard2" type="Enemy" x="960" y="640" width="32" height="32"/>
+  <object id="46" name="castle_guard3" type="Enemy" x="288" y="160" width="32" height="32"/>
+  <object id="47" name="castle_guard4" type="Enemy" x="864" y="320" width="32" height="32"/>
+  <object id="48" name="castle_guard5" type="Enemy" x="672" y="320" width="32" height="32"/>
+  <object id="49" name="castle_guard6" type="Enemy" x="608" y="512" width="32" height="32"/>
+  <object id="50" name="castle_guard7" type="Enemy" x="128" y="448" width="32" height="32"/>
+  <object id="51" name="castle_guard8" type="Enemy" x="256" y="640" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Portals">
-  <object id="43" name="Stairs" x="608" y="768" width="32" height="32"/>
+  <object id="43" name="Stairs" type="Portal" x="608" y="768" width="32" height="32"/>
  </objectgroup>
  <layer name="Foreground" width="100" height="100">
   <data encoding="base64">
