@@ -1,0 +1,119 @@
+Script Notes:  No one knows who the Hero is
+Hero begins game in small room at back of castle, next to a bed.  
+
+"*knock knock*"
+Castle_npc1 enters.  
+"Here you are!  What are you doing lazing about back here?  General Tiren is waiting for you in the main hall.  Go.  Go!"
+First time entering the main hall:
+"Ah, there you are.  On behalf of the entire council, allow me to offer you my thanks.  I never thought I would live to see the Prophecies come true, and now to be able to witness this with my own eyes...  Well.  I wish it hadn't come to this, but I'm more grateful than I can possibly express."  
+Slight pause, General Tiren comes forward and shakes the hero's hand, then steps back again.  
+"The city is under curfew.  I've ordered my people to stand down; the square should be empty.  Is there anything else you need?"
+Hero shakes their head and raises an arm.  A bright light pulses out from their hand, then subsides.  
+The general nods their head.  
+"We'll keep the castle doors open as long as we can.  If you need to, you can always return to rest up before continuing.  Good luck ...Hero."
+
+*After the boss is defeated*
+General Tiren:  "Hero, I...  You have exceeded my every expectation.  On behalf of the council, and our entire kingdom, thank you.  If there's anything I can do-"
+Jaime:  "Actually, there is."
+General Tiren looks shocked.  The player should be shocked too - the hero hasn't spoken until now.  The player character removes their helmet.  
+General Tiren:  "But you're-"
+Jaime:  "WHEW.  Gods it's hot under there."
+"Alright.  I need two things from you.  I need a travel pass for Isterland, the guards wouldn't let me past our borders last time and I don't want to have to try to sneak past them.  Can you get me one?"
+General Tiren:  "I-I can arrange to one sent to the crossing point, if that's-  I mean-"
+Jaime:  "Awesome!  Alright I'm off then."
+They go to leave.  
+General Tiren:  "Wait!  You...  You said two things?"
+Jaime:  "Oh, right."  They turn around and toss something at the General.  Tiren catches it, and it glows brightly in their hand.  
+"Can you see that the bubble is taken back to the shrine?  Ellene would box my ears off if I tried to take it back myself."
+They turn around and walk almost out the door.
+"Thanks!  Good luck with everything, it's been a pleasure."
+They leave.  General Tiren is left in the middle of the hall holding the great bubble in their hand.  
+General Tiren:  "But they were barely more than a child!  How on earth did they get their hands on the Great Bubble when our best soldiers had failed?"  
+The bubble glows in their hand, and we fade out.  
+End of first section
+
+ID:  General_Tiren.png
+Name:  General Tiren
+Location:  Main hall
+Script:
+
+ID: Kitren.png
+Name: Kitren
+Location:
+Script:
+
+ID: castle_npc1
+Name: Alysha
+Location: Small room in back
+Script: "What are you still doing here?"
+"I hope we have enough beds...  Even with all the civilians evacuated, it'll still be tight."
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
+
+ID:
+Name:  
+Location:
+Script:
