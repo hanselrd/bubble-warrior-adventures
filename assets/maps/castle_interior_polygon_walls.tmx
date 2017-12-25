@@ -50,104 +50,104 @@
   </data>
  </layer>
  <objectgroup color="#0a0000" name="Objects">
-  <object id="224" name="Bed9" x="1632" y="192" width="32" height="64"/>
-  <object id="225" name="Bed8" x="1568" y="192" width="32" height="64"/>
-  <object id="226" name="Dresser8" x="1600" y="192" width="32" height="32"/>
-  <object id="227" name="Dresser7" x="1536" y="192" width="32" height="32"/>
-  <object id="228" name="Bed7" x="1504" y="192" width="32" height="64"/>
-  <object id="229" name="Dresser6" x="1472" y="192" width="32" height="32"/>
-  <object id="230" name="Dresser3" x="1408" y="192" width="32" height="32"/>
-  <object id="231" name="Bed3" x="1376" y="192" width="32" height="64"/>
-  <object id="232" name="Dresser2" x="1344" y="192" width="32" height="32"/>
-  <object id="233" name="Bed2" x="1312" y="192" width="32" height="64"/>
-  <object id="234" name="Dresser1" x="1280" y="192" width="32" height="32"/>
-  <object id="235" name="Bed1" x="1248" y="192" width="32" height="64"/>
-  <object id="236" name="Bed4" x="1248" y="320" width="32" height="64"/>
-  <object id="237" name="Dresser4" x="1280" y="352" width="32" height="32"/>
-  <object id="238" name="Bed5" x="1312" y="320" width="32" height="64"/>
-  <object id="239" name="Dresser5" x="1344" y="352" width="32" height="32"/>
-  <object id="240" name="Bed6" x="1376" y="320" width="32" height="64"/>
-  <object id="241" name="Bed10" x="1504" y="320" width="32" height="64"/>
-  <object id="242" name="Dresser9" x="1536" y="352" width="32" height="32"/>
-  <object id="243" name="Bed11" x="1568" y="320" width="32" height="64"/>
-  <object id="244" name="Dresser10" x="1600" y="352" width="32" height="32"/>
-  <object id="245" name="Bed12" x="1632" y="320" width="32" height="64"/>
-  <object id="252" name="GreenFlame1" x="416" y="2016" width="32" height="32"/>
-  <object id="253" name="GreenFlame2" x="416" y="2208" width="32" height="32"/>
-  <object id="254" name="GreenFlame3" x="608" y="2208" width="32" height="32"/>
-  <object id="263" name="FrontDoor" x="1344" y="2304" width="224" height="32"/>
-  <object id="266" name="OrangeFlame1" x="416" y="352" width="32" height="32"/>
-  <object id="267" name="OrangeFlame2" x="608" y="352" width="32" height="32"/>
-  <object id="268" name="OrangeFlame3" x="416" y="544" width="32" height="32"/>
-  <object id="269" name="BlueFlame1" x="2272" y="352" width="32" height="32"/>
-  <object id="270" name="BlueFlame2" x="2464" y="352" width="32" height="32"/>
-  <object id="271" name="BlueFlame3" x="2464" y="544" width="32" height="32"/>
-  <object id="272" name="RedFlame1" x="2464" y="2016" width="32" height="32"/>
-  <object id="273" name="RedFlame3" x="2464" y="2208" width="32" height="32"/>
-  <object id="275" name="RedFlame2" x="2272" y="2208" width="32" height="32"/>
-  <object id="276" name="Throne1" x="1408" y="864" width="32" height="32"/>
-  <object id="277" name="Throne2" x="1472" y="864" width="32" height="32"/>
-  <object id="278" name="RedFlame4" x="1312" y="992" width="32" height="32"/>
-  <object id="279" name="RedFlame5" x="1568" y="992" width="32" height="32"/>
-  <object id="280" name="BlueFlame4" x="1312" y="1216" width="32" height="32"/>
-  <object id="281" name="BlueFlame5" x="1568" y="1216" width="32" height="32"/>
-  <object id="282" name="OrangeFlame4" x="1312" y="1440" width="32" height="32"/>
-  <object id="284" name="OrangeFlame5" x="1568" y="1440" width="32" height="32"/>
-  <object id="285" name="GreenFlame4" x="1312" y="1632" width="32" height="32"/>
-  <object id="286" name="GreenFlame5" x="1568" y="1632" width="32" height="32"/>
-  <object id="287" name="Table1" x="1120" y="864" width="32" height="32"/>
-  <object id="288" name="Table2" x="1760" y="864" width="32" height="32"/>
-  <object id="289" name="Table3" x="1120" y="1088" width="32" height="32"/>
-  <object id="290" name="Table4" x="1760" y="1088" width="32" height="32"/>
-  <object id="291" name="Table5" x="1120" y="1312" width="32" height="32"/>
-  <object id="292" name="Table6" x="1760" y="1312" width="32" height="32"/>
-  <object id="293" name="Table7" x="1120" y="1536" width="32" height="32"/>
-  <object id="294" name="Table8" x="1760" y="1536" width="32" height="32"/>
-  <object id="295" name="Table9" x="1120" y="1728" width="32" height="32"/>
-  <object id="296" name="Table10" x="1760" y="1728" width="32" height="32"/>
-  <object id="306" name="Wall" x="352" y="288" width="352" height="32"/>
-  <object id="308" name="Wall" x="352" y="320" width="32" height="320"/>
-  <object id="310" name="Wall" x="384" y="608" width="192" height="32"/>
-  <object id="311" name="Wall" x="672" y="320" width="32" height="128"/>
-  <object id="312" name="Wall" x="544" y="640" width="32" height="1344"/>
-  <object id="313" name="Wall" x="672" y="448" width="736" height="32"/>
-  <object id="315" name="Wall" x="1376" y="416" width="32" height="32"/>
-  <object id="316" name="Wall" x="1504" y="416" width="32" height="32"/>
-  <object id="317" name="Wall" x="1216" y="384" width="192" height="32"/>
-  <object id="318" name="Wall" x="1216" y="160" width="32" height="224"/>
-  <object id="319" name="Wall" x="1248" y="160" width="416" height="32"/>
-  <object id="320" name="Wall" x="1664" y="160" width="32" height="256"/>
-  <object id="321" name="Wall" x="1504" y="384" width="160" height="32"/>
-  <object id="322" name="Wall" x="1504" y="448" width="736" height="32"/>
-  <object id="325" name="Wall" x="2208" y="288" width="32" height="160"/>
-  <object id="326" name="Wall" x="2240" y="288" width="320" height="32"/>
-  <object id="329" name="Wall" x="2528" y="320" width="32" height="320"/>
-  <object id="330" name="Wall" x="2336" y="608" width="192" height="32"/>
-  <object id="331" name="Wall" x="672" y="576" width="1568" height="32"/>
-  <object id="332" name="Wall" x="2336" y="640" width="32" height="1312"/>
-  <object id="333" name="Wall" x="2336" y="1952" width="224" height="32"/>
-  <object id="334" name="Wall" x="2528" y="1984" width="32" height="320"/>
-  <object id="335" name="Wall" x="2208" y="2272" width="320" height="32"/>
-  <object id="336" name="Wall" x="2208" y="2112" width="32" height="160"/>
-  <object id="337" name="Wall" x="1568" y="2112" width="640" height="32"/>
-  <object id="338" name="Wall" x="1536" y="2112" width="32" height="192"/>
-  <object id="339" name="Wall" x="1344" y="2112" width="32" height="192"/>
-  <object id="340" name="Wall" x="672" y="2112" width="672" height="32"/>
-  <object id="341" name="Wall" x="2208" y="608" width="32" height="1408"/>
-  <object id="342" name="Wall" x="672" y="608" width="32" height="1408"/>
-  <object id="343" name="Wall" x="704" y="1984" width="704" height="32"/>
-  <object id="344" name="Wall" x="1504" y="1984" width="704" height="32"/>
-  <object id="345" name="Wall" x="1504" y="1824" width="32" height="160"/>
-  <object id="346" name="Wall" x="1376" y="1824" width="32" height="160"/>
-  <object id="347" name="Wall" x="1088" y="1824" width="288" height="32"/>
-  <object id="348" name="Wall" x="1536" y="1824" width="288" height="32"/>
-  <object id="349" name="Wall" x="1792" y="736" width="32" height="1088"/>
-  <object id="350" name="Wall" x="1088" y="736" width="32" height="1088"/>
-  <object id="351" name="Wall" x="1120" y="736" width="672" height="32"/>
-  <object id="352" name="Wall" x="352" y="1952" width="192" height="32"/>
-  <object id="353" name="Wall" x="352" y="1984" width="32" height="320"/>
-  <object id="354" name="Wall" x="384" y="2272" width="320" height="32"/>
-  <object id="356" name="Wall" x="672" y="2144" width="32" height="128"/>
+  <object id="224" name="Bed9" type="Object" x="1632" y="192" width="32" height="64"/>
+  <object id="225" name="Bed8" type="Object" x="1568" y="192" width="32" height="64"/>
+  <object id="226" name="Dresser8" type="Object" x="1600" y="192" width="32" height="32"/>
+  <object id="227" name="Dresser7" type="Object" x="1536" y="192" width="32" height="32"/>
+  <object id="228" name="Bed7" type="Object" x="1504" y="192" width="32" height="64"/>
+  <object id="229" name="Dresser6" type="Object" x="1472" y="192" width="32" height="32"/>
+  <object id="230" name="Dresser3" type="Object" x="1408" y="192" width="32" height="32"/>
+  <object id="231" name="Bed3" type="Object" x="1376" y="192" width="32" height="64"/>
+  <object id="232" name="Dresser2" type="Object" x="1344" y="192" width="32" height="32"/>
+  <object id="233" name="Bed2" type="Object" x="1312" y="192" width="32" height="64"/>
+  <object id="234" name="Dresser1" type="Object" x="1280" y="192" width="32" height="32"/>
+  <object id="235" name="Bed1" type="Object" x="1248" y="192" width="32" height="64"/>
+  <object id="236" name="Bed4" type="Object" x="1248" y="320" width="32" height="64"/>
+  <object id="237" name="Dresser4" type="Object" x="1280" y="352" width="32" height="32"/>
+  <object id="238" name="Bed5" type="Object" x="1312" y="320" width="32" height="64"/>
+  <object id="239" name="Dresser5" type="Object" x="1344" y="352" width="32" height="32"/>
+  <object id="240" name="Bed6" type="Object" x="1376" y="320" width="32" height="64"/>
+  <object id="241" name="Bed10" type="Object" x="1504" y="320" width="32" height="64"/>
+  <object id="242" name="Dresser9" type="Object" x="1536" y="352" width="32" height="32"/>
+  <object id="243" name="Bed11" type="Object" x="1568" y="320" width="32" height="64"/>
+  <object id="244" name="Dresser10" type="Object" x="1600" y="352" width="32" height="32"/>
+  <object id="245" name="Bed12" type="Object" x="1632" y="320" width="32" height="64"/>
+  <object id="252" name="GreenFlame1" type="Object" x="416" y="2016" width="32" height="32"/>
+  <object id="253" name="GreenFlame2" type="Object" x="416" y="2208" width="32" height="32"/>
+  <object id="254" name="GreenFlame3" type="Object" x="608" y="2208" width="32" height="32"/>
+  <object id="263" name="FrontDoor" type="Object" x="1344" y="2304" width="224" height="32"/>
+  <object id="266" name="OrangeFlame1" type="Object" x="416" y="352" width="32" height="32"/>
+  <object id="267" name="OrangeFlame2" type="Object" x="608" y="352" width="32" height="32"/>
+  <object id="268" name="OrangeFlame3" type="Object" x="416" y="544" width="32" height="32"/>
+  <object id="269" name="BlueFlame1" type="Object" x="2272" y="352" width="32" height="32"/>
+  <object id="270" name="BlueFlame2" type="Object" x="2464" y="352" width="32" height="32"/>
+  <object id="271" name="BlueFlame3" type="Object" x="2464" y="544" width="32" height="32"/>
+  <object id="272" name="RedFlame1" type="Object" x="2464" y="2016" width="32" height="32"/>
+  <object id="273" name="RedFlame3" type="Object" x="2464" y="2208" width="32" height="32"/>
+  <object id="275" name="RedFlame2" type="Object" x="2272" y="2208" width="32" height="32"/>
+  <object id="276" name="Throne1" type="Object" x="1408" y="864" width="32" height="32"/>
+  <object id="277" name="Throne2" type="Object" x="1472" y="864" width="32" height="32"/>
+  <object id="278" name="RedFlame4" type="Object" x="1312" y="992" width="32" height="32"/>
+  <object id="279" name="RedFlame5" type="Object" x="1568" y="992" width="32" height="32"/>
+  <object id="280" name="BlueFlame4" type="Object" x="1312" y="1216" width="32" height="32"/>
+  <object id="281" name="BlueFlame5" type="Object" x="1568" y="1216" width="32" height="32"/>
+  <object id="282" name="OrangeFlame4" type="Object" x="1312" y="1440" width="32" height="32"/>
+  <object id="284" name="OrangeFlame5" type="Object" x="1568" y="1440" width="32" height="32"/>
+  <object id="285" name="GreenFlame4" type="Object" x="1312" y="1632" width="32" height="32"/>
+  <object id="286" name="GreenFlame5" type="Object" x="1568" y="1632" width="32" height="32"/>
+  <object id="287" name="Table1" type="Object" x="1120" y="864" width="32" height="32"/>
+  <object id="288" name="Table2" type="Object" x="1760" y="864" width="32" height="32"/>
+  <object id="289" name="Table3" type="Object" x="1120" y="1088" width="32" height="32"/>
+  <object id="290" name="Table4" type="Object" x="1760" y="1088" width="32" height="32"/>
+  <object id="291" name="Table5" type="Object" x="1120" y="1312" width="32" height="32"/>
+  <object id="292" name="Table6" type="Object" x="1760" y="1312" width="32" height="32"/>
+  <object id="293" name="Table7" type="Object" x="1120" y="1536" width="32" height="32"/>
+  <object id="294" name="Table8" type="Object" x="1760" y="1536" width="32" height="32"/>
+  <object id="295" name="Table9" type="Object" x="1120" y="1728" width="32" height="32"/>
+  <object id="296" name="Table10" type="Object" x="1760" y="1728" width="32" height="32"/>
+  <object id="306" name="Wall" type="Object" x="352" y="288" width="352" height="32"/>
+  <object id="308" name="Wall" type="Object" x="352" y="320" width="32" height="320"/>
+  <object id="310" name="Wall" type="Object" x="384" y="608" width="192" height="32"/>
+  <object id="311" name="Wall" type="Object" x="672" y="320" width="32" height="128"/>
+  <object id="312" name="Wall" type="Object" x="544" y="640" width="32" height="1344"/>
+  <object id="313" name="Wall" type="Object" x="672" y="448" width="736" height="32"/>
+  <object id="315" name="Wall" type="Object" x="1376" y="416" width="32" height="32"/>
+  <object id="316" name="Wall" type="Object" x="1504" y="416" width="32" height="32"/>
+  <object id="317" name="Wall" type="Object" x="1216" y="384" width="192" height="32"/>
+  <object id="318" name="Wall" type="Object" x="1216" y="160" width="32" height="224"/>
+  <object id="319" name="Wall" type="Object" x="1248" y="160" width="416" height="32"/>
+  <object id="320" name="Wall" type="Object" x="1664" y="160" width="32" height="256"/>
+  <object id="321" name="Wall" type="Object" x="1504" y="384" width="160" height="32"/>
+  <object id="322" name="Wall" type="Object" x="1504" y="448" width="736" height="32"/>
+  <object id="325" name="Wall" type="Object" x="2208" y="288" width="32" height="160"/>
+  <object id="326" name="Wall" type="Object" x="2240" y="288" width="320" height="32"/>
+  <object id="329" name="Wall" type="Object" x="2528" y="320" width="32" height="320"/>
+  <object id="330" name="Wall" type="Object" x="2336" y="608" width="192" height="32"/>
+  <object id="331" name="Wall" type="Object" x="672" y="576" width="1568" height="32"/>
+  <object id="332" name="Wall" type="Object" x="2336" y="640" width="32" height="1312"/>
+  <object id="333" name="Wall" type="Object" x="2336" y="1952" width="224" height="32"/>
+  <object id="334" name="Wall" type="Object" x="2528" y="1984" width="32" height="320"/>
+  <object id="335" name="Wall" type="Object" x="2208" y="2272" width="320" height="32"/>
+  <object id="336" name="Wall" type="Object" x="2208" y="2112" width="32" height="160"/>
+  <object id="337" name="Wall" type="Object" x="1568" y="2112" width="640" height="32"/>
+  <object id="338" name="Wall" type="Object" x="1536" y="2112" width="32" height="192"/>
+  <object id="339" name="Wall" type="Object" x="1344" y="2112" width="32" height="192"/>
+  <object id="340" name="Wall" type="Object" x="672" y="2112" width="672" height="32"/>
+  <object id="341" name="Wall" type="Object" x="2208" y="608" width="32" height="1408"/>
+  <object id="342" name="Wall" type="Object" x="672" y="608" width="32" height="1408"/>
+  <object id="343" name="Wall" type="Object" x="704" y="1984" width="704" height="32"/>
+  <object id="344" name="Wall" type="Object" x="1504" y="1984" width="704" height="32"/>
+  <object id="345" name="Wall" type="Object" x="1504" y="1824" width="32" height="160"/>
+  <object id="346" name="Wall" type="Object" x="1376" y="1824" width="32" height="160"/>
+  <object id="347" name="Wall" type="Object" x="1088" y="1824" width="288" height="32"/>
+  <object id="348" name="Wall" type="Object" x="1536" y="1824" width="288" height="32"/>
+  <object id="349" name="Wall" type="Object" x="1792" y="736" width="32" height="1088"/>
+  <object id="350" name="Wall" type="Object" x="1088" y="736" width="32" height="1088"/>
+  <object id="351" name="Wall" type="Object" x="1120" y="736" width="672" height="32"/>
+  <object id="352" name="Wall" type="Object" x="352" y="1952" width="192" height="32"/>
+  <object id="353" name="Wall" type="Object" x="352" y="1984" width="32" height="320"/>
+  <object id="354" name="Wall" type="Object" x="384" y="2272" width="320" height="32"/>
+  <object id="356" name="Wall" type="Object" x="672" y="2144" width="32" height="128"/>
  </objectgroup>
  <objectgroup name="NPCs">
   <object id="427" name="castle_npc1" type="NPC" x="1504" y="256" width="32" height="32"/>

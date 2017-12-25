@@ -15,7 +15,7 @@ void Camera::update(float delta) {
     auto playerPos = _player.getPosition();
     auto windowSize = _window.getSize();
 
-    _view.setCenter(_player.getPosition().x - 170, _player.getPosition().y - 170);
+    _view.setCenter(_player.getPosition().x, _player.getPosition().y + 15);
 
     if (playerPos.x < (windowSize.x / 2) * CAMERA_ZOOM_FACTOR)
         _view.setCenter((windowSize.x / 2) * CAMERA_ZOOM_FACTOR, _view.getCenter().y);

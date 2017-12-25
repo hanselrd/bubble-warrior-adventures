@@ -236,12 +236,6 @@ void PlayScreen::updateEntitiesForCurrentMap() {
 }
 void PlayScreen::update(float delta) {
 
-    reloadObjects(Entity::EntityType::NPC);
-    reloadObjects(Entity::EntityType::Item);
-    reloadObjects(Entity::EntityType::Object);
-    reloadObjects(Entity::EntityType::Enemy);
-    reloadObjects(Entity::EntityType::Spawn);
-    reloadObjects(Entity::EntityType::Portal);
     // Calling all entity/camera update functions
     _player.update(delta);
     for (int i = 0; i < _enemies.size(); i++) {
